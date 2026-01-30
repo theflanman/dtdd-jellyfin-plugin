@@ -315,8 +315,10 @@ public class DtddMovieProviderTests
                     Topic = new DtddTopic
                     {
                         Id = 153,
-                        Name = "a dog dies"
-                    }
+                        Name = "a dog dies",
+                        TopicCategoryId = 2
+                    },
+                    TopicCategory = new DtddTopicCategory { Id = 2, Name = "Animal" }
                 },
                 new DtddTopicItemStat
                 {
@@ -327,10 +329,191 @@ public class DtddMovieProviderTests
                     Topic = new DtddTopic
                     {
                         Id = 999,
-                        Name = "low vote trigger"
-                    }
+                        Name = "low vote trigger",
+                        TopicCategoryId = 3
+                    },
+                    TopicCategory = new DtddTopicCategory { Id = 3, Name = "Violence" }
                 }
             }
         };
+    }
+
+    private static DtddMediaDetails CreateMediaDetailsWithMultipleTriggers(int id, string name)
+    {
+        return new DtddMediaDetails
+        {
+            Item = new DtddMediaItem
+            {
+                Id = id,
+                Name = name
+            },
+            TopicItemStats = new System.Collections.Generic.List<DtddTopicItemStat>
+            {
+                new DtddTopicItemStat
+                {
+                    TopicItemId = 1,
+                    YesSum = 100,
+                    NoSum = 10,
+                    TopicId = 153,
+                    Topic = new DtddTopic
+                    {
+                        Id = 153,
+                        Name = "a dog dies",
+                        TopicCategoryId = 2
+                    },
+                    TopicCategory = new DtddTopicCategory { Id = 2, Name = "Animal" }
+                },
+                new DtddTopicItemStat
+                {
+                    TopicItemId = 2,
+                    YesSum = 100,
+                    NoSum = 10,
+                    TopicId = 154,
+                    Topic = new DtddTopic
+                    {
+                        Id = 154,
+                        Name = "a cat dies",
+                        TopicCategoryId = 2
+                    },
+                    TopicCategory = new DtddTopicCategory { Id = 2, Name = "Animal" }
+                },
+                new DtddTopicItemStat
+                {
+                    TopicItemId = 3,
+                    YesSum = 100,
+                    NoSum = 10,
+                    TopicId = 101,
+                    Topic = new DtddTopic
+                    {
+                        Id = 101,
+                        Name = "blood/gore",
+                        TopicCategoryId = 3
+                    },
+                    TopicCategory = new DtddTopicCategory { Id = 3, Name = "Violence" }
+                }
+            }
+        };
+    }
+
+    [Fact]
+    public async Task FetchAsync_CategoryFilterEnabled_OnlyIncludesEnabledCategories()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = false,
+            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 } // Only Animal
+        });
+        var movie = CreateMovie("tt2911666");
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("CW: a dog dies", movie.Tags);
+        Assert.Contains("CW: a cat dies", movie.Tags);
+        Assert.DoesNotContain("CW: blood/gore", movie.Tags); // Violence category not enabled
+    }
+
+    [Fact]
+    public async Task FetchAsync_TopicFilterEnabled_OnlyIncludesEnabledTopics()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = false,
+            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 },
+            EnabledTopicIds = new System.Collections.Generic.List<int> { 153 } // Only dog dies
+        });
+        var movie = CreateMovie("tt2911666");
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("CW: a dog dies", movie.Tags);
+        Assert.DoesNotContain("CW: a cat dies", movie.Tags); // Topic not enabled
+        Assert.DoesNotContain("CW: blood/gore", movie.Tags); // Category not enabled
+    }
+
+    [Fact]
+    public async Task FetchAsync_ShowAllTriggers_IncludesAllTriggers()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = true,
+            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 } // This should be ignored
+        });
+        var movie = CreateMovie("tt2911666");
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("CW: a dog dies", movie.Tags);
+        Assert.Contains("CW: a cat dies", movie.Tags);
+        Assert.Contains("CW: blood/gore", movie.Tags); // All triggers included
+    }
+
+    [Fact]
+    public async Task FetchAsync_NoCategoriesSelected_IncludesAllTriggers()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = false,
+            EnabledCategoryIds = new System.Collections.Generic.List<int>() // Empty - no categories selected
+        });
+        var movie = CreateMovie("tt2911666");
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        // All triggers included (with warning in UI)
+        Assert.Contains("CW: a dog dies", movie.Tags);
+        Assert.Contains("CW: a cat dies", movie.Tags);
+        Assert.Contains("CW: blood/gore", movie.Tags);
     }
 }

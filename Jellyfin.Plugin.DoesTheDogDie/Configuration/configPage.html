@@ -3,35 +3,187 @@
 <head>
     <meta charset="utf-8">
     <title>Does The Dog Die</title>
+    <style>
+        .dtdd-section {
+            margin-bottom: 2em;
+            padding: 1em;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        .dtdd-section-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 1em;
+            color: #52B54B;
+        }
+        .dtdd-warning {
+            background: #f0ad4e;
+            color: #000;
+            padding: 1em;
+            border-radius: 4px;
+            margin-bottom: 1em;
+        }
+        .dtdd-category {
+            margin: 0.5em 0;
+            padding: 0.5em;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        .dtdd-category-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .dtdd-category-header:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .dtdd-category-toggle {
+            margin-right: 0.5em;
+            font-family: monospace;
+            width: 1.5em;
+        }
+        .dtdd-category-count {
+            margin-left: 0.5em;
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+        .dtdd-topics {
+            margin-left: 2em;
+            margin-top: 0.5em;
+            display: none;
+        }
+        .dtdd-topics.expanded {
+            display: block;
+        }
+        .dtdd-topic {
+            padding: 0.25em 0;
+        }
+        .dtdd-hidden {
+            display: none !important;
+        }
+        .dtdd-inline-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+        .dtdd-inline-group .inputContainer {
+            flex: 1;
+            min-width: 150px;
+        }
+        .dtdd-refresh-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1em;
+        }
+        .dtdd-last-updated {
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
     <div id="DoesTheDogDieConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-select,emby-checkbox">
         <div data-role="content">
             <div class="content-primary">
                 <form id="DoesTheDogDieConfigForm">
-                    <div class="selectContainer">
-                        <label class="selectLabel" for="Options">Several Options</label>
-                        <select is="emby-select" id="Options" name="Options" class="emby-select-withcolor emby-select">
-                            <option id="optOneOption" value="OneOption">One Option</option>
-                            <option id="optAnotherOption" value="AnotherOption">Another Option</option>
-                        </select>
+                    <!-- Content Types Section -->
+                    <div class="dtdd-section">
+                        <div class="dtdd-section-title">Content Types</div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="EnableMovies" name="EnableMovies" type="checkbox" is="emby-checkbox" />
+                                <span>Movies</span>
+                            </label>
+                        </div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="EnableSeries" name="EnableSeries" type="checkbox" is="emby-checkbox" />
+                                <span>TV Series</span>
+                            </label>
+                        </div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="EnableBooks" name="EnableBooks" type="checkbox" is="emby-checkbox" />
+                                <span>Books</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="inputContainer">
-                        <label class="inputLabel inputLabelUnfocused" for="AnInteger">An Integer</label>
-                        <input id="AnInteger" name="AnInteger" type="number" is="emby-input" min="0" />
-                        <div class="fieldDescription">A Description</div>
+
+                    <!-- Tag Settings Section -->
+                    <div class="dtdd-section">
+                        <div class="dtdd-section-title">Tag Settings</div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="AddWarningTags" name="AddWarningTags" type="checkbox" is="emby-checkbox" />
+                                <span>Add tags to items</span>
+                            </label>
+                        </div>
+                        <div class="dtdd-inline-group">
+                            <div class="inputContainer">
+                                <label class="inputLabel inputLabelUnfocused" for="TagPrefix">Warning Prefix</label>
+                                <input id="TagPrefix" name="TagPrefix" type="text" is="emby-input" />
+                                <div class="fieldDescription">Prefix for triggers present in content (e.g., "CW:")</div>
+                            </div>
+                            <div class="inputContainer">
+                                <label class="inputLabel inputLabelUnfocused" for="SafeTagPrefix">Safe Prefix</label>
+                                <input id="SafeTagPrefix" name="SafeTagPrefix" type="text" is="emby-input" />
+                                <div class="fieldDescription">Prefix for triggers confirmed absent (e.g., "Safe:")</div>
+                            </div>
+                        </div>
+                        <div class="inputContainer">
+                            <label class="inputLabel inputLabelUnfocused" for="MinVotesThreshold">Minimum Votes</label>
+                            <input id="MinVotesThreshold" name="MinVotesThreshold" type="number" is="emby-input" min="1" max="100" />
+                            <div class="fieldDescription">Minimum votes required before showing a tag</div>
+                        </div>
                     </div>
-                    <div class="checkboxContainer checkboxContainer-withDescription">
-                        <label class="emby-checkbox-label">
-                            <input id="TrueFalseSetting" name="TrueFalseCheckBox" type="checkbox" is="emby-checkbox" />
-                            <span>A Checkbox</span>
-                        </label>
+
+                    <!-- Trigger Filtering Section -->
+                    <div class="dtdd-section">
+                        <div class="dtdd-section-title">Trigger Filtering</div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="ShowAllTriggers" name="ShowAllTriggers" type="checkbox" is="emby-checkbox" />
+                                <span>Show all triggers</span>
+                            </label>
+                            <div class="fieldDescription">When enabled, all triggers from DTDD are shown. Uncheck to select specific categories.</div>
+                        </div>
+
+                        <div id="CategoryFilterSection" class="dtdd-hidden">
+                            <div id="NoFilterWarning" class="dtdd-warning dtdd-hidden">
+                                <strong>Warning:</strong> No categories selected. All triggers will be shown, which may add hundreds of tags to each item. Select specific categories below to reduce noise.
+                            </div>
+
+                            <div class="dtdd-refresh-info">
+                                <span id="LastUpdated" class="dtdd-last-updated"></span>
+                                <button id="RefreshTopicsBtn" is="emby-button" type="button" class="raised emby-button">
+                                    <span>Refresh Topics</span>
+                                </button>
+                            </div>
+
+                            <div id="CategoriesContainer">
+                                <div class="fieldDescription">Loading categories...</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="inputContainer">
-                        <label class="inputLabel inputLabelUnfocused" for="AString">A String</label>
-                        <input id="AString" name="AString" type="text" is="emby-input" />
-                        <div class="fieldDescription">Another Description</div>
+
+                    <!-- Cache & Refresh Section -->
+                    <div class="dtdd-section">
+                        <div class="dtdd-section-title">Cache &amp; Refresh</div>
+                        <div class="dtdd-inline-group">
+                            <div class="inputContainer">
+                                <label class="inputLabel inputLabelUnfocused" for="CacheDurationHours">Cache Duration (hours)</label>
+                                <input id="CacheDurationHours" name="CacheDurationHours" type="number" is="emby-input" min="1" />
+                                <div class="fieldDescription">How long to cache API responses (168 = 7 days)</div>
+                            </div>
+                            <div class="inputContainer">
+                                <label class="inputLabel inputLabelUnfocused" for="RefreshIntervalHours">Refresh Interval (hours)</label>
+                                <input id="RefreshIntervalHours" name="RefreshIntervalHours" type="number" is="emby-input" min="1" />
+                                <div class="fieldDescription">How often the scheduled task runs</div>
+                            </div>
+                        </div>
                     </div>
+
                     <div>
                         <button is="emby-button" type="submit" class="raised button-submit block emby-button">
                             <span>Save</span>
@@ -40,39 +192,315 @@
                 </form>
             </div>
         </div>
+
         <script type="text/javascript">
             var DoesTheDogDieConfig = {
-                pluginUniqueId: 'eb5d7894-8eef-4b36-aa6f-5d124e828ce1'
+                pluginUniqueId: 'eb5d7894-8eef-4b36-aa6f-5d124e828ce1',
+                categories: [],
+                enabledCategoryIds: [],
+                enabledTopicIds: []
             };
 
+            // Load configuration on page show
             document.querySelector('#DoesTheDogDieConfigPage')
                 .addEventListener('pageshow', function() {
                     Dashboard.showLoadingMsg();
-                    ApiClient.getPluginConfiguration(DoesTheDogDieConfig.pluginUniqueId).then(function (config) {
-                        document.querySelector('#Options').value = config.Options;
-                        document.querySelector('#AnInteger').value = config.AnInteger;
-                        document.querySelector('#TrueFalseSetting').checked = config.TrueFalseSetting;
-                        document.querySelector('#AString').value = config.AString;
-                        Dashboard.hideLoadingMsg();
+                    loadConfiguration();
+                });
+
+            function loadConfiguration() {
+                ApiClient.getPluginConfiguration(DoesTheDogDieConfig.pluginUniqueId).then(function(config) {
+                    console.log('DTDD Config loaded:', JSON.stringify(config));
+
+                    // Content types (check both casings)
+                    document.querySelector('#EnableMovies').checked = config.EnableMovies ?? config.enableMovies;
+                    document.querySelector('#EnableSeries').checked = config.EnableSeries ?? config.enableSeries;
+                    document.querySelector('#EnableBooks').checked = config.EnableBooks ?? config.enableBooks;
+
+                    // Tag settings
+                    document.querySelector('#AddWarningTags').checked = config.AddWarningTags ?? config.addWarningTags;
+                    document.querySelector('#TagPrefix').value = config.TagPrefix ?? config.tagPrefix ?? 'CW:';
+                    document.querySelector('#SafeTagPrefix').value = config.SafeTagPrefix ?? config.safeTagPrefix ?? 'Safe:';
+                    document.querySelector('#MinVotesThreshold').value = config.MinVotesThreshold ?? config.minVotesThreshold ?? 3;
+
+                    // Trigger filtering (check both casings)
+                    document.querySelector('#ShowAllTriggers').checked = config.ShowAllTriggers ?? config.showAllTriggers ?? true;
+                    DoesTheDogDieConfig.enabledCategoryIds = config.EnabledCategoryIds || config.enabledCategoryIds || [];
+                    DoesTheDogDieConfig.enabledTopicIds = config.EnabledTopicIds || config.enabledTopicIds || [];
+
+                    console.log('DTDD Enabled categories:', DoesTheDogDieConfig.enabledCategoryIds);
+                    console.log('DTDD Enabled topics:', DoesTheDogDieConfig.enabledTopicIds);
+
+                    // Cache & refresh
+                    document.querySelector('#CacheDurationHours').value = config.CacheDurationHours ?? config.cacheDurationHours ?? 168;
+                    document.querySelector('#RefreshIntervalHours').value = config.RefreshIntervalHours ?? config.refreshIntervalHours ?? 24;
+
+                    updateCategoryFilterVisibility();
+                    loadTopics();
+                    Dashboard.hideLoadingMsg();
+                });
+            }
+
+            function updateCategoryFilterVisibility() {
+                var showAll = document.querySelector('#ShowAllTriggers').checked;
+                var filterSection = document.querySelector('#CategoryFilterSection');
+
+                if (showAll) {
+                    filterSection.classList.add('dtdd-hidden');
+                } else {
+                    filterSection.classList.remove('dtdd-hidden');
+                    updateWarningVisibility();
+                }
+            }
+
+            function updateWarningVisibility() {
+                var warning = document.querySelector('#NoFilterWarning');
+                var anySelected = DoesTheDogDieConfig.enabledCategoryIds.length > 0;
+
+                if (anySelected) {
+                    warning.classList.add('dtdd-hidden');
+                } else {
+                    warning.classList.remove('dtdd-hidden');
+                }
+            }
+
+            function loadTopics() {
+                fetch(ApiClient.getUrl('Plugins/DoesTheDogDie/Topics'), {
+                    headers: {
+                        'X-Emby-Token': ApiClient.accessToken()
+                    }
+                })
+                .then(function(response) { return response.json(); })
+                .then(function(cache) {
+                    DoesTheDogDieConfig.categories = cache.categories || [];
+                    renderCategories();
+                    updateLastUpdated(cache.lastRefreshed);
+                })
+                .catch(function(err) {
+                    console.error('Failed to load topics:', err);
+                    document.querySelector('#CategoriesContainer').innerHTML =
+                        '<div class="fieldDescription">Failed to load categories. Click "Refresh Topics" to try again.</div>';
+                });
+            }
+
+            function updateLastUpdated(dateStr) {
+                var el = document.querySelector('#LastUpdated');
+                if (dateStr) {
+                    var date = new Date(dateStr);
+                    el.textContent = 'Last updated: ' + date.toLocaleString();
+                } else {
+                    el.textContent = '';
+                }
+            }
+
+            function renderCategories() {
+                var container = document.querySelector('#CategoriesContainer');
+                var categories = DoesTheDogDieConfig.categories;
+
+                if (!categories || categories.length === 0) {
+                    container.innerHTML = '<div class="fieldDescription">No categories found. Click "Refresh Topics" to load from DTDD.</div>';
+                    return;
+                }
+
+                var html = '';
+                categories.forEach(function(category) {
+                    var isEnabled = DoesTheDogDieConfig.enabledCategoryIds.indexOf(category.id) !== -1;
+                    var topicCount = category.topics ? category.topics.length : 0;
+
+                    html += '<div class="dtdd-category" data-category-id="' + category.id + '">';
+                    html += '<div class="dtdd-category-header">';
+                    html += '<span class="dtdd-category-toggle">' + (isEnabled ? '▼' : '▶') + '</span>';
+                    html += '<label class="emby-checkbox-label">';
+                    html += '<input type="checkbox" class="category-checkbox" is="emby-checkbox" data-category-id="' + category.id + '" ' + (isEnabled ? 'checked' : '') + ' />';
+                    html += '<span>' + escapeHtml(category.name) + '</span>';
+                    html += '</label>';
+                    html += '<span class="dtdd-category-count">(' + topicCount + ' topics)</span>';
+                    html += '</div>';
+
+                    html += '<div class="dtdd-topics' + (isEnabled ? ' expanded' : '') + '">';
+                    if (category.topics) {
+                        category.topics.forEach(function(topic) {
+                            // Topic is enabled if it's explicitly in the enabledTopicIds list
+                            var topicEnabled = DoesTheDogDieConfig.enabledTopicIds.indexOf(topic.id) !== -1;
+                            html += '<div class="dtdd-topic">';
+                            html += '<label class="emby-checkbox-label">';
+                            html += '<input type="checkbox" class="topic-checkbox" is="emby-checkbox" data-topic-id="' + topic.id + '" data-category-id="' + category.id + '" ' + (topicEnabled ? 'checked' : '') + ' />';
+                            html += '<span>' + escapeHtml(topic.name) + '</span>';
+                            html += '</label>';
+                            html += '</div>';
+                        });
+                    }
+                    html += '</div>';
+                    html += '</div>';
+                });
+
+                container.innerHTML = html;
+                attachCategoryListeners();
+            }
+
+            function attachCategoryListeners() {
+                // Category checkbox change
+                document.querySelectorAll('.category-checkbox').forEach(function(checkbox) {
+                    checkbox.addEventListener('change', function() {
+                        var categoryId = parseInt(this.dataset.categoryId);
+                        var category = this.closest('.dtdd-category');
+                        var topics = category.querySelector('.dtdd-topics');
+                        var toggle = category.querySelector('.dtdd-category-toggle');
+
+                        if (this.checked) {
+                            if (DoesTheDogDieConfig.enabledCategoryIds.indexOf(categoryId) === -1) {
+                                DoesTheDogDieConfig.enabledCategoryIds.push(categoryId);
+                            }
+                            topics.classList.add('expanded');
+                            toggle.textContent = '▼';
+
+                            // Add all topics in this category to enabledTopicIds
+                            category.querySelectorAll('.topic-checkbox').forEach(function(topicCb) {
+                                topicCb.checked = true;
+                                var topicId = parseInt(topicCb.dataset.topicId);
+                                if (DoesTheDogDieConfig.enabledTopicIds.indexOf(topicId) === -1) {
+                                    DoesTheDogDieConfig.enabledTopicIds.push(topicId);
+                                }
+                            });
+                        } else {
+                            var idx = DoesTheDogDieConfig.enabledCategoryIds.indexOf(categoryId);
+                            if (idx !== -1) {
+                                DoesTheDogDieConfig.enabledCategoryIds.splice(idx, 1);
+                            }
+                            topics.classList.remove('expanded');
+                            toggle.textContent = '▶';
+
+                            // Remove topic IDs from this category and uncheck them
+                            category.querySelectorAll('.topic-checkbox').forEach(function(topicCb) {
+                                topicCb.checked = false;
+                                var topicId = parseInt(topicCb.dataset.topicId);
+                                var tidx = DoesTheDogDieConfig.enabledTopicIds.indexOf(topicId);
+                                if (tidx !== -1) {
+                                    DoesTheDogDieConfig.enabledTopicIds.splice(tidx, 1);
+                                }
+                            });
+                        }
+
+                        updateWarningVisibility();
                     });
                 });
 
+                // Category header click (toggle expand/collapse)
+                document.querySelectorAll('.dtdd-category-header').forEach(function(header) {
+                    header.addEventListener('click', function(e) {
+                        // Don't toggle if clicking the checkbox
+                        if (e.target.type === 'checkbox' || e.target.tagName === 'LABEL') {
+                            return;
+                        }
+
+                        var checkbox = this.querySelector('.category-checkbox');
+                        if (checkbox.checked) {
+                            var topics = this.closest('.dtdd-category').querySelector('.dtdd-topics');
+                            var toggle = this.querySelector('.dtdd-category-toggle');
+                            topics.classList.toggle('expanded');
+                            toggle.textContent = topics.classList.contains('expanded') ? '▼' : '▶';
+                        }
+                    });
+                });
+
+                // Topic checkbox change
+                document.querySelectorAll('.topic-checkbox').forEach(function(checkbox) {
+                    checkbox.addEventListener('change', function() {
+                        var topicId = parseInt(this.dataset.topicId);
+                        var categoryId = parseInt(this.dataset.categoryId);
+
+                        // Ensure category is enabled
+                        if (DoesTheDogDieConfig.enabledCategoryIds.indexOf(categoryId) === -1) {
+                            return;
+                        }
+
+                        if (this.checked) {
+                            // Add to enabledTopicIds
+                            if (DoesTheDogDieConfig.enabledTopicIds.indexOf(topicId) === -1) {
+                                DoesTheDogDieConfig.enabledTopicIds.push(topicId);
+                            }
+                        } else {
+                            // Remove from enabledTopicIds
+                            var idx = DoesTheDogDieConfig.enabledTopicIds.indexOf(topicId);
+                            if (idx !== -1) {
+                                DoesTheDogDieConfig.enabledTopicIds.splice(idx, 1);
+                            }
+                        }
+                    });
+                });
+            }
+
+            function escapeHtml(text) {
+                var div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // Show all triggers checkbox change
+            document.querySelector('#ShowAllTriggers').addEventListener('change', updateCategoryFilterVisibility);
+
+            // Refresh topics button
+            document.querySelector('#RefreshTopicsBtn').addEventListener('click', function() {
+                Dashboard.showLoadingMsg();
+                fetch(ApiClient.getUrl('Plugins/DoesTheDogDie/Topics/Refresh'), {
+                    method: 'POST',
+                    headers: {
+                        'X-Emby-Token': ApiClient.accessToken()
+                    }
+                })
+                .then(function(response) { return response.json(); })
+                .then(function(cache) {
+                    DoesTheDogDieConfig.categories = cache.categories || [];
+                    renderCategories();
+                    updateLastUpdated(cache.lastRefreshed);
+                    Dashboard.hideLoadingMsg();
+                    Dashboard.alert('Topics refreshed successfully!');
+                })
+                .catch(function(err) {
+                    console.error('Failed to refresh topics:', err);
+                    Dashboard.hideLoadingMsg();
+                    Dashboard.alert('Failed to refresh topics. Check the server log for details.');
+                });
+            });
+
+            // Form submission
             document.querySelector('#DoesTheDogDieConfigForm')
                 .addEventListener('submit', function(e) {
-                Dashboard.showLoadingMsg();
-                ApiClient.getPluginConfiguration(DoesTheDogDieConfig.pluginUniqueId).then(function (config) {
-                    config.Options = document.querySelector('#Options').value;
-                    config.AnInteger = document.querySelector('#AnInteger').value;
-                    config.TrueFalseSetting = document.querySelector('#TrueFalseSetting').checked;
-                    config.AString = document.querySelector('#AString').value;
-                    ApiClient.updatePluginConfiguration(DoesTheDogDieConfig.pluginUniqueId, config).then(function (result) {
-                        Dashboard.processPluginConfigurationUpdateResult(result);
-                    });
-                });
+                    e.preventDefault();
+                    Dashboard.showLoadingMsg();
 
-                e.preventDefault();
-                return false;
-            });
+                    ApiClient.getPluginConfiguration(DoesTheDogDieConfig.pluginUniqueId).then(function(config) {
+                        // Content types
+                        config.EnableMovies = document.querySelector('#EnableMovies').checked;
+                        config.EnableSeries = document.querySelector('#EnableSeries').checked;
+                        config.EnableBooks = document.querySelector('#EnableBooks').checked;
+
+                        // Tag settings
+                        config.AddWarningTags = document.querySelector('#AddWarningTags').checked;
+                        config.TagPrefix = document.querySelector('#TagPrefix').value;
+                        config.SafeTagPrefix = document.querySelector('#SafeTagPrefix').value;
+                        config.MinVotesThreshold = parseInt(document.querySelector('#MinVotesThreshold').value) || 3;
+
+                        // Trigger filtering
+                        config.ShowAllTriggers = document.querySelector('#ShowAllTriggers').checked;
+                        config.EnabledCategoryIds = DoesTheDogDieConfig.enabledCategoryIds;
+                        config.EnabledTopicIds = DoesTheDogDieConfig.enabledTopicIds;
+
+                        // Cache & refresh
+                        config.CacheDurationHours = parseInt(document.querySelector('#CacheDurationHours').value) || 168;
+                        config.RefreshIntervalHours = parseInt(document.querySelector('#RefreshIntervalHours').value) || 24;
+
+                        console.log('DTDD Saving config:', JSON.stringify(config));
+                        console.log('DTDD Saving categories:', config.EnabledCategoryIds);
+                        console.log('DTDD Saving topics:', config.EnabledTopicIds);
+
+                        ApiClient.updatePluginConfiguration(DoesTheDogDieConfig.pluginUniqueId, config).then(function(result) {
+                            Dashboard.processPluginConfigurationUpdateResult(result);
+                        });
+                    });
+
+                    return false;
+                });
         </script>
     </div>
 </body>

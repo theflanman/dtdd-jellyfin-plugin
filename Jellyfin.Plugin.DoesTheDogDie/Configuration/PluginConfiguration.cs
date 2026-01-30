@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MediaBrowser.Model.Plugins;
 
 namespace Jellyfin.Plugin.DoesTheDogDie.Configuration;
@@ -21,6 +22,9 @@ public class PluginConfiguration : BasePluginConfiguration
         TagPrefix = "CW:";
         SafeTagPrefix = "Safe:";
         RefreshIntervalHours = 24;
+        ShowAllTriggers = true;
+        EnabledCategoryIds = new List<int>();
+        EnabledTopicIds = new List<int>();
     }
 
     /// <summary>
@@ -67,4 +71,22 @@ public class PluginConfiguration : BasePluginConfiguration
     /// Gets or sets the refresh interval in hours for the scheduled task.
     /// </summary>
     public int RefreshIntervalHours { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to include all triggers.
+    /// When false, uses category/topic filtering.
+    /// </summary>
+    public bool ShowAllTriggers { get; set; }
+
+    /// <summary>
+    /// Gets or sets the list of enabled category IDs.
+    /// When ShowAllTriggers is false and this list is empty, all triggers are shown with a warning.
+    /// </summary>
+    public List<int> EnabledCategoryIds { get; set; }
+
+    /// <summary>
+    /// Gets or sets the list of enabled topic IDs for fine-grained control.
+    /// When empty, all topics in enabled categories are shown.
+    /// </summary>
+    public List<int> EnabledTopicIds { get; set; }
 }

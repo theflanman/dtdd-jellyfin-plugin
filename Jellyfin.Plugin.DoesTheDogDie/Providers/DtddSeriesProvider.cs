@@ -94,8 +94,17 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
 
     private static void AddWarningTags(Series item, DtddMediaDetails details, PluginConfiguration config)
     {
+        // First, remove all existing DTDD tags (those starting with our prefixes)
+        var existingTags = item.Tags
+            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
+                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
         // Add positive triggers (content warnings)
-        var positiveTriggers = details.GetPositiveTriggers(config.MinVotesThreshold);
+        var positiveTriggers = TriggerFilter.FilterTriggers(
+            details.GetPositiveTriggers(config.MinVotesThreshold),
+            config);
+
         foreach (var trigger in positiveTriggers)
         {
             if (trigger.Topic == null)
@@ -104,14 +113,17 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
             }
 
             var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
-            if (!item.Tags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
+            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
-                item.Tags = item.Tags.Append(tagName).ToArray();
+                existingTags.Add(tagName);
             }
         }
 
         // Add negative triggers (safe confirmations)
-        var negativeTriggers = details.GetNegativeTriggers(config.MinVotesThreshold);
+        var negativeTriggers = TriggerFilter.FilterTriggers(
+            details.GetNegativeTriggers(config.MinVotesThreshold),
+            config);
+
         foreach (var trigger in negativeTriggers)
         {
             if (trigger.Topic == null)
@@ -120,10 +132,12 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
             }
 
             var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
-            if (!item.Tags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
+            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
-                item.Tags = item.Tags.Append(tagName).ToArray();
+                existingTags.Add(tagName);
             }
         }
+
+        item.Tags = existingTags.ToArray();
     }
 }
