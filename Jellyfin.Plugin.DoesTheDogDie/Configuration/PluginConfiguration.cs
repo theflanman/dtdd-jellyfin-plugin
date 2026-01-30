@@ -3,22 +3,6 @@ using MediaBrowser.Model.Plugins;
 namespace Jellyfin.Plugin.DoesTheDogDie.Configuration;
 
 /// <summary>
-/// The configuration options.
-/// </summary>
-public enum SomeOptions
-{
-    /// <summary>
-    /// Option one.
-    /// </summary>
-    OneOption,
-
-    /// <summary>
-    /// Second option.
-    /// </summary>
-    AnotherOption
-}
-
-/// <summary>
 /// Plugin configuration.
 /// </summary>
 public class PluginConfiguration : BasePluginConfiguration
@@ -28,30 +12,53 @@ public class PluginConfiguration : BasePluginConfiguration
     /// </summary>
     public PluginConfiguration()
     {
-        // set default options here
-        Options = SomeOptions.AnotherOption;
-        TrueFalseSetting = true;
-        AnInteger = 2;
-        AString = "string";
+        EnableMovies = true;
+        EnableSeries = true;
+        EnableBooks = true;
+        CacheDurationHours = 168; // 7 days
+        MinVotesThreshold = 3;
+        AddWarningTags = true;
+        TagPrefix = "CW:";
+        RefreshIntervalHours = 24;
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether some true or false setting is enabled..
+    /// Gets or sets a value indicating whether to fetch warnings for movies.
     /// </summary>
-    public bool TrueFalseSetting { get; set; }
+    public bool EnableMovies { get; set; }
 
     /// <summary>
-    /// Gets or sets an integer setting.
+    /// Gets or sets a value indicating whether to fetch warnings for TV series.
     /// </summary>
-    public int AnInteger { get; set; }
+    public bool EnableSeries { get; set; }
 
     /// <summary>
-    /// Gets or sets a string setting.
+    /// Gets or sets a value indicating whether to fetch warnings for books.
     /// </summary>
-    public string AString { get; set; }
+    public bool EnableBooks { get; set; }
 
     /// <summary>
-    /// Gets or sets an enum option.
+    /// Gets or sets the cache duration in hours.
     /// </summary>
-    public SomeOptions Options { get; set; }
+    public int CacheDurationHours { get; set; }
+
+    /// <summary>
+    /// Gets or sets the minimum number of votes required to display a trigger.
+    /// </summary>
+    public int MinVotesThreshold { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to add warning tags to items.
+    /// </summary>
+    public bool AddWarningTags { get; set; }
+
+    /// <summary>
+    /// Gets or sets the prefix for warning tags.
+    /// </summary>
+    public string TagPrefix { get; set; }
+
+    /// <summary>
+    /// Gets or sets the refresh interval in hours for the scheduled task.
+    /// </summary>
+    public int RefreshIntervalHours { get; set; }
 }
