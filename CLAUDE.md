@@ -99,8 +99,30 @@ The `.env` file contains:
 - `DTDD_API_KEY` - DoesTheDogDie API key (embedded in builds)
 - `JELLYFIN_API_KEY` - For testing against local Jellyfin instance
 
+## Testing
+
+```bash
+# Run all tests
+dotnet test
+
+# Run tests with coverage
+dotnet test --collect:"XPlat Code Coverage"
+
+# Generate HTML coverage report (requires ReportGenerator)
+reportgenerator -reports:"TestResults/**/coverage.cobertura.xml" \
+  -targetdir:"TestResults/CoverageReport" -reporttypes:Html
+```
+
+See [docs/TESTING.md](./docs/TESTING.md) for detailed testing documentation.
+
 ## Key References
 
 - [TVDB Plugin](https://github.com/jellyfin/jellyfin-plugin-tvdb) - Reference implementation for metadata plugins
 - [Jellyfin Plugin Docs](https://jellyfin.org/docs/general/server/plugins/) - Official documentation
-- [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md) - Detailed implementation plan with interface analysis
+
+## Documentation
+
+- [docs/IMPLEMENTATION_PLAN.md](./docs/IMPLEMENTATION_PLAN.md) - Detailed implementation plan with interface analysis
+- [docs/API_DOCUMENTATION.md](./docs/API_DOCUMENTATION.md) - DoesTheDogDie API reference
+- [docs/PROGRESS.md](./docs/PROGRESS.md) - Current implementation progress
+- [docs/TESTING.md](./docs/TESTING.md) - Testing guide and coverage

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using MediaBrowser.Common.Configuration;
@@ -12,6 +13,7 @@ namespace Jellyfin.Plugin.DoesTheDogDie;
 /// <summary>
 /// The main plugin.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
 {
     /// <summary>
