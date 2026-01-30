@@ -41,8 +41,8 @@ public class DtddTopicItemStat
     /// <summary>
     /// Gets or sets the media item ID.
     /// </summary>
-    [JsonPropertyName("ItemId")]
-    public int ItemId { get; set; }
+    [JsonPropertyName("itemId")]
+    public int? ItemId { get; set; }
 
     /// <summary>
     /// Gets or sets the top-voted comment.
