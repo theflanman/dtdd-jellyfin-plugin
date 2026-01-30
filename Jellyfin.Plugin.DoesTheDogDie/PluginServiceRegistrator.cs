@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
+using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using MediaBrowser.Controller;
 using MediaBrowser.Controller.Plugins;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +11,7 @@ namespace Jellyfin.Plugin.DoesTheDogDie;
 /// <summary>
 /// Registers plugin services with the dependency injection container.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class PluginServiceRegistrator : IPluginServiceRegistrator
 {
     /// <inheritdoc />
@@ -22,5 +25,6 @@ public class PluginServiceRegistrator : IPluginServiceRegistrator
         });
 
         serviceCollection.AddSingleton<DtddApiClient>();
+        serviceCollection.AddSingleton<IPluginConfigurationAccessor, PluginConfigurationAccessor>();
     }
 }

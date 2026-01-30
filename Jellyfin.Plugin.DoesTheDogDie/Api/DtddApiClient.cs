@@ -39,7 +39,7 @@ public class DtddApiClient
     /// <param name="imdbId">The IMDB ID (e.g., "tt2911666").</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The search response, or null if not found or on error.</returns>
-    public async Task<DtddSearchResponse?> SearchByImdbIdAsync(string imdbId, CancellationToken cancellationToken = default)
+    public virtual async Task<DtddSearchResponse?> SearchByImdbIdAsync(string imdbId, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(imdbId))
         {
@@ -56,7 +56,7 @@ public class DtddApiClient
     /// <param name="title">The media title.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The search response, or null if not found or on error.</returns>
-    public async Task<DtddSearchResponse?> SearchByTitleAsync(string title, CancellationToken cancellationToken = default)
+    public virtual async Task<DtddSearchResponse?> SearchByTitleAsync(string title, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(title))
         {
@@ -73,7 +73,7 @@ public class DtddApiClient
     /// <param name="dtddId">The DoesTheDogDie media ID.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The media details, or null if not found or on error.</returns>
-    public async Task<DtddMediaDetails?> GetMediaDetailsAsync(int dtddId, CancellationToken cancellationToken = default)
+    public virtual async Task<DtddMediaDetails?> GetMediaDetailsAsync(int dtddId, CancellationToken cancellationToken = default)
     {
         var url = $"{Constants.ApiBaseUrl}/media/{dtddId}";
 
@@ -122,7 +122,7 @@ public class DtddApiClient
     /// <param name="imdbId">The IMDB ID to search for.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The media details if found, otherwise null.</returns>
-    public async Task<DtddMediaDetails?> GetMediaDetailsByImdbIdAsync(string imdbId, CancellationToken cancellationToken = default)
+    public virtual async Task<DtddMediaDetails?> GetMediaDetailsByImdbIdAsync(string imdbId, CancellationToken cancellationToken = default)
     {
         var searchResult = await SearchByImdbIdAsync(imdbId, cancellationToken).ConfigureAwait(false);
 
