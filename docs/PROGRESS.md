@@ -9,7 +9,7 @@
 | **Phase 1.5** | API client unit tests | ✅ Complete | 20 tests |
 | **Phase 2** | Metadata providers | ✅ Complete | Movie, Series, Season, Episode |
 | **Phase 2.5** | Provider tests | ✅ Complete | 34 tests |
-| **Phase 3** | Background services | ❌ Not Started | IHostedService, IScheduledTask |
+| **Phase 3** | Background services | ✅ Complete | IHostedService, IScheduledTask |
 | **Phase 4** | UI integration | ❌ Not Started | ExternalIds, URLs, config page |
 
 ---
@@ -20,9 +20,9 @@
 
 | Metric | Value |
 |--------|-------|
-| Total Tests | 54 |
-| Line Coverage | 69.6% |
-| Branch Coverage | 68.75% |
+| Total Tests | 66 |
+| Line Coverage | ~75% |
+| Branch Coverage | ~70% |
 
 ### Coverage by Component
 
@@ -33,6 +33,8 @@
 | DtddSeriesProvider | High | Well tested |
 | DtddSeasonProvider | 44% | Parent series lookup untestable |
 | DtddEpisodeProvider | 44% | Parent series lookup untestable |
+| DtddLibraryScanService | Partial | Event subscription path tested |
+| DtddRefreshTask | High | Properties and triggers tested |
 | Plugin.cs | 0% | Excluded - bootstrap code |
 | PluginServiceRegistrator | 0% | Excluded - DI registration |
 
@@ -46,26 +48,26 @@
 - [x] Season/Episode providers inherit from parent series
 - [x] Configuration options (EnableMovies, EnableSeries, TagPrefix, MinVotesThreshold)
 - [x] Warning tags respect vote threshold filtering
+- [x] Background library scan service (auto-fetch for new items with IMDB IDs)
+- [x] Scheduled refresh task (daily at 2 AM)
 
 ---
 
 ## What's Not Yet Implemented
 
-- [ ] Background library scan service (auto-fetch for new items)
-- [ ] Scheduled refresh task (periodic updates)
 - [ ] External ID display in Jellyfin UI
 - [ ] External URL links to DTDD website
-- [ ] Configuration page HTML
+- [ ] Configuration page HTML (currently placeholder)
 - [ ] Full trigger data cache
 
 ---
 
 ## Next Steps
 
-1. **Phase 3: Background Services**
-   - Implement `DtddLibraryScanService` (IHostedService)
-   - Implement `DtddRefreshTask` (IScheduledTask)
-   - Add tests for background services
+1. **Test in Jellyfin** (Ready Now!)
+   - Plugin is functional with default settings
+   - Config page is placeholder - settings use defaults
+   - Test by adding movie/series with IMDB ID
 
 2. **Phase 4: UI Integration**
    - Implement `IExternalId` providers

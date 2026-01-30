@@ -19,6 +19,7 @@ public class PluginConfiguration : BasePluginConfiguration
         MinVotesThreshold = 3;
         AddWarningTags = true;
         TagPrefix = "CW:";
+        SafeTagPrefix = "Safe:";
         RefreshIntervalHours = 24;
     }
 
@@ -53,9 +54,14 @@ public class PluginConfiguration : BasePluginConfiguration
     public bool AddWarningTags { get; set; }
 
     /// <summary>
-    /// Gets or sets the prefix for warning tags.
+    /// Gets or sets the prefix for warning tags (content has this trigger).
     /// </summary>
     public string TagPrefix { get; set; }
+
+    /// <summary>
+    /// Gets or sets the prefix for safe tags (content confirmed safe from this trigger).
+    /// </summary>
+    public string SafeTagPrefix { get; set; }
 
     /// <summary>
     /// Gets or sets the refresh interval in hours for the scheduled task.

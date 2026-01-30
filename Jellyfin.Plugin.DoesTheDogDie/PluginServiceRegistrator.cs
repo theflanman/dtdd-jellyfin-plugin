@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 using MediaBrowser.Controller;
 using MediaBrowser.Controller.Plugins;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,5 +27,11 @@ public class PluginServiceRegistrator : IPluginServiceRegistrator
 
         serviceCollection.AddSingleton<DtddApiClient>();
         serviceCollection.AddSingleton<IPluginConfigurationAccessor, PluginConfigurationAccessor>();
+
+        // Background service for automatic DTDD lookup on library changes
+        serviceCollection.AddHostedService<DtddLibraryScanService>();
+
+        // Note: IScheduledTask (DtddRefreshTask) is auto-discovered by Jellyfin
+        // via assembly scanning, no explicit registration needed
     }
 }

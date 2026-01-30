@@ -98,8 +98,8 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
 
     private static void AddWarningTags(Movie item, DtddMediaDetails details, PluginConfiguration config)
     {
+        // Add positive triggers (content warnings)
         var positiveTriggers = details.GetPositiveTriggers(config.MinVotesThreshold);
-
         foreach (var trigger in positiveTriggers)
         {
             if (trigger.Topic == null)
@@ -108,7 +108,22 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
             }
 
             var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
+            if (!item.Tags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
+            {
+                item.Tags = item.Tags.Append(tagName).ToArray();
+            }
+        }
 
+        // Add negative triggers (safe confirmations)
+        var negativeTriggers = details.GetNegativeTriggers(config.MinVotesThreshold);
+        foreach (var trigger in negativeTriggers)
+        {
+            if (trigger.Topic == null)
+            {
+                continue;
+            }
+
+            var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
             if (!item.Tags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 item.Tags = item.Tags.Append(tagName).ToArray();
