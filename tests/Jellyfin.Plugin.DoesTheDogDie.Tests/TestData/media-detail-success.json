@@ -1,0 +1,121 @@
+{
+  "item": {
+    "id": 15713,
+    "name": "John Wick",
+    "cleanName": "john wick",
+    "altName": "",
+    "genre": "action",
+    "releaseYear": "2014",
+    "tmdbId": 245891,
+    "imdbId": "tt2911666",
+    "numRatings": 11399,
+    "backgroundImage": "ff2ti5DkA9UYLzyqhQfI2kZqEuh.jpg",
+    "posterImage": "wXqWR7dHncNRbxoEGybEy7QTe9h.jpg",
+    "overview": "Ex-hitman John Wick comes out of retirement to track down the gangsters that took everything from him.",
+    "verified": true,
+    "staffVerified": true,
+    "ItemTypeId": 15,
+    "itemType": {
+      "id": 15,
+      "name": "Movie"
+    }
+  },
+  "topicItemStats": [
+    {
+      "topicItemId": 504377,
+      "yesSum": 1336,
+      "noSum": 118,
+      "numComments": 59,
+      "TopicId": 153,
+      "ItemId": 15713,
+      "comment": "Yes, and it's terrible, BUT John Wick spends the rest of the movie deliberately, gloriously, and violently avenging the dog, so it feels really pro-dog overall.",
+      "username": "egreen",
+      "topic": {
+        "id": 153,
+        "name": "a dog dies",
+        "notName": "no dogs die",
+        "survivesName": "the dog survives",
+        "doesName": "Does the dog die",
+        "description": "This trigger is for people who are upset by the death of a canine companion.",
+        "isSpoiler": false,
+        "isVisible": true,
+        "isSensitive": false,
+        "smmwDescription": "dogs dying",
+        "TopicCategoryId": 2,
+        "TopicCategory": {
+          "id": 2,
+          "name": "Animal"
+        }
+      },
+      "TopicCategory": {
+        "id": 2,
+        "name": "Animal"
+      },
+      "slug": "does-the-dog-die"
+    },
+    {
+      "topicItemId": 588004,
+      "yesSum": 317,
+      "noSum": 17,
+      "numComments": 4,
+      "TopicId": 229,
+      "ItemId": 15713,
+      "comment": "The dog is kicked before it is killed.",
+      "username": "JohnCena",
+      "topic": {
+        "id": 229,
+        "name": "an animal is abused",
+        "notName": "no animals are abused",
+        "survivesName": null,
+        "doesName": "Is an animal abused",
+        "description": "This trigger is for depictions of animal abuse.",
+        "isSpoiler": false,
+        "isVisible": true,
+        "isSensitive": false,
+        "smmwDescription": "animal abuse",
+        "TopicCategoryId": 2,
+        "TopicCategory": {
+          "id": 2,
+          "name": "Animal"
+        }
+      },
+      "TopicCategory": {
+        "id": 2,
+        "name": "Animal"
+      },
+      "slug": "is-an-animal-abused"
+    },
+    {
+      "topicItemId": 999999,
+      "yesSum": 5,
+      "noSum": 50,
+      "numComments": 1,
+      "TopicId": 999,
+      "ItemId": 15713,
+      "comment": "No, this does not happen.",
+      "username": "TestUser",
+      "topic": {
+        "id": 999,
+        "name": "a negative trigger",
+        "notName": "no negative triggers",
+        "survivesName": null,
+        "doesName": "Does negative trigger happen",
+        "description": "Test trigger with more no votes than yes.",
+        "isSpoiler": false,
+        "isVisible": true,
+        "isSensitive": false,
+        "smmwDescription": "negative trigger",
+        "TopicCategoryId": 3,
+        "TopicCategory": {
+          "id": 3,
+          "name": "Violence"
+        }
+      },
+      "TopicCategory": {
+        "id": 3,
+        "name": "Violence"
+      },
+      "slug": "negative-trigger"
+    }
+  ]
+}
