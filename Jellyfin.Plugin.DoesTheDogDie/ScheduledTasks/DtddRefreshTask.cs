@@ -213,11 +213,20 @@ public class DtddRefreshTask : IScheduledTask
 
     private static bool UpdateWarningTags(BaseItem item, DtddMediaDetails details, PluginConfiguration config)
     {
-        var existingTags = item.Tags.ToList();
-        var tagsChanged = false;
+        // First, remove all existing DTDD tags (those starting with our prefixes)
+        var existingTags = item.Tags
+            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
+                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        var originalTagCount = item.Tags.Length;
+        var nonDtddTagCount = existingTags.Count;
 
         // Add positive triggers (content warnings)
-        var positiveTriggers = details.GetPositiveTriggers(config.MinVotesThreshold);
+        var positiveTriggers = TriggerFilter.FilterTriggers(
+            details.GetPositiveTriggers(config.MinVotesThreshold),
+            config);
+
         foreach (var trigger in positiveTriggers)
         {
             if (trigger.Topic == null)
@@ -229,12 +238,14 @@ public class DtddRefreshTask : IScheduledTask
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);
-                tagsChanged = true;
             }
         }
 
         // Add negative triggers (safe confirmations)
-        var negativeTriggers = details.GetNegativeTriggers(config.MinVotesThreshold);
+        var negativeTriggers = TriggerFilter.FilterTriggers(
+            details.GetNegativeTriggers(config.MinVotesThreshold),
+            config);
+
         foreach (var trigger in negativeTriggers)
         {
             if (trigger.Topic == null)
@@ -246,14 +257,14 @@ public class DtddRefreshTask : IScheduledTask
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);
-                tagsChanged = true;
             }
         }
 
-        if (tagsChanged)
-        {
-            item.Tags = existingTags.ToArray();
-        }
+        // Check if tags actually changed (either count changed or we removed/added DTDD tags)
+        var tagsChanged = existingTags.Count != originalTagCount ||
+                          (originalTagCount - nonDtddTagCount) != (existingTags.Count - nonDtddTagCount);
+
+        item.Tags = existingTags.ToArray();
 
         return tagsChanged;
     }

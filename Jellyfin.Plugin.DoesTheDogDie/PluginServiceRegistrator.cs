@@ -27,6 +27,7 @@ public class PluginServiceRegistrator : IPluginServiceRegistrator
 
         serviceCollection.AddSingleton<DtddApiClient>();
         serviceCollection.AddSingleton<IPluginConfigurationAccessor, PluginConfigurationAccessor>();
+        serviceCollection.AddSingleton<TriggerCacheService>();
 
         // Background service for automatic DTDD lookup on library changes
         serviceCollection.AddHostedService<DtddLibraryScanService>();
