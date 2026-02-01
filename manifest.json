@@ -1,0 +1,11 @@
+[
+  {
+    "guid": "eb5d7894-8eef-4b36-aa6f-5d124e828ce1",
+    "name": "Does The Dog Die",
+    "description": "Integrates with DoesTheDogDie.com to display content warnings and trigger information for movies and TV shows in Jellyfin.",
+    "overview": "Display content warnings from DoesTheDogDie.com",
+    "owner": "theflanman",
+    "category": "General",
+    "versions": []
+  }
+]
