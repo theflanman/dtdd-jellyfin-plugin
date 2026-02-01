@@ -84,12 +84,14 @@ public class DtddMediaItem
     /// Gets or sets a value indicating whether the content is verified.
     /// </summary>
     [JsonPropertyName("verified")]
+    [JsonConverter(typeof(BooleanOrIntConverter))]
     public bool Verified { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the content is staff verified.
     /// </summary>
     [JsonPropertyName("staffVerified")]
+    [JsonConverter(typeof(BooleanOrIntConverter))]
     public bool StaffVerified { get; set; }
 
     /// <summary>
