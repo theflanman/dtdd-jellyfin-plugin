@@ -104,5 +104,11 @@
         <Rule Id="CA2101" Action="None" />
         <!-- disable warning CA2234: Pass System.Uri objects instead of strings -->
         <Rule Id="CA2234" Action="None" />
+        <!-- disable warning CA1002: Do not expose generic lists (needed for JSON deserialization DTOs) -->
+        <Rule Id="CA1002" Action="None" />
+        <!-- disable warning CA1819: Properties should not return arrays (needed for JSON deserialization DTOs) -->
+        <Rule Id="CA1819" Action="None" />
+        <!-- disable warning CA2227: Collection properties should be read only (needed for JSON deserialization DTOs) -->
+        <Rule Id="CA2227" Action="None" />
     </Rules>
 </RuleSet>

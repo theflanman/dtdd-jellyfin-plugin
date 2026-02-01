@@ -1,16 +1,23 @@
 ---
-name: "Template"
+name: "Does The Dog Die"
 guid: "eb5d7894-8eef-4b36-aa6f-5d124e828ce1"
 version: "1.0.0.0"
-targetAbi: "10.9.0.0"
-framework: "net8.0"
-overview: "Short description about your plugin"
+targetAbi: "10.11.0.0"
+framework: "net9.0"
+overview: "Display content warnings from DoesTheDogDie.com"
 description: >
-  This is a longer description that can span more than one
-  line and include details about your plugin.
+  Integrates with DoesTheDogDie.com to display content warnings
+  and trigger information for movies and TV shows in Jellyfin.
+  Fetches triggers (animal death, violence, jump scares, etc.)
+  and adds them as metadata tags to movies and TV shows.
 category: "General"
 owner: "jellyfin"
 artifacts:
-- "Jellyfin.Plugin.Template.dll"
-changelog: >
-  changelog
+- "Jellyfin.Plugin.DoesTheDogDie.dll"
+changelog: |
+  - Initial release with DoesTheDogDie.com integration
+  - Hierarchical trigger filtering (categories and topics)
+  - Content warning tags (CW:) and safe tags (Safe:)
+  - Background service for automatic lookups
+  - Scheduled task for periodic refresh
+  - External ID and URL providers
