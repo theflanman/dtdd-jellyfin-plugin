@@ -29,4 +29,14 @@ public static class Constants
     /// The HTTP client name for dependency injection.
     /// </summary>
     public const string HttpClientName = "DoesTheDogDie";
+
+    /// <summary>
+    /// DTDD item type ID for movies.
+    /// </summary>
+    public const int DtddItemTypeMovie = 15;
+
+    /// <summary>
+    /// DTDD item type ID for TV shows.
+    /// </summary>
+    public const int DtddItemTypeSeries = 16;
 }

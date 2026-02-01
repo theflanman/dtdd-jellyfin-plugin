@@ -56,13 +56,6 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
             return ItemUpdateType.None;
         }
 
-        var imdbId = item.GetProviderId(MetadataProvider.Imdb);
-        if (string.IsNullOrEmpty(imdbId))
-        {
-            _logger.LogDebug("No IMDB ID for series {Name}, skipping DTDD lookup", item.Name);
-            return ItemUpdateType.None;
-        }
-
         var existingDtddId = item.GetProviderId(Constants.ProviderId);
         if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
         {
@@ -70,10 +63,7 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
             return ItemUpdateType.None;
         }
 
-        _logger.LogDebug("Fetching DTDD data for series {Name} (IMDB: {ImdbId})", item.Name, imdbId);
-
-        var details = await _apiClient.GetMediaDetailsByImdbIdAsync(imdbId, cancellationToken)
-            .ConfigureAwait(false);
+        var details = await FetchDtddDetailsAsync(item, cancellationToken).ConfigureAwait(false);
 
         if (details == null)
         {
@@ -90,6 +80,35 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
 
         _logger.LogInformation("Added DTDD data for series {Name} (ID: {DtddId})", item.Name, details.Item.Id);
         return ItemUpdateType.MetadataDownload;
+    }
+
+    private async Task<DtddMediaDetails?> FetchDtddDetailsAsync(Series item, CancellationToken cancellationToken)
+    {
+        // Try IMDB lookup first (most reliable)
+        var imdbId = item.GetProviderId(MetadataProvider.Imdb);
+        if (!string.IsNullOrEmpty(imdbId))
+        {
+            _logger.LogDebug("Fetching DTDD data for series {Name} (IMDB: {ImdbId})", item.Name, imdbId);
+            var details = await _apiClient.GetMediaDetailsByImdbIdAsync(imdbId, cancellationToken).ConfigureAwait(false);
+            if (details != null)
+            {
+                return details;
+            }
+
+            _logger.LogDebug("IMDB lookup failed for series {Name}, trying title search", item.Name);
+        }
+        else
+        {
+            _logger.LogDebug("No IMDB ID for series {Name}, trying title search", item.Name);
+        }
+
+        // Fall back to title-based search
+        _logger.LogDebug("Searching DTDD by title for series {Name} ({Year})", item.Name, item.ProductionYear);
+        return await _apiClient.GetMediaDetailsByTitleAsync(
+            item.Name,
+            item.ProductionYear,
+            Constants.DtddItemTypeSeries,
+            cancellationToken).ConfigureAwait(false);
     }
 
     private static void AddWarningTags(Series item, DtddMediaDetails details, PluginConfiguration config)

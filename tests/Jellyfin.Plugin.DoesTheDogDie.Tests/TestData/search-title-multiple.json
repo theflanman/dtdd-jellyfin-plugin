@@ -1,0 +1,6 @@
+{"items":[
+  {"id":15713,"name":"John Wick","cleanName":"john wick","altName":"","genre":"action","releaseYear":"2014","tmdbId":245891,"imdbId":"tt2911666","numRatings":11399,"verified":true,"staffVerified":true,"ItemTypeId":15},
+  {"id":99999,"name":"John Wick","cleanName":"john wick","altName":"","genre":"action","releaseYear":"2014","tmdbId":null,"imdbId":null,"numRatings":50,"verified":false,"staffVerified":false,"ItemTypeId":15},
+  {"id":88888,"name":"John Wick: Chapter 2","cleanName":"john wick chapter 2","altName":"","genre":"action","releaseYear":"2017","tmdbId":324552,"imdbId":"tt4425200","numRatings":5000,"verified":true,"staffVerified":true,"ItemTypeId":15},
+  {"id":77777,"name":"John Wick","cleanName":"john wick","altName":"","genre":"drama","releaseYear":"2020","tmdbId":null,"imdbId":null,"numRatings":10,"verified":false,"staffVerified":false,"ItemTypeId":16}
+],"topics":[]}
