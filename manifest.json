@@ -6,6 +6,15 @@
     "overview": "Display content warnings from DoesTheDogDie.com",
     "owner": "theflanman",
     "category": "General",
-    "versions": []
+    "versions": [
+      {
+        "version": "0.1.0.0-rc2",
+        "changelog": "**Full Changelog**: https://github.com/theflanman/dtdd-jellyfin-plugin/commits/0.1.0.0-rc2",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/theflanman/dtdd-jellyfin-plugin/releases/download/0.1.0.0-rc2/doesthedogdie-0.1.0.0-rc2.zip",
+        "checksum": "91e812a6436ebfda80b9117c7aeddeec",
+        "timestamp": "2026-02-01T16:43:32Z"
+      }
+    ]
   }
 ]
