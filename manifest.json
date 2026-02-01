@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "0.1.0.2",
+        "changelog": "## Changes\n- Add title-based search fallback when IMDB ID is unavailable\n- Fix JSON deserialization for verified fields (API returns int instead of bool)",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/theflanman/dtdd-jellyfin-plugin/releases/download/0.1.0.2/doesthedogdie-0.1.0.2.zip",
+        "checksum": "8b310d5d40bec4b82c1a0ec255c58a61",
+        "timestamp": "2026-02-01T18:37:04Z"
+      },
+      {
         "version": "0.1.0.1",
         "changelog": "",
         "targetAbi": "10.11.0.0",
