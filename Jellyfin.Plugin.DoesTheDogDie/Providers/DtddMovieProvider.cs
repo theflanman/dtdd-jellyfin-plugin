@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
 using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Providers;
@@ -20,6 +21,7 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
 {
     private readonly DtddApiClient _apiClient;
     private readonly IPluginConfigurationAccessor _configAccessor;
+    private readonly OverviewFormatter _overviewFormatter;
     private readonly ILogger<DtddMovieProvider> _logger;
 
     /// <summary>
@@ -27,14 +29,17 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
     /// </summary>
     /// <param name="apiClient">The DTDD API client.</param>
     /// <param name="configAccessor">The configuration accessor.</param>
+    /// <param name="overviewFormatter">The overview formatter service.</param>
     /// <param name="logger">The logger.</param>
     public DtddMovieProvider(
         DtddApiClient apiClient,
         IPluginConfigurationAccessor configAccessor,
+        OverviewFormatter overviewFormatter,
         ILogger<DtddMovieProvider> logger)
     {
         _apiClient = apiClient;
         _configAccessor = configAccessor;
+        _overviewFormatter = overviewFormatter;
         _logger = logger;
     }
 
@@ -80,6 +85,11 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
         if (config.AddWarningTags)
         {
             AddWarningTags(item, details, config);
+        }
+
+        if (config.AddDescriptionWarnings)
+        {
+            AddDescriptionWarnings(item, details, config);
         }
 
         _logger.LogInformation("Added DTDD data for movie {Name} (ID: {DtddId})", item.Name, details.Item.Id);
@@ -162,5 +172,24 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
         }
 
         item.Tags = existingTags.ToArray();
+    }
+
+    private void AddDescriptionWarnings(Movie item, DtddMediaDetails details, PluginConfiguration config)
+    {
+        if (item.LockedFields.Contains(MetadataField.Overview))
+        {
+            _logger.LogDebug("Overview is locked for {Name}, skipping description injection", item.Name);
+            return;
+        }
+
+        var dtddContent = _overviewFormatter.FormatTriggerSummary(details, config);
+        if (string.IsNullOrEmpty(dtddContent))
+        {
+            _logger.LogDebug("No trigger content to add for {Name}", item.Name);
+            return;
+        }
+
+        item.Overview = _overviewFormatter.AppendToOverview(item.Overview, dtddContent);
+        _logger.LogDebug("Added description warnings for {Name}", item.Name);
     }
 }
