@@ -4,6 +4,7 @@ using Jellyfin.Plugin.DoesTheDogDie.Api;
 using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using Jellyfin.Plugin.DoesTheDogDie.Providers;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Providers;
@@ -18,6 +19,7 @@ public class DtddSeriesProviderTests
 {
     private readonly Mock<DtddApiClient> _apiClientMock;
     private readonly Mock<IPluginConfigurationAccessor> _configAccessorMock;
+    private readonly Mock<OverviewFormatter> _overviewFormatterMock;
     private readonly Mock<ILogger<DtddSeriesProvider>> _loggerMock;
     private readonly DtddSeriesProvider _provider;
     private readonly MetadataRefreshOptions _defaultOptions;
@@ -28,10 +30,12 @@ public class DtddSeriesProviderTests
             Mock.Of<System.Net.Http.IHttpClientFactory>(),
             Mock.Of<ILogger<DtddApiClient>>());
         _configAccessorMock = new Mock<IPluginConfigurationAccessor>();
+        _overviewFormatterMock = new Mock<OverviewFormatter>();
         _loggerMock = new Mock<ILogger<DtddSeriesProvider>>();
         _provider = new DtddSeriesProvider(
             _apiClientMock.Object,
             _configAccessorMock.Object,
+            _overviewFormatterMock.Object,
             _loggerMock.Object);
         _defaultOptions = new MetadataRefreshOptions(Mock.Of<IDirectoryService>());
     }
