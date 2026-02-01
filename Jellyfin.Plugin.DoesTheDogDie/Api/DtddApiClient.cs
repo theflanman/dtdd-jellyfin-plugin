@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -134,6 +135,155 @@ public class DtddApiClient
 
         var firstMatch = searchResult.Items[0];
         return await GetMediaDetailsAsync(firstMatch.Id, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Searches for media by title and returns the best matching result's details.
+    /// </summary>
+    /// <param name="title">The media title to search for.</param>
+    /// <param name="year">The release year for disambiguation (optional).</param>
+    /// <param name="itemTypeId">The DTDD item type ID to filter by (15=Movie, 16=TV Show).</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The media details if found, otherwise null.</returns>
+    public virtual async Task<DtddMediaDetails?> GetMediaDetailsByTitleAsync(
+        string title,
+        int? year,
+        int itemTypeId,
+        CancellationToken cancellationToken = default)
+    {
+        var searchResult = await SearchByTitleAsync(title, cancellationToken).ConfigureAwait(false);
+
+        if (searchResult?.Items == null || searchResult.Items.Count == 0)
+        {
+            _logger.LogDebug("No DTDD results found for title {Title}", title);
+            return null;
+        }
+
+        var bestMatch = FindBestMatch(searchResult.Items, title, year, itemTypeId);
+
+        if (bestMatch == null)
+        {
+            _logger.LogDebug("No matching DTDD result for title {Title} (year: {Year}, type: {TypeId})", title, year, itemTypeId);
+            return null;
+        }
+
+        _logger.LogDebug("Found DTDD match for title {Title}: {MatchName} ({MatchYear})", title, bestMatch.Name, bestMatch.ReleaseYear);
+        return await GetMediaDetailsAsync(bestMatch.Id, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Finds the best matching item from search results based on title, year, and type.
+    /// </summary>
+    /// <param name="items">The search result items.</param>
+    /// <param name="title">The title to match.</param>
+    /// <param name="year">The release year (optional).</param>
+    /// <param name="itemTypeId">The item type ID to filter by.</param>
+    /// <returns>The best matching item, or null if no suitable match found.</returns>
+    internal static DtddMediaItem? FindBestMatch(
+        System.Collections.Generic.List<DtddMediaItem> items,
+        string title,
+        int? year,
+        int itemTypeId)
+    {
+        // Filter by item type first
+        var typeMatches = items.Where(i => i.ItemTypeId == itemTypeId).ToList();
+
+        if (typeMatches.Count == 0)
+        {
+            return null;
+        }
+
+        // Normalize search title for comparison
+        var normalizedTitle = NormalizeTitle(title);
+
+        // Score each match
+        var scored = typeMatches.Select(item =>
+        {
+            int score = 0;
+
+            // Exact title match (case-insensitive)
+            if (string.Equals(item.Name, title, StringComparison.OrdinalIgnoreCase))
+            {
+                score += 100;
+            }
+            else if (string.Equals(NormalizeTitle(item.Name), normalizedTitle, StringComparison.OrdinalIgnoreCase))
+            {
+                score += 80;
+            }
+            else if (item.CleanName != null && string.Equals(item.CleanName, normalizedTitle, StringComparison.OrdinalIgnoreCase))
+            {
+                score += 70;
+            }
+
+            // Year match
+            if (year.HasValue && !string.IsNullOrEmpty(item.ReleaseYear))
+            {
+                if (int.TryParse(item.ReleaseYear, out int itemYear))
+                {
+                    if (itemYear == year.Value)
+                    {
+                        score += 50;
+                    }
+                    else if (Math.Abs(itemYear - year.Value) == 1)
+                    {
+                        // Allow 1 year tolerance
+                        score += 25;
+                    }
+                }
+            }
+
+            // Prefer verified content
+            if (item.StaffVerified)
+            {
+                score += 10;
+            }
+            else if (item.Verified)
+            {
+                score += 5;
+            }
+
+            // Prefer items with more ratings (more data)
+            if (item.NumRatings > 100)
+            {
+                score += 5;
+            }
+
+            return new { Item = item, Score = score };
+        })
+        .OrderByDescending(x => x.Score)
+        .ToList();
+
+        // Only return if we have a reasonable match (at least partial title match)
+        var best = scored.FirstOrDefault();
+        return best != null && best.Score >= 70 ? best.Item : null;
+    }
+
+    /// <summary>
+    /// Normalizes a title for comparison by removing articles and converting to lowercase.
+    /// </summary>
+    /// <param name="title">The title to normalize.</param>
+    /// <returns>The normalized title.</returns>
+    internal static string NormalizeTitle(string title)
+    {
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return string.Empty;
+        }
+
+        var normalized = title.Trim().ToLowerInvariant();
+
+        // Remove common articles from the beginning
+        string[] articles = { "the ", "a ", "an " };
+        foreach (var article in articles)
+        {
+            if (normalized.StartsWith(article, StringComparison.Ordinal))
+            {
+                normalized = normalized[article.Length..];
+                break;
+            }
+        }
+
+        return normalized;
     }
 
     private async Task<DtddSearchResponse?> SendSearchRequestAsync(string url, CancellationToken cancellationToken)
