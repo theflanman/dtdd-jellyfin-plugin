@@ -63,20 +63,50 @@ public class DtddMovieProviderTests
     }
 
     [Fact]
-    public async Task FetchAsync_NoImdbId_ReturnsNone()
+    public async Task FetchAsync_NoImdbId_TriesTitleSearch()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration { EnableMovies = true, AddWarningTags = false });
+        var movie = CreateMovie(null);
+        movie.Name = "John Wick";
+        movie.ProductionYear = 2014;
+
+        var details = CreateMediaDetails(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByTitleAsync("John Wick", 2014, Constants.DtddItemTypeMovie, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsByTitleAsync("John Wick", 2014, Constants.DtddItemTypeMovie, It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task FetchAsync_NoImdbId_TitleSearchFails_ReturnsNone()
     {
         // Arrange
         SetupConfiguration(new PluginConfiguration { EnableMovies = true });
         var movie = CreateMovie(null);
+        movie.Name = "Unknown Movie";
+        movie.ProductionYear = 2024;
+
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByTitleAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((DtddMediaDetails?)null);
 
         // Act
         var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
 
         // Assert
         Assert.Equal(ItemUpdateType.None, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
-            Times.Never);
     }
 
     [Fact]
@@ -125,14 +155,51 @@ public class DtddMovieProviderTests
     }
 
     [Fact]
-    public async Task FetchAsync_ApiReturnsNull_ReturnsNone()
+    public async Task FetchAsync_ImdbLookupFails_FallsBackToTitleSearch()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration { EnableMovies = true, AddWarningTags = false });
+        var movie = CreateMovie("tt9999999");
+        movie.Name = "John Wick";
+        movie.ProductionYear = 2014;
+
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt9999999", It.IsAny<CancellationToken>()))
+            .ReturnsAsync((DtddMediaDetails?)null);
+
+        var details = CreateMediaDetails(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByTitleAsync("John Wick", 2014, Constants.DtddItemTypeMovie, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsByImdbIdAsync("tt9999999", It.IsAny<CancellationToken>()),
+            Times.Once);
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsByTitleAsync("John Wick", 2014, Constants.DtddItemTypeMovie, It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task FetchAsync_BothLookupsReturnNull_ReturnsNone()
     {
         // Arrange
         SetupConfiguration(new PluginConfiguration { EnableMovies = true });
         var movie = CreateMovie("tt9999999");
+        movie.Name = "Unknown Movie";
+        movie.ProductionYear = 2024;
 
         _apiClientMock
             .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt9999999", It.IsAny<CancellationToken>()))
+            .ReturnsAsync((DtddMediaDetails?)null);
+
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByTitleAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((DtddMediaDetails?)null);
 
         // Act
@@ -140,6 +207,30 @@ public class DtddMovieProviderTests
 
         // Assert
         Assert.Equal(ItemUpdateType.None, result);
+    }
+
+    [Fact]
+    public async Task FetchAsync_ImdbLookupSucceeds_DoesNotTryTitleSearch()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration { EnableMovies = true, AddWarningTags = false });
+        var movie = CreateMovie("tt2911666");
+        movie.Name = "John Wick";
+        movie.ProductionYear = 2014;
+
+        var details = CreateMediaDetails(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsByTitleAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.Never);
     }
 
     [Fact]
