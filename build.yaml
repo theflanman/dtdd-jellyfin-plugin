@@ -11,7 +11,7 @@ description: >
   Fetches triggers (animal death, violence, jump scares, etc.)
   and adds them as metadata tags to movies and TV shows.
 category: "General"
-owner: "jellyfin"
+owner: "theflanman"
 artifacts:
 - "Jellyfin.Plugin.DoesTheDogDie.dll"
 changelog: |
