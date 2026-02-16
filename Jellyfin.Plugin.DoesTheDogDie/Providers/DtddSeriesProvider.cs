@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
@@ -57,13 +55,30 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
         }
 
         var existingDtddId = item.GetProviderId(Constants.ProviderId);
+        DtddMediaDetails? details;
+
         if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
         {
-            _logger.LogDebug("DTDD ID already exists for series {Name}", item.Name);
-            return ItemUpdateType.None;
+            // DTDD ID already exists — skip search but re-fetch details to re-evaluate tags
+            if (int.TryParse(existingDtddId, out var dtddId))
+            {
+                _logger.LogDebug("Re-fetching DTDD data for series {Name} (DTDD ID: {DtddId})", item.Name, dtddId);
+                details = await _apiClient.GetMediaDetailsAsync(dtddId, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                return ItemUpdateType.None;
+            }
         }
-
-        var details = await FetchDtddDetailsAsync(item, cancellationToken).ConfigureAwait(false);
+        else
+        {
+            details = await FetchDtddDetailsAsync(item, cancellationToken).ConfigureAwait(false);
+            if (details != null)
+            {
+                item.SetProviderId(Constants.ProviderId, details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            }
+        }
 
         if (details == null)
         {
@@ -71,14 +86,16 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
             return ItemUpdateType.None;
         }
 
-        item.SetProviderId(Constants.ProviderId, details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
-
         if (config.AddWarningTags)
         {
-            AddWarningTags(item, details, config);
+            TagHelper.UpdateWarningTags(item, details, config);
+        }
+        else
+        {
+            TagHelper.RemoveDtddTags(item, config);
         }
 
-        _logger.LogInformation("Added DTDD data for series {Name} (ID: {DtddId})", item.Name, details.Item.Id);
+        _logger.LogInformation("Updated DTDD data for series {Name} (ID: {DtddId})", item.Name, details.Item.Id);
         return ItemUpdateType.MetadataDownload;
     }
 
@@ -109,54 +126,5 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
             item.ProductionYear,
             Constants.DtddItemTypeSeries,
             cancellationToken).ConfigureAwait(false);
-    }
-
-    private static void AddWarningTags(Series item, DtddMediaDetails details, PluginConfiguration config)
-    {
-        // First, remove all existing DTDD tags (those starting with our prefixes)
-        var existingTags = item.Tags
-            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
-                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-
-        // Add positive triggers (content warnings)
-        var positiveTriggers = TriggerFilter.FilterTriggers(
-            details.GetPositiveTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in positiveTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        // Add negative triggers (safe confirmations)
-        var negativeTriggers = TriggerFilter.FilterTriggers(
-            details.GetNegativeTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in negativeTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        item.Tags = existingTags.ToArray();
     }
 }

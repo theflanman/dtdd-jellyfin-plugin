@@ -1,9 +1,7 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
@@ -128,10 +126,14 @@ public class DtddLibraryScanService : IHostedService
                 Constants.ProviderId,
                 details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
 
-            // Add warning tags if enabled
+            // Update warning tags if enabled, otherwise clean up existing DTDD tags
             if (config.AddWarningTags)
             {
-                AddWarningTags(item, details, config);
+                TagHelper.UpdateWarningTags(item, details, config);
+            }
+            else
+            {
+                TagHelper.RemoveDtddTags(item, config);
             }
 
             _logger.LogInformation(
@@ -143,54 +145,5 @@ public class DtddLibraryScanService : IHostedService
         {
             _logger.LogWarning(ex, "Failed to fetch DTDD data for {ItemName}", item.Name);
         }
-    }
-
-    private static void AddWarningTags(BaseItem item, DtddMediaDetails details, PluginConfiguration config)
-    {
-        // First, remove all existing DTDD tags (those starting with our prefixes)
-        var existingTags = item.Tags
-            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
-                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-
-        // Add positive triggers (content warnings)
-        var positiveTriggers = TriggerFilter.FilterTriggers(
-            details.GetPositiveTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in positiveTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        // Add negative triggers (safe confirmations)
-        var negativeTriggers = TriggerFilter.FilterTriggers(
-            details.GetNegativeTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in negativeTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        item.Tags = existingTags.ToArray();
     }
 }

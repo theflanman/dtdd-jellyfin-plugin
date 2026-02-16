@@ -342,7 +342,7 @@ public class DtddLibraryScanServiceTests
     }
 
     [Fact]
-    public void OnItemChanged_AddWarningTagsDisabled_DoesNotAddTags()
+    public void OnItemChanged_AddWarningTagsDisabled_RemovesExistingTags()
     {
         // Arrange
         var config = new PluginConfiguration
@@ -358,7 +358,7 @@ public class DtddLibraryScanServiceTests
             .ReturnsAsync(details);
 
         var movie = CreateMovie("tt2911666");
-        movie.Tags = Array.Empty<string>();
+        movie.Tags = new[] { "CW: a dog dies", "Custom Tag" };
         var eventArgs = new ItemChangeEventArgs { Item = movie };
 
         // Act
@@ -366,7 +366,8 @@ public class DtddLibraryScanServiceTests
 
         // Assert - wait for async processing
         Thread.Sleep(200);
-        Assert.Empty(movie.Tags);
+        Assert.DoesNotContain("CW: a dog dies", movie.Tags);
+        Assert.Contains("Custom Tag", movie.Tags);
     }
 
     [Fact]

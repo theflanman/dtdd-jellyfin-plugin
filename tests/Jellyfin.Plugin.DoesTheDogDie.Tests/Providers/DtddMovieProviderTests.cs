@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
@@ -110,9 +111,11 @@ public class DtddMovieProviderTests
     }
 
     [Fact]
-    public async Task FetchAsync_DtddIdAlreadyExists_ReturnsNone()
+    public async Task FetchAsync_DtddIdAlreadyExists_GetMediaDetailsReturnsNull_ReturnsNone()
     {
-        // Arrange
+        // Arrange: DTDD ID exists; GetMediaDetailsAsync is not set up so returns null by default.
+        // The provider calls GetMediaDetailsAsync(15713) to re-fetch, and when it returns null
+        // the result should be ItemUpdateType.None.
         SetupConfiguration(new PluginConfiguration { EnableMovies = true });
         var movie = CreateMovie("tt2911666");
         movie.SetProviderId(Constants.ProviderId, "15713");
@@ -122,6 +125,40 @@ public class DtddMovieProviderTests
 
         // Assert
         Assert.Equal(ItemUpdateType.None, result);
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsAsync(15713, It.IsAny<CancellationToken>()),
+            Times.Once);
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task FetchAsync_ExistingDtddId_StillUpdatesTags()
+    {
+        // Arrange: Movie already has DTDD ID; provider should re-fetch details and update tags
+        // without performing an IMDB or title search.
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0
+        });
+        var movie = CreateMovie("tt2911666");
+        movie.SetProviderId(Constants.ProviderId, "15713");
+
+        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(15713, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("CW: a dog dies", movie.Tags);
         _apiClientMock.Verify(
             x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
             Times.Never);
@@ -352,6 +389,223 @@ public class DtddMovieProviderTests
         Assert.Single(movie.Tags, t => t == "CW: a dog dies");
     }
 
+    [Fact]
+    public async Task FetchAsync_AdminUnticksTriggerCategory_RemovesStaleTag()
+    {
+        // Arrange: Simulate a prior refresh that added both Animal and Violence tags.
+        // Now the admin has unticked the Animal category (only Violence enabled).
+        // The provider should remove the stale "CW: a dog dies" tag.
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = false,
+            EnabledCategoryIds = new List<int> { 3 } // Only Violence enabled
+        });
+        var movie = CreateMovie("tt2911666");
+        movie.SetProviderId(Constants.ProviderId, "15713");
+        movie.Tags = new[] { "CW: a dog dies", "CW: blood/gore", "Custom Tag" };
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(15713, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.DoesNotContain("CW: a dog dies", movie.Tags);  // Animal category unticked
+        Assert.DoesNotContain("CW: a cat dies", movie.Tags);   // Animal category unticked
+        Assert.Contains("CW: blood/gore", movie.Tags);          // Violence still enabled
+        Assert.Contains("Custom Tag", movie.Tags);              // Non-DTDD tag preserved
+    }
+
+    [Fact]
+    public async Task FetchAsync_AddWarningTagsDisabled_RemovesExistingTags()
+    {
+        // Arrange: Movie has DTDD ID and existing CW tags. Admin has disabled AddWarningTags.
+        // The provider should remove all DTDD-prefixed tags but preserve non-DTDD tags.
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = false,
+            TagPrefix = "CW:"
+        });
+        var movie = CreateMovie("tt2911666");
+        movie.SetProviderId(Constants.ProviderId, "15713");
+        movie.Tags = new[] { "CW: a dog dies", "Custom Tag" };
+
+        var details = CreateMediaDetails(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(15713, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.DoesNotContain("CW: a dog dies", movie.Tags);  // DTDD tag removed
+        Assert.Contains("Custom Tag", movie.Tags);             // Non-DTDD tag preserved
+    }
+
+    [Fact]
+    public async Task FetchAsync_PreservesNonDtddTags()
+    {
+        // Arrange: Movie has non-DTDD tags. After fetching DTDD data, those tags
+        // should remain and DTDD tags should be added alongside them.
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0
+        });
+        var movie = CreateMovie("tt2911666");
+        movie.SetProviderId(Constants.ProviderId, "15713");
+        movie.Tags = new[] { "Custom Tag", "Genre: Action" };
+
+        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(15713, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("Custom Tag", movie.Tags);
+        Assert.Contains("Genre: Action", movie.Tags);
+        Assert.Contains("CW: a dog dies", movie.Tags);
+    }
+
+    [Fact]
+    public async Task FetchAsync_CategoryFilterEnabled_OnlyIncludesEnabledCategories()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = false,
+            EnabledCategoryIds = new List<int> { 2 } // Only Animal
+        });
+        var movie = CreateMovie("tt2911666");
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("CW: a dog dies", movie.Tags);
+        Assert.Contains("CW: a cat dies", movie.Tags);
+        Assert.DoesNotContain("CW: blood/gore", movie.Tags); // Violence category not enabled
+    }
+
+    [Fact]
+    public async Task FetchAsync_TopicFilterEnabled_OnlyIncludesEnabledTopics()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = false,
+            EnabledCategoryIds = new List<int> { 2 },
+            EnabledTopicIds = new List<int> { 153 } // Only dog dies
+        });
+        var movie = CreateMovie("tt2911666");
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("CW: a dog dies", movie.Tags);
+        Assert.DoesNotContain("CW: a cat dies", movie.Tags); // Topic not enabled
+        Assert.DoesNotContain("CW: blood/gore", movie.Tags); // Category not enabled
+    }
+
+    [Fact]
+    public async Task FetchAsync_ShowAllTriggers_IncludesAllTriggers()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = true,
+            EnabledCategoryIds = new List<int> { 2 } // This should be ignored
+        });
+        var movie = CreateMovie("tt2911666");
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("CW: a dog dies", movie.Tags);
+        Assert.Contains("CW: a cat dies", movie.Tags);
+        Assert.Contains("CW: blood/gore", movie.Tags); // All triggers included
+    }
+
+    [Fact]
+    public async Task FetchAsync_NoCategoriesSelected_IncludesAllTriggers()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = false,
+            EnabledCategoryIds = new List<int>() // Empty - no categories selected
+        });
+        var movie = CreateMovie("tt2911666");
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        // All triggers included (with warning in UI)
+        Assert.Contains("CW: a dog dies", movie.Tags);
+        Assert.Contains("CW: a cat dies", movie.Tags);
+        Assert.Contains("CW: blood/gore", movie.Tags);
+    }
+
     private void SetupConfiguration(PluginConfiguration config)
     {
         _configAccessorMock.Setup(x => x.GetConfiguration()).Returns(config);
@@ -484,127 +738,5 @@ public class DtddMovieProviderTests
                 }
             }
         };
-    }
-
-    [Fact]
-    public async Task FetchAsync_CategoryFilterEnabled_OnlyIncludesEnabledCategories()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0,
-            ShowAllTriggers = false,
-            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 } // Only Animal
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Contains("CW: a dog dies", movie.Tags);
-        Assert.Contains("CW: a cat dies", movie.Tags);
-        Assert.DoesNotContain("CW: blood/gore", movie.Tags); // Violence category not enabled
-    }
-
-    [Fact]
-    public async Task FetchAsync_TopicFilterEnabled_OnlyIncludesEnabledTopics()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0,
-            ShowAllTriggers = false,
-            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 },
-            EnabledTopicIds = new System.Collections.Generic.List<int> { 153 } // Only dog dies
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Contains("CW: a dog dies", movie.Tags);
-        Assert.DoesNotContain("CW: a cat dies", movie.Tags); // Topic not enabled
-        Assert.DoesNotContain("CW: blood/gore", movie.Tags); // Category not enabled
-    }
-
-    [Fact]
-    public async Task FetchAsync_ShowAllTriggers_IncludesAllTriggers()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0,
-            ShowAllTriggers = true,
-            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 } // This should be ignored
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Contains("CW: a dog dies", movie.Tags);
-        Assert.Contains("CW: a cat dies", movie.Tags);
-        Assert.Contains("CW: blood/gore", movie.Tags); // All triggers included
-    }
-
-    [Fact]
-    public async Task FetchAsync_NoCategoriesSelected_IncludesAllTriggers()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0,
-            ShowAllTriggers = false,
-            EnabledCategoryIds = new System.Collections.Generic.List<int>() // Empty - no categories selected
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        // All triggers included (with warning in UI)
-        Assert.Contains("CW: a dog dies", movie.Tags);
-        Assert.Contains("CW: a cat dies", movie.Tags);
-        Assert.Contains("CW: blood/gore", movie.Tags);
     }
 }

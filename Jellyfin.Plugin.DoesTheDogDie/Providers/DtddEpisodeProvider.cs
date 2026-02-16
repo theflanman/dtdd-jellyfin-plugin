@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
@@ -58,25 +56,65 @@ public class DtddEpisodeProvider : ICustomMetadataProvider<Episode>, IHasOrder
         }
 
         var existingDtddId = item.GetProviderId(Constants.ProviderId);
+        DtddMediaDetails? details;
+
         if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
         {
-            _logger.LogDebug("DTDD ID already exists for episode {Name}", item.Name);
+            // DTDD ID already exists — skip search but re-fetch details to re-evaluate tags
+            if (int.TryParse(existingDtddId, out var dtddId))
+            {
+                _logger.LogDebug("Re-fetching DTDD data for episode {Name} (DTDD ID: {DtddId})", item.Name, dtddId);
+                details = await _apiClient.GetMediaDetailsAsync(dtddId, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                return ItemUpdateType.None;
+            }
+        }
+        else
+        {
+            details = await FetchDtddDetailsFromSeriesAsync(item, cancellationToken).ConfigureAwait(false);
+            if (details != null)
+            {
+                item.SetProviderId(Constants.ProviderId, details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            }
+        }
+
+        if (details == null)
+        {
+            _logger.LogDebug("No DTDD data found for episode {Name}", item.Name);
             return ItemUpdateType.None;
         }
 
+        if (config.AddWarningTags)
+        {
+            TagHelper.UpdateWarningTags(item, details, config);
+        }
+        else
+        {
+            TagHelper.RemoveDtddTags(item, config);
+        }
+
+        _logger.LogInformation("Updated DTDD data for episode {Name} (ID: {DtddId})", item.Name, details.Item.Id);
+        return ItemUpdateType.MetadataDownload;
+    }
+
+    private async Task<DtddMediaDetails?> FetchDtddDetailsFromSeriesAsync(Episode item, CancellationToken cancellationToken)
+    {
         // Get the parent series to look up DTDD data
         var series = item.Series;
         if (series == null)
         {
             _logger.LogDebug("No parent series for episode {Name}, skipping DTDD lookup", item.Name);
-            return ItemUpdateType.None;
+            return null;
         }
 
         var imdbId = series.GetProviderId(MetadataProvider.Imdb);
         if (string.IsNullOrEmpty(imdbId))
         {
             _logger.LogDebug("No IMDB ID for parent series {SeriesName}, skipping DTDD lookup for episode", series.Name);
-            return ItemUpdateType.None;
+            return null;
         }
 
         _logger.LogDebug(
@@ -85,44 +123,7 @@ public class DtddEpisodeProvider : ICustomMetadataProvider<Episode>, IHasOrder
             series.Name,
             imdbId);
 
-        var details = await _apiClient.GetMediaDetailsByImdbIdAsync(imdbId, cancellationToken)
+        return await _apiClient.GetMediaDetailsByImdbIdAsync(imdbId, cancellationToken)
             .ConfigureAwait(false);
-
-        if (details == null)
-        {
-            _logger.LogDebug("No DTDD data found for episode {Name}", item.Name);
-            return ItemUpdateType.None;
-        }
-
-        // Store the series DTDD ID on the episode
-        item.SetProviderId(Constants.ProviderId, details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
-
-        if (config.AddWarningTags)
-        {
-            AddWarningTags(item, details, config);
-        }
-
-        _logger.LogInformation("Added DTDD data for episode {Name} (ID: {DtddId})", item.Name, details.Item.Id);
-        return ItemUpdateType.MetadataDownload;
-    }
-
-    private static void AddWarningTags(Episode item, DtddMediaDetails details, PluginConfiguration config)
-    {
-        var positiveTriggers = details.GetPositiveTriggers(config.MinVotesThreshold);
-
-        foreach (var trigger in positiveTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
-
-            if (!item.Tags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                item.Tags = item.Tags.Append(tagName).ToArray();
-            }
-        }
     }
 }

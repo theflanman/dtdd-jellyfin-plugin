@@ -306,18 +306,22 @@ public class DtddRefreshTaskTests
     }
 
     [Fact]
-    public async Task ExecuteAsync_AddWarningTagsDisabled_DoesNotAddTags()
+    public async Task ExecuteAsync_AddWarningTagsDisabled_RemovesExistingTags()
     {
         // Arrange
         var config = new PluginConfiguration
         {
             EnableMovies = true,
             EnableSeries = false,
-            AddWarningTags = false
+            AddWarningTags = false,
+            TagPrefix = "CW:",
+            SafeTagPrefix = "Safe:"
         };
         _configAccessorMock.Setup(x => x.GetConfiguration()).Returns(config);
 
         var movie = CreateMovie("tt2911666", "15713");
+        movie.Tags = new[] { "CW: a dog dies", "Custom Tag" };
+
         _libraryManagerMock
             .Setup(x => x.GetItemList(It.IsAny<InternalItemsQuery>()))
             .Returns(new BaseItem[] { movie });
@@ -332,8 +336,10 @@ public class DtddRefreshTaskTests
         // Act
         await _task.ExecuteAsync(progress.Object, CancellationToken.None);
 
-        // Assert - tags should not be added
-        Assert.Empty(movie.Tags);
+        // Assert - DTDD tags should be removed, custom tags preserved
+        Assert.DoesNotContain("CW: a dog dies", movie.Tags);
+        Assert.Contains("Custom Tag", movie.Tags);
+        Assert.NotEmpty(movie.Tags);
     }
 
     [Fact]
@@ -445,6 +451,48 @@ public class DtddRefreshTaskTests
         Assert.Contains("Safe: a dog dies", movie.Tags);
     }
 
+    [Fact]
+    public async Task ExecuteAsync_AdminUnticksTriggerCategory_RemovesStaleTag()
+    {
+        // Arrange - movie already has tags from both Animal and Violence categories
+        var config = new PluginConfiguration
+        {
+            EnableMovies = true,
+            EnableSeries = false,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            SafeTagPrefix = "Safe:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = false,
+            EnabledCategoryIds = new List<int> { 3 } // Only Violence enabled; Animal (2) unticked
+        };
+        _configAccessorMock.Setup(x => x.GetConfiguration()).Returns(config);
+
+        var movie = CreateMovie("tt2911666", "15713");
+        movie.Tags = new[] { "CW: a dog dies", "CW: blood/gore", "Custom Tag" };
+
+        _libraryManagerMock
+            .Setup(x => x.GetItemList(It.IsAny<InternalItemsQuery>()))
+            .Returns(new BaseItem[] { movie });
+
+        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        var progress = new Mock<IProgress<double>>();
+
+        // Act
+        await _task.ExecuteAsync(progress.Object, CancellationToken.None);
+
+        // Assert - Animal category was unticked so "a dog dies" should be removed
+        Assert.DoesNotContain("CW: a dog dies", movie.Tags);
+        // Violence category is still enabled so "blood/gore" should be preserved
+        Assert.Contains("CW: blood/gore", movie.Tags);
+        // Non-DTDD tags are always preserved
+        Assert.Contains("Custom Tag", movie.Tags);
+    }
+
     private static Movie CreateMovie(string imdbId, string dtddId)
     {
         var movie = new Movie
@@ -535,6 +583,29 @@ public class DtddRefreshTaskTests
                         TopicCategoryId = 2
                     },
                     TopicCategory = new DtddTopicCategory { Id = 2, Name = "Animal" }
+                }
+            }
+        };
+    }
+
+    private static DtddMediaDetails CreateMediaDetailsWithMultipleTriggers(int id, string name)
+    {
+        return new DtddMediaDetails
+        {
+            Item = new DtddMediaItem { Id = id, Name = name },
+            TopicItemStats = new List<DtddTopicItemStat>
+            {
+                new DtddTopicItemStat
+                {
+                    TopicItemId = 1, YesSum = 100, NoSum = 10, TopicId = 153,
+                    Topic = new DtddTopic { Id = 153, Name = "a dog dies", TopicCategoryId = 2 },
+                    TopicCategory = new DtddTopicCategory { Id = 2, Name = "Animal" }
+                },
+                new DtddTopicItemStat
+                {
+                    TopicItemId = 2, YesSum = 100, NoSum = 10, TopicId = 101,
+                    Topic = new DtddTopic { Id = 101, Name = "blood/gore", TopicCategoryId = 3 },
+                    TopicCategory = new DtddTopicCategory { Id = 3, Name = "Violence" }
                 }
             }
         };

@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Data.Enums;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using MediaBrowser.Controller.Entities;
-using MediaBrowser.Controller.Entities.Movies;
-using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Tasks;
@@ -201,71 +197,12 @@ public class DtddRefreshTask : IScheduledTask
             Constants.ProviderId,
             details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
 
-        // Update warning tags if enabled
+        // Update warning tags if enabled, otherwise clean up existing DTDD tags
         if (config.AddWarningTags)
         {
-            var tagsChanged = UpdateWarningTags(item, details, config);
-            return tagsChanged;
+            return TagHelper.UpdateWarningTags(item, details, config);
         }
 
-        return false;
-    }
-
-    private static bool UpdateWarningTags(BaseItem item, DtddMediaDetails details, PluginConfiguration config)
-    {
-        // First, remove all existing DTDD tags (those starting with our prefixes)
-        var existingTags = item.Tags
-            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
-                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-
-        var originalTagCount = item.Tags.Length;
-        var nonDtddTagCount = existingTags.Count;
-
-        // Add positive triggers (content warnings)
-        var positiveTriggers = TriggerFilter.FilterTriggers(
-            details.GetPositiveTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in positiveTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        // Add negative triggers (safe confirmations)
-        var negativeTriggers = TriggerFilter.FilterTriggers(
-            details.GetNegativeTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in negativeTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        // Check if tags actually changed (either count changed or we removed/added DTDD tags)
-        var tagsChanged = existingTags.Count != originalTagCount ||
-                          (originalTagCount - nonDtddTagCount) != (existingTags.Count - nonDtddTagCount);
-
-        item.Tags = existingTags.ToArray();
-
-        return tagsChanged;
+        return TagHelper.RemoveDtddTags(item, config);
     }
 }

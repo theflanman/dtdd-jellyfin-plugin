@@ -82,7 +82,8 @@ public class DtddSeriesProviderTests
     [Fact]
     public async Task FetchAsync_DtddIdAlreadyExists_ReturnsNone()
     {
-        // Arrange
+        // Arrange - DTDD ID exists but GetMediaDetailsAsync is not mocked so returns null,
+        // causing the provider to return None (no details to process).
         SetupConfiguration(new PluginConfiguration { EnableSeries = true });
         var series = CreateSeries("tt0944947");
         series.SetProviderId(Constants.ProviderId, "12345");
@@ -93,8 +94,138 @@ public class DtddSeriesProviderTests
         // Assert
         Assert.Equal(ItemUpdateType.None, result);
         _apiClientMock.Verify(
+            x => x.GetMediaDetailsAsync(12345, It.IsAny<CancellationToken>()),
+            Times.Once);
+        _apiClientMock.Verify(
             x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
             Times.Never);
+    }
+
+    [Fact]
+    public async Task FetchAsync_ExistingDtddId_StillUpdatesTags()
+    {
+        // Arrange - DTDD ID already exists; provider re-fetches details and updates tags
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableSeries = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0
+        });
+        var series = CreateSeries("tt0944947");
+        series.SetProviderId(Constants.ProviderId, "12345");
+
+        var details = CreateMediaDetailsWithTriggers(12345, "Game of Thrones");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(12345, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(series, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("CW: violence", series.Tags);
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsAsync(12345, It.IsAny<CancellationToken>()),
+            Times.Once);
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task FetchAsync_AdminUnticksTriggerCategory_RemovesStaleTag()
+    {
+        // Arrange - Series already has tags from previous fetch including Violence category.
+        // Admin changes config to only enable Animal category (id 2), disabling Violence (id 3).
+        // The provider should remove the stale "CW: violence" tag.
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableSeries = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowAllTriggers = false,
+            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 } // Only Animal
+        });
+        var series = CreateSeries("tt0944947");
+        series.SetProviderId(Constants.ProviderId, "12345");
+        series.Tags = new[] { "CW: violence", "CW: blood/gore", "Custom Tag" };
+
+        var details = CreateMediaDetailsWithMultipleTriggers(12345, "Game of Thrones");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(12345, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(series, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("CW: a dog dies", series.Tags);         // Animal category - enabled
+        Assert.DoesNotContain("CW: blood/gore", series.Tags);   // Violence category - not enabled, removed
+        Assert.DoesNotContain("CW: violence", series.Tags);     // Old stale tag stripped by UpdateWarningTags
+        Assert.Contains("Custom Tag", series.Tags);              // Non-DTDD tag preserved
+    }
+
+    [Fact]
+    public async Task FetchAsync_AddWarningTagsDisabled_RemovesExistingTags()
+    {
+        // Arrange - Series has existing DTDD tags, but AddWarningTags is now false.
+        // Provider should remove DTDD tags but preserve non-DTDD tags.
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableSeries = true,
+            AddWarningTags = false,
+            TagPrefix = "CW:"
+        });
+        var series = CreateSeries("tt0944947");
+        series.SetProviderId(Constants.ProviderId, "12345");
+        series.Tags = new[] { "CW: violence", "Custom Tag" };
+
+        var details = CreateMediaDetails(12345, "Game of Thrones");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(12345, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(series, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.DoesNotContain("CW: violence", series.Tags);
+        Assert.Contains("Custom Tag", series.Tags);
+    }
+
+    [Fact]
+    public async Task FetchAsync_PreservesNonDtddTags()
+    {
+        // Arrange - Series has a custom non-DTDD tag. After fetching triggers,
+        // the custom tag should be preserved alongside newly added DTDD tags.
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableSeries = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0
+        });
+        var series = CreateSeries("tt0944947");
+        series.SetProviderId(Constants.ProviderId, "12345");
+        series.Tags = new[] { "Custom Tag" };
+
+        var details = CreateMediaDetailsWithTriggers(12345, "Game of Thrones");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(12345, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(series, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Contains("Custom Tag", series.Tags);
+        Assert.Contains("CW: violence", series.Tags);
     }
 
     [Fact]
@@ -261,6 +392,29 @@ public class DtddSeriesProviderTests
                         Id = 101,
                         Name = "violence"
                     }
+                }
+            }
+        };
+    }
+
+    private static DtddMediaDetails CreateMediaDetailsWithMultipleTriggers(int id, string name)
+    {
+        return new DtddMediaDetails
+        {
+            Item = new DtddMediaItem { Id = id, Name = name },
+            TopicItemStats = new System.Collections.Generic.List<DtddTopicItemStat>
+            {
+                new DtddTopicItemStat
+                {
+                    TopicItemId = 1, YesSum = 100, NoSum = 10, TopicId = 153,
+                    Topic = new DtddTopic { Id = 153, Name = "a dog dies", TopicCategoryId = 2 },
+                    TopicCategory = new DtddTopicCategory { Id = 2, Name = "Animal" }
+                },
+                new DtddTopicItemStat
+                {
+                    TopicItemId = 2, YesSum = 100, NoSum = 10, TopicId = 101,
+                    Topic = new DtddTopic { Id = 101, Name = "blood/gore", TopicCategoryId = 3 },
+                    TopicCategory = new DtddTopicCategory { Id = 3, Name = "Violence" }
                 }
             }
         };
