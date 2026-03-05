@@ -288,3 +288,7 @@ mono_crash.*.json
 
 Claude.md
 claude.mdy
+
+# Gas Town (added by gt)
+.runtime/
+.logs/
