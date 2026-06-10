@@ -134,6 +134,11 @@ public class DtddLibraryScanService : IHostedService
                 AddWarningTags(item, details, config);
             }
 
+            // Persist the provider ID and tags back to the library database.
+            // Without this, the in-memory changes are discarded when the method returns.
+            await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None)
+                .ConfigureAwait(false);
+
             _logger.LogInformation(
                 "Added DTDD data for {ItemName} (DTDD ID: {DtddId})",
                 item.Name,
@@ -165,7 +170,7 @@ public class DtddLibraryScanService : IHostedService
                 continue;
             }
 
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);
@@ -184,7 +189,7 @@ public class DtddLibraryScanService : IHostedService
                 continue;
             }
 
-            var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);

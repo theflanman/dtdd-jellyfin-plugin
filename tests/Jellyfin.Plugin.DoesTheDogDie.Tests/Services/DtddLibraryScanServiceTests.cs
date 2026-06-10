@@ -430,6 +430,43 @@ public class DtddLibraryScanServiceTests
         Assert.Contains("CW: a dog dies", movie.Tags);
     }
 
+    [Fact]
+    public void OnItemChanged_CallsUpdateToRepositoryAsync_AfterProcessing()
+    {
+        // Arrange
+        var config = new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0
+        };
+        _configAccessorMock.Setup(x => x.GetConfiguration()).Returns(config);
+
+        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        var movieMock = new Mock<Movie> { CallBase = true };
+        movieMock.Object.Name = "Test Movie";
+        movieMock.Object.Tags = Array.Empty<string>();
+        movieMock.Object.SetProviderId(MetadataProvider.Imdb, "tt2911666");
+        movieMock.Setup(x => x.UpdateToRepositoryAsync(It.IsAny<MediaBrowser.Controller.Library.ItemUpdateType>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        var eventArgs = new ItemChangeEventArgs { Item = movieMock.Object };
+
+        // Act
+        _service.OnItemChanged(null, eventArgs);
+
+        // Assert - wait for fire-and-forget async task
+        Thread.Sleep(200);
+        movieMock.Verify(
+            x => x.UpdateToRepositoryAsync(MediaBrowser.Controller.Library.ItemUpdateType.MetadataEdit, It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
     private static Movie CreateMovie(string imdbId)
     {
         var movie = new Movie
