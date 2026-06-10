@@ -1,3 +1,5 @@
+using System;
+
 namespace Jellyfin.Plugin.DoesTheDogDie;
 
 /// <summary>
@@ -11,9 +13,9 @@ public static class Constants
     public const string ApiKey = "37410a353ce46488ec077d0c73ef1c2e";
 
     /// <summary>
-    /// The DoesTheDogDie API base URL.
+    /// The default DoesTheDogDie API base URL.
     /// </summary>
-    public const string ApiBaseUrl = "https://www.doesthedogdie.com";
+    public const string DefaultApiBaseUrl = "https://www.doesthedogdie.com";
 
     /// <summary>
     /// The provider name displayed in Jellyfin UI.
@@ -39,4 +41,11 @@ public static class Constants
     /// DTDD item type ID for TV shows.
     /// </summary>
     public const int DtddItemTypeSeries = 16;
+
+    /// <summary>
+    /// Gets the DoesTheDogDie API base URL. Honors the DTDD_API_BASE_URL environment variable
+    /// for E2E test redirection; falls back to <see cref="DefaultApiBaseUrl"/>.
+    /// </summary>
+    public static string ApiBaseUrl =>
+        Environment.GetEnvironmentVariable("DTDD_API_BASE_URL") ?? DefaultApiBaseUrl;
 }
