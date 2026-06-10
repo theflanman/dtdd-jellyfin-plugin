@@ -134,6 +134,11 @@ public class DtddLibraryScanService : IHostedService
                 AddWarningTags(item, details, config);
             }
 
+            // Persist the provider ID and tags back to the library database.
+            // Without this, the in-memory changes are discarded when the method returns.
+            await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None)
+                .ConfigureAwait(false);
+
             _logger.LogInformation(
                 "Added DTDD data for {ItemName} (DTDD ID: {DtddId})",
                 item.Name,
