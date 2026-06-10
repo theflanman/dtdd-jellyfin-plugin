@@ -64,6 +64,17 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
         var existingDtddId = item.GetProviderId(Constants.ProviderId);
         if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
         {
+            if (config.AddWarningTags && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
+            {
+                var cachedDetails = await _apiClient.GetMediaDetailsAsync(parsedDtddId, cancellationToken)
+                    .ConfigureAwait(false);
+                if (cachedDetails != null)
+                {
+                    AddWarningTags(item, cachedDetails, config);
+                    return ItemUpdateType.MetadataDownload;
+                }
+            }
+
             _logger.LogDebug("DTDD ID already exists for series {Name}", item.Name);
             return ItemUpdateType.None;
         }
@@ -141,7 +152,7 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
                 continue;
             }
 
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);
@@ -160,7 +171,7 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
                 continue;
             }
 
-            var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);

@@ -22,7 +22,10 @@ public class PluginConfiguration : BasePluginConfiguration
         TagPrefix = "CW:";
         SafeTagPrefix = "Safe:";
         RefreshIntervalHours = 24;
-        ShowAllTriggers = true;
+        UseConfidenceScoring = false;
+        MinConfidenceThreshold = 0.7;
+        ShowConfidenceInTags = false;
+        ShowAllTriggers = false;
         EnabledCategoryIds = new List<int>();
         EnabledTopicIds = new List<int>();
         AddDescriptionWarnings = false;
@@ -75,6 +78,25 @@ public class PluginConfiguration : BasePluginConfiguration
     /// Gets or sets the refresh interval in hours for the scheduled task.
     /// </summary>
     public int RefreshIntervalHours { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to filter triggers using
+    /// statistical confidence (Wilson score) instead of raw vote counts alone.
+    /// When false, only <see cref="MinVotesThreshold"/> applies.
+    /// </summary>
+    public bool UseConfidenceScoring { get; set; }
+
+    /// <summary>
+    /// Gets or sets the minimum confidence (0.0-1.0) required to include a
+    /// trigger when <see cref="UseConfidenceScoring"/> is enabled.
+    /// </summary>
+    public double MinConfidenceThreshold { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to append the confidence
+    /// percentage to tag names, e.g. "CW: a dog dies (95%)".
+    /// </summary>
+    public bool ShowConfidenceInTags { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether to include all triggers.

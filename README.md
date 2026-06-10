@@ -66,6 +66,9 @@ Copy the contents of `Jellyfin.Plugin.DoesTheDogDie/bin/Release/net9.0/publish/`
 | Tag Prefix | Customize warning tag prefix | `CW:` |
 | Safe Tag Prefix | Customize safe tag prefix | `Safe:` |
 | Min Votes Threshold | Minimum votes required to show a trigger | `3` |
+| Use Confidence Scoring | Filter triggers by Wilson score confidence instead of raw vote counts alone | `false` |
+| Min Confidence Threshold | Confidence (0.0–1.0) required to show a trigger when confidence scoring is enabled | `0.7` |
+| Show Confidence In Tags | Append confidence to tag names, e.g. `CW: a dog dies (95%)` | `false` |
 | Trigger Categories | Select which categories to track (Animal, Violence, etc.) | All |
 
 ## Requirements
