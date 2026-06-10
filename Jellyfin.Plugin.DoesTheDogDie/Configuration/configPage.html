@@ -157,6 +157,37 @@
                         </div>
                     </div>
 
+                    <!-- Description Injection Section -->
+                    <div class="dtdd-section">
+                        <div class="dtdd-section-title">Description Injection</div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="AddDescriptionWarnings" name="AddDescriptionWarnings" type="checkbox" is="emby-checkbox" />
+                                <span>Add warnings to item descriptions</span>
+                            </label>
+                            <div class="fieldDescription">Append a content-warning summary to each item's Overview. The section is delimited with hidden markers and updated in place on refresh. Items with a locked Overview are never modified.</div>
+                        </div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="IncludeTopComment" name="IncludeTopComment" type="checkbox" is="emby-checkbox" />
+                                <span>Include top comment per trigger</span>
+                            </label>
+                            <div class="fieldDescription">Show the top-voted DTDD comment under each warning line</div>
+                        </div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="HideSpoilerComments" name="HideSpoilerComments" type="checkbox" is="emby-checkbox" />
+                                <span>Hide spoiler comments</span>
+                            </label>
+                            <div class="fieldDescription">Skip comments on triggers marked as spoilers by DTDD</div>
+                        </div>
+                        <div class="inputContainer">
+                            <label class="inputLabel inputLabelUnfocused" for="MaxCommentLength">Maximum Comment Length</label>
+                            <input id="MaxCommentLength" name="MaxCommentLength" type="number" is="emby-input" min="10" max="1000" />
+                            <div class="fieldDescription">Comments longer than this are truncated (default 200)</div>
+                        </div>
+                    </div>
+
                     <!-- Trigger Filtering Section -->
                     <div class="dtdd-section">
                         <div class="dtdd-section-title">Trigger Filtering</div>
@@ -244,6 +275,12 @@
                     document.querySelector('#UseConfidenceScoring').checked = config.UseConfidenceScoring ?? config.useConfidenceScoring ?? false;
                     document.querySelector('#MinConfidenceThreshold').value = config.MinConfidenceThreshold ?? config.minConfidenceThreshold ?? 0.7;
                     document.querySelector('#ShowConfidenceInTags').checked = config.ShowConfidenceInTags ?? config.showConfidenceInTags ?? false;
+
+                    // Description injection
+                    document.querySelector('#AddDescriptionWarnings').checked = config.AddDescriptionWarnings ?? config.addDescriptionWarnings ?? false;
+                    document.querySelector('#IncludeTopComment').checked = config.IncludeTopComment ?? config.includeTopComment ?? false;
+                    document.querySelector('#HideSpoilerComments').checked = config.HideSpoilerComments ?? config.hideSpoilerComments ?? true;
+                    document.querySelector('#MaxCommentLength').value = config.MaxCommentLength ?? config.maxCommentLength ?? 200;
 
                     // Trigger filtering (check both casings)
                     document.querySelector('#ShowAllTriggers').checked = config.ShowAllTriggers ?? config.showAllTriggers ?? true;
@@ -505,6 +542,12 @@
                         config.UseConfidenceScoring = document.querySelector('#UseConfidenceScoring').checked;
                         config.MinConfidenceThreshold = parseFloat(document.querySelector('#MinConfidenceThreshold').value) || 0.7;
                         config.ShowConfidenceInTags = document.querySelector('#ShowConfidenceInTags').checked;
+
+                        // Description injection
+                        config.AddDescriptionWarnings = document.querySelector('#AddDescriptionWarnings').checked;
+                        config.IncludeTopComment = document.querySelector('#IncludeTopComment').checked;
+                        config.HideSpoilerComments = document.querySelector('#HideSpoilerComments').checked;
+                        config.MaxCommentLength = parseInt(document.querySelector('#MaxCommentLength').value) || 200;
 
                         // Trigger filtering
                         config.ShowAllTriggers = document.querySelector('#ShowAllTriggers').checked;

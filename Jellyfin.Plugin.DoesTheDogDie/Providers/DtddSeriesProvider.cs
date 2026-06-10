@@ -64,13 +64,19 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
         var existingDtddId = item.GetProviderId(Constants.ProviderId);
         if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
         {
-            if (config.AddWarningTags && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
+            if ((config.AddWarningTags || config.AddDescriptionWarnings)
+                && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
             {
                 var cachedDetails = await _apiClient.GetMediaDetailsAsync(parsedDtddId, cancellationToken)
                     .ConfigureAwait(false);
                 if (cachedDetails != null)
                 {
-                    AddWarningTags(item, cachedDetails, config);
+                    if (config.AddWarningTags)
+                    {
+                        AddWarningTags(item, cachedDetails, config);
+                    }
+
+                    UpdateDescriptionWarnings(item, cachedDetails, config);
                     return ItemUpdateType.MetadataDownload;
                 }
             }
@@ -94,10 +100,7 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
             AddWarningTags(item, details, config);
         }
 
-        if (config.AddDescriptionWarnings)
-        {
-            AddDescriptionWarnings(item, details, config);
-        }
+        UpdateDescriptionWarnings(item, details, config);
 
         _logger.LogInformation("Added DTDD data for series {Name} (ID: {DtddId})", item.Name, details.Item.Id);
         return ItemUpdateType.MetadataDownload;
@@ -181,7 +184,7 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
         item.Tags = existingTags.ToArray();
     }
 
-    private void AddDescriptionWarnings(Series item, DtddMediaDetails details, PluginConfiguration config)
+    private void UpdateDescriptionWarnings(Series item, DtddMediaDetails details, PluginConfiguration config)
     {
         if (item.LockedFields.Contains(MetadataField.Overview))
         {
@@ -189,10 +192,19 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
             return;
         }
 
-        var dtddContent = _overviewFormatter.FormatTriggerSummary(details, config);
+        var dtddContent = config.AddDescriptionWarnings
+            ? _overviewFormatter.FormatTriggerSummary(details, config)
+            : string.Empty;
+
         if (string.IsNullOrEmpty(dtddContent))
         {
-            _logger.LogDebug("No trigger content to add for {Name}", item.Name);
+            // Disabled, or nothing survived filtering: remove any stale DTDD section.
+            if (_overviewFormatter.HasDtddSection(item.Overview))
+            {
+                item.Overview = _overviewFormatter.RemoveDtddSection(item.Overview!);
+                _logger.LogDebug("Removed stale description warnings for {Name}", item.Name);
+            }
+
             return;
         }
 
