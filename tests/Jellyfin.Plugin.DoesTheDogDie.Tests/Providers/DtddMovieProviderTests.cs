@@ -280,6 +280,35 @@ public class DtddMovieProviderTests
     }
 
     [Fact]
+    public async Task FetchAsync_ShowConfidenceInTags_AppendsConfidencePercentage()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0,
+            ShowConfidenceInTags = true
+        });
+        var movie = CreateMovie("tt2911666");
+
+        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+
+        // "a dog dies" has 1336 yes / 118 no => Wilson confidence 0.904 => 90%
+        Assert.Contains("CW: a dog dies (90%)", movie.Tags);
+    }
+
+    [Fact]
     public async Task FetchAsync_MinVotesThreshold_FiltersTriggers()
     {
         // Arrange

@@ -117,7 +117,7 @@ public class DtddEpisodeProvider : ICustomMetadataProvider<Episode>, IHasOrder
                 continue;
             }
 
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
 
             if (!item.Tags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {

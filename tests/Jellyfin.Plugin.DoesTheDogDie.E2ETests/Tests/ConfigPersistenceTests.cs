@@ -148,6 +148,14 @@ public sealed class ConfigPersistenceTests
         {
             await ResetConfigAsync();
             await _fixture.Client.RefreshItemMetadataAsync(johnWick.Id, replaceAllMetadata: true);
+            await TestHelpers.WaitForAsync(
+                async () =>
+                {
+                    var refreshed = (await _fixture.Client.GetItemsAsync("Movie")).Single(m => m.Name == "John Wick");
+                    return refreshed.Tags.Contains("CW: an animal dies");
+                },
+                System.TimeSpan.FromSeconds(30),
+                failureMessage: "Cleanup: tags did not return after restoring default config");
         }
     }
 
