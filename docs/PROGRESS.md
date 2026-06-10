@@ -58,7 +58,7 @@
 - [x] Scheduled refresh task (daily at 2 AM)
 - [x] External ID display in Jellyfin UI (`IExternalId`)
 - [x] External URL links to DTDD website (`IExternalUrlProvider`)
-- [x] Real configuration page (`configPage.html`, ~500 LOC)
+- [x] Real configuration page (`configPage.html`, ~500 LOC) incl. Description Injection section (`AddDescriptionWarnings`, `IncludeTopComment`, `HideSpoilerComments`, `MaxCommentLength`)
 - [x] Automated E2E harness (Testcontainers + WireMock) — verifies real Jellyfin integration without manual setup
 
 ---
@@ -67,7 +67,6 @@
 
 - [ ] Full trigger data cache (file-based; current `TriggerCacheService` is in-memory)
 - [ ] Live (non-mocked) DTDD smoke test in CI to catch upstream schema drift
-- [ ] **Config UI for description-injection flags** — `AddDescriptionWarnings`, `IncludeTopComment`, `MaxCommentLength`, `HideSpoilerComments` exist in `PluginConfiguration` but `configPage.html` has no inputs for them. Currently only settable via REST POST to `/Plugins/{guid}/Configuration`.
 
 ---
 
@@ -85,7 +84,7 @@
 |-------|--------|------------|
 | Season/Episode parent lookup untestable in unit tests | Low unit coverage on these providers | E2E suite covers real Jellyfin parent-series inheritance |
 | Plugin.cs requires Jellyfin runtime | 0% unit coverage | Excluded from coverage; E2E exercises it via the real container |
-| `DtddMovieProvider.FetchAsync` skips when ProviderId set + `ReplaceAllMetadata=false` | Config changes don't propagate on partial refresh | E2E mutation tests use `replaceAllMetadata=true` |
+| `DtddMovieProvider.FetchAsync` short-circuits when ProviderId set + `ReplaceAllMetadata=false` and both `AddWarningTags`/`AddDescriptionWarnings` are off | DTDD ID is kept but nothing is re-applied on partial refresh | Enable either option, or refresh with `replaceAllMetadata=true` |
 | Plugin meta.json status defaults to Disabled | Won't load without explicit `"status": "Active"` | E2E fixture writes a correct meta.json automatically |
 
 ---

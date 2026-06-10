@@ -715,6 +715,80 @@ public class DtddMovieProviderTests
     }
 
     [Fact]
+    public async Task FetchAsync_CachedDtddId_AddDescriptionWarningsEnabled_UpdatesOverview()
+    {
+        // Arrange
+        var config = new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = false,
+            AddDescriptionWarnings = true,
+            MinVotesThreshold = 0
+        };
+        SetupConfiguration(config);
+        var movie = CreateMovie("tt2911666");
+        movie.SetProviderId(Constants.ProviderId, "15713");
+        movie.Overview = "Original description.";
+
+        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(15713, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        _overviewFormatterMock
+            .Setup(x => x.FormatTriggerSummary(details, config))
+            .Returns("\nTest trigger");
+        _overviewFormatterMock
+            .Setup(x => x.AppendToOverview("Original description.", It.IsAny<string>()))
+            .Returns("Original description.\n\n<!-- DTDD_START -->\nTest trigger\n<!-- DTDD_END -->");
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        _overviewFormatterMock.Verify(
+            x => x.AppendToOverview("Original description.", It.IsAny<string>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task FetchAsync_AddDescriptionWarningsDisabled_RemovesStaleSection()
+    {
+        // Arrange
+        var config = new PluginConfiguration
+        {
+            EnableMovies = true,
+            AddWarningTags = false,
+            AddDescriptionWarnings = false,
+            MinVotesThreshold = 0
+        };
+        SetupConfiguration(config);
+        var movie = CreateMovie("tt2911666");
+        var staleOverview = "Original description.\n\n<!-- DTDD_START -->\nOld trigger\n<!-- DTDD_END -->";
+        movie.Overview = staleOverview;
+
+        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        _overviewFormatterMock
+            .Setup(x => x.HasDtddSection(staleOverview))
+            .Returns(true);
+        _overviewFormatterMock
+            .Setup(x => x.RemoveDtddSection(staleOverview))
+            .Returns("Original description.");
+
+        // Act
+        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Equal("Original description.", movie.Overview);
+    }
+
+    [Fact]
     public async Task FetchAsync_AddDescriptionWarningsDisabled_DoesNotUpdateOverview()
     {
         // Arrange

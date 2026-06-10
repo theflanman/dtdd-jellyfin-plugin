@@ -132,7 +132,7 @@ Season/Episode providers get IMDB ID from parent Series via `item.Series.GetProv
 - **REST wrapper:** `JellyfinClient.cs` — wraps wizard, login, library mgmt, plugin config, refresh + poll. Retries 5xx during wizard window. Authenticates via `MediaBrowser` auth header.
 - **Stubs:** `Stubs/wiremock-mappings/*.json` — canned `DtddSearchResponse` / `DtddMediaDetails` for known IMDB IDs (`tt2911666`, `tt0903747`).
 - **Fixture media:** `Fixtures/media/{movies,tv}/` — minimal NFO-only tree (stub `.mkv` files); IMDB IDs match the WireMock stubs.
-- **Refresh gotcha:** `DtddMovieProvider` / `DtddSeriesProvider` skip work when a `Dtdd` ProviderId is already set unless the refresh sets `replaceAllMetadata=true`. Mutation tests must pass that flag to see config-driven changes.
+- **Refresh gotcha:** when a `Dtdd` ProviderId is already set and `replaceAllMetadata=false`, `DtddMovieProvider` / `DtddSeriesProvider` only re-apply tags/overview if `AddWarningTags` or `AddDescriptionWarnings` is enabled (cached-id path); otherwise they skip entirely. Mutation tests usually pass `replaceAllMetadata=true` to force a full re-fetch.
 - **meta.json:** must include `"status": "Active"` and live at `/config/data/plugins/<Name>_<Version>/`. Without `Active`, `PluginManager` treats the plugin as Disabled and silently skips loading it.
 
 ## Implementation Status
