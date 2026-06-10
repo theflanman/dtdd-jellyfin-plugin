@@ -1,0 +1,30 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/dddsearch",
+    "queryParameters": {
+      "imdb": { "equalTo": "tt2911666" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "items": [
+        {
+          "id": 1234,
+          "name": "John Wick",
+          "cleanName": "john wick",
+          "releaseYear": "2014",
+          "imdbId": "tt2911666",
+          "tmdbId": 245891,
+          "numRatings": 500,
+          "verified": 1,
+          "staffVerified": 1,
+          "ItemTypeId": 15
+        }
+      ],
+      "topics": []
+    }
+  }
+}
