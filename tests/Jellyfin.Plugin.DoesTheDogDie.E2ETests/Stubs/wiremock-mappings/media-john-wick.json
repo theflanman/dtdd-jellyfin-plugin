@@ -1,0 +1,56 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/media/1234"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "item": {
+        "id": 1234,
+        "name": "John Wick",
+        "cleanName": "john wick",
+        "releaseYear": "2014",
+        "imdbId": "tt2911666",
+        "tmdbId": 245891,
+        "numRatings": 500,
+        "verified": 1,
+        "staffVerified": 1,
+        "ItemTypeId": 15
+      },
+      "topicItemStats": [
+        {
+          "topicItemId": 1001,
+          "yesSum": 87,
+          "noSum": 4,
+          "numComments": 12,
+          "TopicId": 101,
+          "itemId": 1234,
+          "topic": {
+            "id": 101,
+            "name": "an animal dies",
+            "notName": "no animals die",
+            "isSpoiler": false,
+            "isVisible": true
+          }
+        },
+        {
+          "topicItemId": 1002,
+          "yesSum": 256,
+          "noSum": 8,
+          "numComments": 30,
+          "TopicId": 102,
+          "itemId": 1234,
+          "topic": {
+            "id": 102,
+            "name": "someone is shot",
+            "notName": "no one is shot",
+            "isSpoiler": false,
+            "isVisible": true
+          }
+        }
+      ]
+    }
+  }
+}
