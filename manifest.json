@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "0.1.1.0",
+        "changelog": "## What's New\n\n### Features\n- **Wilson score confidence scoring**: Statistical confidence filtering using the Wilson score interval lower bound (95% CI). Enable via  with a configurable  (default 0.70).\n- **Confidence percentage in tags**: Optionally append the confidence percentage (rounded to nearest 5%) to trigger tags — e.g., . Enable via .\n\n### Fixes\n- E2E test suite: Fixed async cleanup race condition in  and  that caused intermittent test failures in the full suite.\n\n## Configuration\n\nThree new settings are available in the plugin configuration page:\n\n| Setting | Default | Description |\n|---|---|---|\n|  |  | Filter triggers below a minimum statistical confidence |\n|  |  | Minimum Wilson score lower bound (0–1) |\n|  |  | Append confidence % to tag names |",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/theflanman/dtdd-jellyfin-plugin/releases/download/0.1.1.0/doesthedogdie-0.1.1.0.zip",
+        "checksum": "ff1b4328894b09cf3e5760894b3fb883",
+        "timestamp": "2026-06-10T16:30:27Z"
+      },
+      {
         "version": "0.1.0.2",
         "changelog": "## Changes\n- Add title-based search fallback when IMDB ID is unavailable\n- Fix JSON deserialization for verified fields (API returns int instead of bool)",
         "targetAbi": "10.11.0.0",
