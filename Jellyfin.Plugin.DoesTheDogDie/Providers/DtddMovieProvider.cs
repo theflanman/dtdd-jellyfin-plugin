@@ -135,7 +135,7 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
                 continue;
             }
 
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);
@@ -154,7 +154,7 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
                 continue;
             }
 
-            var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);
