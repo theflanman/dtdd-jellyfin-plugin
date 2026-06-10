@@ -178,11 +178,15 @@ public sealed class DescriptionInjectionContentTests
             async () =>
             {
                 var refreshed = (await _fixture.Client.GetItemsAsync("Movie")).Single(m => m.Name == "John Wick");
-                return refreshed.Overview is null
-                    || !refreshed.Overview.Contains(DtddStartMarker, StringComparison.Ordinal);
+
+                // Tags must be restored too: the test body may have raised MinVotesThreshold,
+                // stripping CW: tags; later tests rely on the default-config tag state.
+                return (refreshed.Overview is null
+                    || !refreshed.Overview.Contains(DtddStartMarker, StringComparison.Ordinal))
+                    && refreshed.Tags.Contains("CW: an animal dies");
             },
             TimeSpan.FromSeconds(30),
-            failureMessage: "Cleanup: DTDD markers should be removed after disabling AddDescriptionWarnings");
+            failureMessage: "Cleanup: DTDD markers should be removed and CW: tags restored after resetting config");
     }
 
     private async Task<JellyfinClient.JellyfinItemDto> WaitForInjectedAsync()
