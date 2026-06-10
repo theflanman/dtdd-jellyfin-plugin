@@ -445,6 +445,121 @@ public class DtddRefreshTaskTests
         Assert.Contains("Safe: a dog dies", movie.Tags);
     }
 
+    [Fact]
+    public async Task ExecuteAsync_WithTagsEnabled_CallsUpdateToRepositoryAsync()
+    {
+        // Arrange
+        var config = new PluginConfiguration
+        {
+            EnableMovies = true,
+            EnableSeries = false,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0
+        };
+        _configAccessorMock.Setup(x => x.GetConfiguration()).Returns(config);
+
+        var movieMock = new Mock<Movie> { CallBase = true };
+        movieMock.Object.Name = "Test Movie";
+        movieMock.Object.Tags = Array.Empty<string>();
+        movieMock.Object.SetProviderId(MetadataProvider.Imdb, "tt2911666");
+        movieMock.Object.SetProviderId(Constants.ProviderId, "15713");
+        movieMock.Setup(x => x.UpdateToRepositoryAsync(It.IsAny<MediaBrowser.Controller.Library.ItemUpdateType>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        _libraryManagerMock
+            .Setup(x => x.GetItemList(It.IsAny<InternalItemsQuery>()))
+            .Returns(new BaseItem[] { movieMock.Object });
+
+        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        await _task.ExecuteAsync(new Mock<IProgress<double>>().Object, CancellationToken.None);
+
+        // Assert
+        movieMock.Verify(
+            x => x.UpdateToRepositoryAsync(MediaBrowser.Controller.Library.ItemUpdateType.MetadataEdit, It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_WithTagsDisabled_StillCallsUpdateToRepositoryAsync()
+    {
+        // Arrange
+        var config = new PluginConfiguration
+        {
+            EnableMovies = true,
+            EnableSeries = false,
+            AddWarningTags = false
+        };
+        _configAccessorMock.Setup(x => x.GetConfiguration()).Returns(config);
+
+        var movieMock = new Mock<Movie> { CallBase = true };
+        movieMock.Object.Name = "Test Movie";
+        movieMock.Object.Tags = Array.Empty<string>();
+        movieMock.Object.SetProviderId(MetadataProvider.Imdb, "tt2911666");
+        movieMock.Object.SetProviderId(Constants.ProviderId, "15713");
+        movieMock.Setup(x => x.UpdateToRepositoryAsync(It.IsAny<MediaBrowser.Controller.Library.ItemUpdateType>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        _libraryManagerMock
+            .Setup(x => x.GetItemList(It.IsAny<InternalItemsQuery>()))
+            .Returns(new BaseItem[] { movieMock.Object });
+
+        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        await _task.ExecuteAsync(new Mock<IProgress<double>>().Object, CancellationToken.None);
+
+        // Assert - must persist even when tagging is disabled (DTDD provider ID still needs saving)
+        movieMock.Verify(
+            x => x.UpdateToRepositoryAsync(MediaBrowser.Controller.Library.ItemUpdateType.MetadataEdit, It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_ItemWithOnlyImdbId_IsProcessedOnFreshInstall()
+    {
+        // Arrange - item has IMDB ID but no DTDD ID (fresh install scenario)
+        var config = new PluginConfiguration
+        {
+            EnableMovies = true,
+            EnableSeries = false,
+            AddWarningTags = true,
+            TagPrefix = "CW:",
+            MinVotesThreshold = 0
+        };
+        _configAccessorMock.Setup(x => x.GetConfiguration()).Returns(config);
+
+        var movie = new Movie { Name = "Test Movie", Tags = Array.Empty<string>() };
+        movie.SetProviderId(MetadataProvider.Imdb, "tt2911666");
+        // No DTDD provider ID set
+
+        _libraryManagerMock
+            .Setup(x => x.GetItemList(It.IsAny<InternalItemsQuery>()))
+            .Returns(new BaseItem[] { movie });
+
+        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        await _task.ExecuteAsync(new Mock<IProgress<double>>().Object, CancellationToken.None);
+
+        // Assert - item should be fetched and tagged even without a pre-existing DTDD ID
+        _apiClientMock.Verify(
+            x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()),
+            Times.Once);
+        Assert.Contains("CW: a dog dies", movie.Tags);
+    }
+
     private static Movie CreateMovie(string imdbId, string dtddId)
     {
         var movie = new Movie

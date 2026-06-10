@@ -68,6 +68,17 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
         var existingDtddId = item.GetProviderId(Constants.ProviderId);
         if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
         {
+            if (config.AddWarningTags && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
+            {
+                var cachedDetails = await _apiClient.GetMediaDetailsAsync(parsedDtddId, cancellationToken)
+                    .ConfigureAwait(false);
+                if (cachedDetails != null)
+                {
+                    AddWarningTags(item, cachedDetails, config);
+                    return ItemUpdateType.MetadataDownload;
+                }
+            }
+
             _logger.LogDebug("DTDD ID already exists for movie {Name}", item.Name);
             return ItemUpdateType.None;
         }
@@ -145,7 +156,7 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
                 continue;
             }
 
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);
@@ -164,7 +175,7 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
                 continue;
             }
 
-            var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);
