@@ -144,6 +144,9 @@ public class DtddRefreshTask : IScheduledTask
     {
         var items = new List<BaseItem>();
 
+        // Select all movies/series that have an IMDB ID. This lets the task do the
+        // initial population on existing libraries (which have no DTDD ID yet) as well
+        // as refresh items already tagged. Items without an IMDB ID are skipped later.
         if (config.EnableMovies)
         {
             var movies = _libraryManager.GetItemList(new InternalItemsQuery
@@ -152,7 +155,7 @@ public class DtddRefreshTask : IScheduledTask
                 IncludeItemTypes = new[] { BaseItemKind.Movie },
                 HasAnyProviderId = new Dictionary<string, string>
                 {
-                    { Constants.ProviderId, string.Empty }
+                    { MetadataProvider.Imdb.ToString(), string.Empty }
                 }
             });
             items.AddRange(movies);
@@ -166,7 +169,7 @@ public class DtddRefreshTask : IScheduledTask
                 IncludeItemTypes = new[] { BaseItemKind.Series },
                 HasAnyProviderId = new Dictionary<string, string>
                 {
-                    { Constants.ProviderId, string.Empty }
+                    { MetadataProvider.Imdb.ToString(), string.Empty }
                 }
             });
             items.AddRange(series);
@@ -205,9 +208,14 @@ public class DtddRefreshTask : IScheduledTask
         if (config.AddWarningTags)
         {
             var tagsChanged = UpdateWarningTags(item, details, config);
+            await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, cancellationToken)
+                .ConfigureAwait(false);
             return tagsChanged;
         }
 
+        // Even if tags are disabled, persist the (possibly updated) DTDD provider ID.
+        await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, cancellationToken)
+            .ConfigureAwait(false);
         return false;
     }
 
@@ -234,7 +242,7 @@ public class DtddRefreshTask : IScheduledTask
                 continue;
             }
 
-            var tagName = $"{config.TagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);
@@ -253,7 +261,7 @@ public class DtddRefreshTask : IScheduledTask
                 continue;
             }
 
-            var tagName = $"{config.SafeTagPrefix} {trigger.Topic.Name}";
+            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
             if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
                 existingTags.Add(tagName);

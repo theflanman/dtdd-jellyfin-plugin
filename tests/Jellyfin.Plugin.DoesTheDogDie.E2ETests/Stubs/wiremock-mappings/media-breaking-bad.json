@@ -1,0 +1,41 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/media/5678"
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "item": {
+        "id": 5678,
+        "name": "Breaking Bad",
+        "cleanName": "breaking bad",
+        "releaseYear": "2008",
+        "imdbId": "tt0903747",
+        "tmdbId": 1396,
+        "numRatings": 1200,
+        "verified": 1,
+        "staffVerified": 1,
+        "ItemTypeId": 16
+      },
+      "topicItemStats": [
+        {
+          "topicItemId": 2001,
+          "yesSum": 412,
+          "noSum": 6,
+          "numComments": 88,
+          "TopicId": 201,
+          "itemId": 5678,
+          "topic": {
+            "id": 201,
+            "name": "someone dies",
+            "notName": "no one dies",
+            "isSpoiler": false,
+            "isVisible": true
+          }
+        }
+      ]
+    }
+  }
+}

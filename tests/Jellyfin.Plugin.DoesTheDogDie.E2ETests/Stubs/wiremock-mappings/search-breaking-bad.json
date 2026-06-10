@@ -1,0 +1,30 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/dddsearch",
+    "queryParameters": {
+      "imdb": { "equalTo": "tt0903747" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "items": [
+        {
+          "id": 5678,
+          "name": "Breaking Bad",
+          "cleanName": "breaking bad",
+          "releaseYear": "2008",
+          "imdbId": "tt0903747",
+          "tmdbId": 1396,
+          "numRatings": 1200,
+          "verified": 1,
+          "staffVerified": 1,
+          "ItemTypeId": 16
+        }
+      ],
+      "topics": []
+    }
+  }
+}
