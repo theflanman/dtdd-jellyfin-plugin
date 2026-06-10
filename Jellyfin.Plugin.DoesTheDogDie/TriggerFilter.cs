@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
+using Jellyfin.Plugin.DoesTheDogDie.Scoring;
 
 namespace Jellyfin.Plugin.DoesTheDogDie;
 
@@ -17,6 +19,12 @@ public static class TriggerFilter
     /// <returns>True if the trigger should be included, false otherwise.</returns>
     public static bool ShouldIncludeTrigger(DtddTopicItemStat trigger, PluginConfiguration config)
     {
+        // Statistical confidence filter applies regardless of category selection
+        if (config.UseConfidenceScoring && GetConfidence(trigger) < config.MinConfidenceThreshold)
+        {
+            return false;
+        }
+
         // Master switch - include everything
         if (config.ShowAllTriggers)
         {
@@ -56,6 +64,18 @@ public static class TriggerFilter
 
         // Otherwise, topic must be explicitly enabled
         return config.EnabledTopicIds.Contains(topic.Id);
+    }
+
+    /// <summary>
+    /// Calculates the statistical confidence that a trigger's majority vote
+    /// direction is correct, using the Wilson score interval lower bound.
+    /// </summary>
+    /// <param name="trigger">The trigger to evaluate.</param>
+    /// <returns>Confidence score between 0.0 and 1.0.</returns>
+    public static double GetConfidence(DtddTopicItemStat trigger)
+    {
+        var majorityVotes = Math.Max(trigger.YesSum, trigger.NoSum);
+        return BetaConfidenceCalculator.CalculateConfidence(majorityVotes, trigger.TotalVotes);
     }
 
     /// <summary>

@@ -136,6 +136,25 @@
                             <input id="MinVotesThreshold" name="MinVotesThreshold" type="number" is="emby-input" min="1" max="100" />
                             <div class="fieldDescription">Minimum votes required before showing a tag</div>
                         </div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="UseConfidenceScoring" name="UseConfidenceScoring" type="checkbox" is="emby-checkbox" />
+                                <span>Use statistical confidence scoring</span>
+                            </label>
+                            <div class="fieldDescription">Filter triggers using a Wilson score confidence interval instead of raw vote counts alone. Triggers with few or conflicting votes are excluded.</div>
+                        </div>
+                        <div class="inputContainer">
+                            <label class="inputLabel inputLabelUnfocused" for="MinConfidenceThreshold">Minimum Confidence</label>
+                            <input id="MinConfidenceThreshold" name="MinConfidenceThreshold" type="number" is="emby-input" min="0" max="1" step="0.05" />
+                            <div class="fieldDescription">Confidence (0.0&ndash;1.0) required to show a trigger when confidence scoring is enabled (default 0.7)</div>
+                        </div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input id="ShowConfidenceInTags" name="ShowConfidenceInTags" type="checkbox" is="emby-checkbox" />
+                                <span>Show confidence percentage in tags</span>
+                            </label>
+                            <div class="fieldDescription">Append confidence to tag names, e.g. "CW: a dog dies (95%)"</div>
+                        </div>
                     </div>
 
                     <!-- Trigger Filtering Section -->
@@ -222,6 +241,9 @@
                     document.querySelector('#TagPrefix').value = config.TagPrefix ?? config.tagPrefix ?? 'CW:';
                     document.querySelector('#SafeTagPrefix').value = config.SafeTagPrefix ?? config.safeTagPrefix ?? 'Safe:';
                     document.querySelector('#MinVotesThreshold').value = config.MinVotesThreshold ?? config.minVotesThreshold ?? 3;
+                    document.querySelector('#UseConfidenceScoring').checked = config.UseConfidenceScoring ?? config.useConfidenceScoring ?? false;
+                    document.querySelector('#MinConfidenceThreshold').value = config.MinConfidenceThreshold ?? config.minConfidenceThreshold ?? 0.7;
+                    document.querySelector('#ShowConfidenceInTags').checked = config.ShowConfidenceInTags ?? config.showConfidenceInTags ?? false;
 
                     // Trigger filtering (check both casings)
                     document.querySelector('#ShowAllTriggers').checked = config.ShowAllTriggers ?? config.showAllTriggers ?? true;
@@ -480,6 +502,9 @@
                         config.TagPrefix = document.querySelector('#TagPrefix').value;
                         config.SafeTagPrefix = document.querySelector('#SafeTagPrefix').value;
                         config.MinVotesThreshold = parseInt(document.querySelector('#MinVotesThreshold').value) || 3;
+                        config.UseConfidenceScoring = document.querySelector('#UseConfidenceScoring').checked;
+                        config.MinConfidenceThreshold = parseFloat(document.querySelector('#MinConfidenceThreshold').value) || 0.7;
+                        config.ShowConfidenceInTags = document.querySelector('#ShowConfidenceInTags').checked;
 
                         // Trigger filtering
                         config.ShowAllTriggers = document.querySelector('#ShowAllTriggers').checked;

@@ -1,7 +1,7 @@
 ---
 name: "Does The Dog Die"
 guid: "eb5d7894-8eef-4b36-aa6f-5d124e828ce1"
-version: "0.1.0.0"
+version: "0.1.1.0"
 targetAbi: "10.11.0.0"
 framework: "net9.0"
 overview: "Display content warnings from DoesTheDogDie.com"
@@ -15,9 +15,8 @@ owner: "theflanman"
 artifacts:
 - "Jellyfin.Plugin.DoesTheDogDie.dll"
 changelog: |
-  - Initial release with DoesTheDogDie.com integration
-  - Hierarchical trigger filtering (categories and topics)
-  - Content warning tags (CW:) and safe tags (Safe:)
-  - Background service for automatic lookups
-  - Scheduled task for periodic refresh
-  - External ID and URL providers
+  - Statistical confidence scoring (Wilson score interval) for trigger filtering
+  - Optional confidence percentage in tag names, e.g. "CW: a dog dies (95%)"
+  - New settings: UseConfidenceScoring, MinConfidenceThreshold, ShowConfidenceInTags
+  - Fix: tags now persist to the library from scan service and refresh task
+  - Fix: refresh task seeds items without a DTDD id on fresh installs
