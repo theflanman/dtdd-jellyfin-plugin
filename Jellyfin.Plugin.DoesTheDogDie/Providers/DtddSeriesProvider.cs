@@ -59,6 +59,17 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
         var existingDtddId = item.GetProviderId(Constants.ProviderId);
         if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
         {
+            if (config.AddWarningTags && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
+            {
+                var cachedDetails = await _apiClient.GetMediaDetailsAsync(parsedDtddId, cancellationToken)
+                    .ConfigureAwait(false);
+                if (cachedDetails != null)
+                {
+                    AddWarningTags(item, cachedDetails, config);
+                    return ItemUpdateType.MetadataDownload;
+                }
+            }
+
             _logger.LogDebug("DTDD ID already exists for series {Name}", item.Name);
             return ItemUpdateType.None;
         }

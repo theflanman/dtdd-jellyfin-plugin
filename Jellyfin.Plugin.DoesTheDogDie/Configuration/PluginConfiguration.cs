@@ -25,7 +25,7 @@ public class PluginConfiguration : BasePluginConfiguration
         UseConfidenceScoring = false;
         MinConfidenceThreshold = 0.7;
         ShowConfidenceInTags = false;
-        ShowAllTriggers = true;
+        ShowAllTriggers = false;
         EnabledCategoryIds = new List<int>();
         EnabledTopicIds = new List<int>();
     }

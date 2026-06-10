@@ -60,6 +60,17 @@ public class DtddSeasonProvider : ICustomMetadataProvider<Season>, IHasOrder
         var existingDtddId = item.GetProviderId(Constants.ProviderId);
         if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
         {
+            if (config.AddWarningTags && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
+            {
+                var cachedDetails = await _apiClient.GetMediaDetailsAsync(parsedDtddId, cancellationToken)
+                    .ConfigureAwait(false);
+                if (cachedDetails != null)
+                {
+                    AddWarningTags(item, cachedDetails, config);
+                    return ItemUpdateType.MetadataDownload;
+                }
+            }
+
             _logger.LogDebug("DTDD ID already exists for season {Name}", item.Name);
             return ItemUpdateType.None;
         }
@@ -108,7 +119,14 @@ public class DtddSeasonProvider : ICustomMetadataProvider<Season>, IHasOrder
 
     private static void AddWarningTags(Season item, DtddMediaDetails details, PluginConfiguration config)
     {
-        var positiveTriggers = details.GetPositiveTriggers(config.MinVotesThreshold);
+        var existingTags = item.Tags
+            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
+                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        var positiveTriggers = TriggerFilter.FilterTriggers(
+            details.GetPositiveTriggers(config.MinVotesThreshold),
+            config);
 
         foreach (var trigger in positiveTriggers)
         {
@@ -118,11 +136,30 @@ public class DtddSeasonProvider : ICustomMetadataProvider<Season>, IHasOrder
             }
 
             var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
-
-            if (!item.Tags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
+            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
             {
-                item.Tags = item.Tags.Append(tagName).ToArray();
+                existingTags.Add(tagName);
             }
         }
+
+        var negativeTriggers = TriggerFilter.FilterTriggers(
+            details.GetNegativeTriggers(config.MinVotesThreshold),
+            config);
+
+        foreach (var trigger in negativeTriggers)
+        {
+            if (trigger.Topic == null)
+            {
+                continue;
+            }
+
+            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
+            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
+            {
+                existingTags.Add(tagName);
+            }
+        }
+
+        item.Tags = existingTags.ToArray();
     }
 }
