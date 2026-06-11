@@ -50,6 +50,7 @@ public class OverviewFormatter
 
         sb.AppendLine();
         sb.AppendLine("**Content Warnings** (via DoesTheDogDie)");
+        sb.AppendLine();
 
         // Add positive triggers (warnings)
         foreach (var trigger in positiveTriggers)
@@ -76,6 +77,8 @@ public class OverviewFormatter
                     sb.AppendLine(comment);
                 }
             }
+
+            sb.AppendLine();
         }
 
         // Add negative triggers (safe confirmations)
@@ -93,6 +96,7 @@ public class OverviewFormatter
                 trigger.YesSum,
                 trigger.NoSum);
             sb.AppendLine(line);
+            sb.AppendLine();
         }
 
         return sb.ToString().TrimEnd();
