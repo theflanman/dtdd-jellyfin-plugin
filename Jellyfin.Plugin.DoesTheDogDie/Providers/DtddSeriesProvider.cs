@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
 using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Providers;
@@ -20,6 +21,7 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
 {
     private readonly DtddApiClient _apiClient;
     private readonly IPluginConfigurationAccessor _configAccessor;
+    private readonly OverviewFormatter _overviewFormatter;
     private readonly ILogger<DtddSeriesProvider> _logger;
 
     /// <summary>
@@ -27,14 +29,17 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
     /// </summary>
     /// <param name="apiClient">The DTDD API client.</param>
     /// <param name="configAccessor">The configuration accessor.</param>
+    /// <param name="overviewFormatter">The overview formatter service.</param>
     /// <param name="logger">The logger.</param>
     public DtddSeriesProvider(
         DtddApiClient apiClient,
         IPluginConfigurationAccessor configAccessor,
+        OverviewFormatter overviewFormatter,
         ILogger<DtddSeriesProvider> logger)
     {
         _apiClient = apiClient;
         _configAccessor = configAccessor;
+        _overviewFormatter = overviewFormatter;
         _logger = logger;
     }
 
@@ -59,13 +64,19 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
         var existingDtddId = item.GetProviderId(Constants.ProviderId);
         if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
         {
-            if (config.AddWarningTags && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
+            if ((config.AddWarningTags || config.AddDescriptionWarnings)
+                && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
             {
                 var cachedDetails = await _apiClient.GetMediaDetailsAsync(parsedDtddId, cancellationToken)
                     .ConfigureAwait(false);
                 if (cachedDetails != null)
                 {
-                    AddWarningTags(item, cachedDetails, config);
+                    if (config.AddWarningTags)
+                    {
+                        AddWarningTags(item, cachedDetails, config);
+                    }
+
+                    UpdateDescriptionWarnings(item, cachedDetails, config);
                     return ItemUpdateType.MetadataDownload;
                 }
             }
@@ -88,6 +99,8 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
         {
             AddWarningTags(item, details, config);
         }
+
+        UpdateDescriptionWarnings(item, details, config);
 
         _logger.LogInformation("Added DTDD data for series {Name} (ID: {DtddId})", item.Name, details.Item.Id);
         return ItemUpdateType.MetadataDownload;
@@ -169,5 +182,33 @@ public class DtddSeriesProvider : ICustomMetadataProvider<Series>, IHasOrder
         }
 
         item.Tags = existingTags.ToArray();
+    }
+
+    private void UpdateDescriptionWarnings(Series item, DtddMediaDetails details, PluginConfiguration config)
+    {
+        if (item.LockedFields.Contains(MetadataField.Overview))
+        {
+            _logger.LogDebug("Overview is locked for {Name}, skipping description injection", item.Name);
+            return;
+        }
+
+        var dtddContent = config.AddDescriptionWarnings
+            ? _overviewFormatter.FormatTriggerSummary(details, config)
+            : string.Empty;
+
+        if (string.IsNullOrEmpty(dtddContent))
+        {
+            // Disabled, or nothing survived filtering: remove any stale DTDD section.
+            if (_overviewFormatter.HasDtddSection(item.Overview))
+            {
+                item.Overview = _overviewFormatter.RemoveDtddSection(item.Overview!);
+                _logger.LogDebug("Removed stale description warnings for {Name}", item.Name);
+            }
+
+            return;
+        }
+
+        item.Overview = _overviewFormatter.AppendToOverview(item.Overview, dtddContent);
+        _logger.LogDebug("Added description warnings for {Name}", item.Name);
     }
 }

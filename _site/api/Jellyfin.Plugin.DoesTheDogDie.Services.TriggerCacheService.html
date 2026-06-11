@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class TriggerCacheService </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class TriggerCacheService ">
+    
+    <meta name="description" content="Service for managing the trigger category/topic cache.">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService">
+
+
+
+  <h1 id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService" class="text-break">Class TriggerCacheService</h1>
+  <div class="markdown level0 summary"><p>Service for managing the trigger category/topic cache.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">TriggerCacheService</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Jellyfin.html">Jellyfin</a>.<a class="xref" href="Jellyfin.Plugin.html">Plugin</a>.<a class="xref" href="Jellyfin.Plugin.DoesTheDogDie.html">DoesTheDogDie</a>.<a class="xref" href="Jellyfin.Plugin.DoesTheDogDie.Services.html">Services</a></h6>
+  <h6><strong>Assembly</strong>: Jellyfin.Plugin.DoesTheDogDie.dll</h6>
+  <h5 id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class TriggerCacheService</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/new/feature/docfx-setup/apiSpec/new?filename=Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService__ctor_Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_Microsoft_Extensions_Logging_ILogger_Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService__.md&amp;value=---%0Auid%3A%20Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.%23ctor(Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient%2CMicrosoft.Extensions.Logging.ILogger%7BJellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs/#L53">View Source</a>
+  </span>
+  <a id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService__ctor_" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.#ctor*"></a>
+  <h4 id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService__ctor_Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_Microsoft_Extensions_Logging_ILogger_Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService__" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.#ctor(Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService})">TriggerCacheService(DtddApiClient, ILogger&lt;TriggerCacheService&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html">TriggerCacheService</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TriggerCacheService(DtddApiClient apiClient, ILogger&lt;TriggerCacheService&gt; logger)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html">DtddApiClient</a></td>
+        <td><span class="parametername">apiClient</span></td>
+        <td><p>The DTDD API client.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1">ILogger</a>&lt;<a class="xref" href="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html">TriggerCacheService</a>&gt;</td>
+        <td><span class="parametername">logger</span></td>
+        <td><p>The logger.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/new/feature/docfx-setup/apiSpec/new?filename=Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_GetOrRefreshCacheAsync_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync(System.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs/#L72">View Source</a>
+  </span>
+  <a id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_GetOrRefreshCacheAsync_" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync*"></a>
+  <h4 id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_GetOrRefreshCacheAsync_System_Boolean_System_Threading_CancellationToken_" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync(System.Boolean,System.Threading.CancellationToken)">GetOrRefreshCacheAsync(bool, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Gets the cached triggers, optionally refreshing if the cache is empty or stale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;TriggerCache&gt; GetOrRefreshCacheAsync(bool forceRefresh = false, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><span class="parametername">forceRefresh</span></td>
+        <td><p>Force a refresh even if cache exists.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>The cancellation token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.html">TriggerCache</a>&gt;</td>
+        <td><p>The trigger cache.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/new/feature/docfx-setup/apiSpec/new?filename=Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_LoadCache.md&amp;value=---%0Auid%3A%20Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs/#L153">View Source</a>
+  </span>
+  <a id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_LoadCache_" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache*"></a>
+  <h4 id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_LoadCache" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache">LoadCache()</h4>
+  <div class="markdown level1 summary"><p>Loads the trigger cache from disk.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TriggerCache? LoadCache()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.html">TriggerCache</a></td>
+        <td><p>The cached triggers, or null if not found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/new/feature/docfx-setup/apiSpec/new?filename=Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_RefreshCacheAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs/#L91">View Source</a>
+  </span>
+  <a id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_RefreshCacheAsync_" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync*"></a>
+  <h4 id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_RefreshCacheAsync_System_Threading_CancellationToken_" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync(System.Threading.CancellationToken)">RefreshCacheAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Refreshes the trigger cache by fetching data from multiple seed titles.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;TriggerCache&gt; RefreshCacheAsync(CancellationToken cancellationToken = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>The cancellation token.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.html">TriggerCache</a>&gt;</td>
+        <td><p>The refreshed trigger cache.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/new/feature/docfx-setup/apiSpec/new?filename=Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_SaveCache_Jellyfin_Plugin_DoesTheDogDie_Configuration_TriggerCache_.md&amp;value=---%0Auid%3A%20Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache(Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs/#L176">View Source</a>
+  </span>
+  <a id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_SaveCache_" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache*"></a>
+  <h4 id="Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_SaveCache_Jellyfin_Plugin_DoesTheDogDie_Configuration_TriggerCache_" data-uid="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache(Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache)">SaveCache(TriggerCache)</h4>
+  <div class="markdown level1 summary"><p>Saves the trigger cache to disk.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SaveCache(TriggerCache cache)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.html">TriggerCache</a></td>
+        <td><span class="parametername">cache</span></td>
+        <td><p>The cache to save.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/new/feature/docfx-setup/apiSpec/new?filename=Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService.md&amp;value=---%0Auid%3A%20Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

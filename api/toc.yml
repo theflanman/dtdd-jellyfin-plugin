@@ -1,0 +1,131 @@
+### YamlMime:TableOfContent
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie
+  name: Jellyfin.Plugin.DoesTheDogDie
+  type: Namespace
+  items:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Constants
+    name: Constants
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Plugin
+    name: Plugin
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator
+    name: PluginServiceRegistrator
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.TriggerFilter
+    name: TriggerFilter
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter
+    name: TriggerTagFormatter
+    type: Class
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api
+  name: Jellyfin.Plugin.DoesTheDogDie.Api
+  type: Namespace
+  items:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+    name: DtddApiClient
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController
+    name: DtddPluginController
+    type: Class
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  name: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  type: Namespace
+  items:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter
+    name: BooleanOrIntConverter
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType
+    name: DtddItemType
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails
+    name: DtddMediaDetails
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+    name: DtddMediaItem
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse
+    name: DtddSearchResponse
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic
+    name: DtddTopic
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory
+    name: DtddTopicCategory
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat
+    name: DtddTopicItemStat
+    type: Class
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  type: Namespace
+  items:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+    name: CachedCategory
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic
+    name: CachedTopic
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+    name: IPluginConfigurationAccessor
+    type: Interface
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+    name: PluginConfiguration
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+    name: PluginConfigurationAccessor
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+    name: TriggerCache
+    type: Class
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers
+  name: Jellyfin.Plugin.DoesTheDogDie.Providers
+  type: Namespace
+  items:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider
+    name: DtddEpisodeProvider
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider
+    name: DtddExternalUrlProvider
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId
+    name: DtddMovieExternalId
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider
+    name: DtddMovieProvider
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider
+    name: DtddSeasonProvider
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+    name: DtddSeriesExternalId
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider
+    name: DtddSeriesProvider
+    type: Class
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  name: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  type: Namespace
+  items:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+    name: DtddRefreshTask
+    type: Class
+- uid: Jellyfin.Plugin.DoesTheDogDie.Scoring
+  name: Jellyfin.Plugin.DoesTheDogDie.Scoring
+  type: Namespace
+  items:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator
+    name: BetaConfidenceCalculator
+    type: Class
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services
+  name: Jellyfin.Plugin.DoesTheDogDie.Services
+  type: Namespace
+  items:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+    name: DtddLibraryScanService
+    type: Class
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+    name: TriggerCacheService
+    type: Class
+memberLayout: SamePage

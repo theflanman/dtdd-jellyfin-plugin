@@ -4,6 +4,7 @@ using Jellyfin.Plugin.DoesTheDogDie.Api;
 using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using Jellyfin.Plugin.DoesTheDogDie.Providers;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Providers;
@@ -18,6 +19,7 @@ public class DtddSeriesProviderTests
 {
     private readonly Mock<DtddApiClient> _apiClientMock;
     private readonly Mock<IPluginConfigurationAccessor> _configAccessorMock;
+    private readonly Mock<OverviewFormatter> _overviewFormatterMock;
     private readonly Mock<ILogger<DtddSeriesProvider>> _loggerMock;
     private readonly DtddSeriesProvider _provider;
     private readonly MetadataRefreshOptions _defaultOptions;
@@ -28,10 +30,12 @@ public class DtddSeriesProviderTests
             Mock.Of<System.Net.Http.IHttpClientFactory>(),
             Mock.Of<ILogger<DtddApiClient>>());
         _configAccessorMock = new Mock<IPluginConfigurationAccessor>();
+        _overviewFormatterMock = new Mock<OverviewFormatter>();
         _loggerMock = new Mock<ILogger<DtddSeriesProvider>>();
         _provider = new DtddSeriesProvider(
             _apiClientMock.Object,
             _configAccessorMock.Object,
+            _overviewFormatterMock.Object,
             _loggerMock.Object);
         _defaultOptions = new MetadataRefreshOptions(Mock.Of<IDirectoryService>());
     }
@@ -202,6 +206,183 @@ public class DtddSeriesProviderTests
         Assert.Equal(ItemUpdateType.None, result);
         _apiClientMock.Verify(
             x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task FetchAsync_AddDescriptionWarningsEnabled_UpdatesOverview()
+    {
+        // Arrange
+        var config = new PluginConfiguration
+        {
+            EnableSeries = true,
+            AddWarningTags = false,
+            AddDescriptionWarnings = true,
+            MinVotesThreshold = 0
+        };
+        SetupConfiguration(config);
+        var series = CreateSeries("tt0944947");
+        series.Overview = "Original description.";
+
+        var details = CreateMediaDetailsWithTriggers(12345, "Game of Thrones");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt0944947", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        _overviewFormatterMock
+            .Setup(x => x.FormatTriggerSummary(details, config))
+            .Returns("\n**Content Warnings** (via DoesTheDogDie)\nTest trigger");
+
+        _overviewFormatterMock
+            .Setup(x => x.AppendToOverview("Original description.", It.IsAny<string>()))
+            .Returns("Original description.\n\n<!-- DTDD_START -->\nTest trigger\n<!-- DTDD_END -->");
+
+        // Act
+        var result = await _provider.FetchAsync(series, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        _overviewFormatterMock.Verify(
+            x => x.FormatTriggerSummary(details, config),
+            Times.Once);
+        _overviewFormatterMock.Verify(
+            x => x.AppendToOverview("Original description.", It.IsAny<string>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task FetchAsync_OverviewLocked_SkipsDescriptionInjection()
+    {
+        // Arrange
+        var config = new PluginConfiguration
+        {
+            EnableSeries = true,
+            AddWarningTags = false,
+            AddDescriptionWarnings = true,
+            MinVotesThreshold = 0
+        };
+        SetupConfiguration(config);
+        var series = CreateSeries("tt0944947");
+        series.Overview = "Original description.";
+        series.LockedFields = new[] { MetadataField.Overview };
+
+        var details = CreateMediaDetailsWithTriggers(12345, "Game of Thrones");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt0944947", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(series, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Equal("Original description.", series.Overview);
+        _overviewFormatterMock.Verify(
+            x => x.FormatTriggerSummary(It.IsAny<DtddMediaDetails>(), It.IsAny<PluginConfiguration>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task FetchAsync_CachedDtddId_AddDescriptionWarningsEnabled_UpdatesOverview()
+    {
+        // Arrange
+        var config = new PluginConfiguration
+        {
+            EnableSeries = true,
+            AddWarningTags = false,
+            AddDescriptionWarnings = true,
+            MinVotesThreshold = 0
+        };
+        SetupConfiguration(config);
+        var series = CreateSeries("tt0944947");
+        series.SetProviderId(Constants.ProviderId, "12345");
+        series.Overview = "Original description.";
+
+        var details = CreateMediaDetailsWithTriggers(12345, "Game of Thrones");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsAsync(12345, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        _overviewFormatterMock
+            .Setup(x => x.FormatTriggerSummary(details, config))
+            .Returns("\nTest trigger");
+        _overviewFormatterMock
+            .Setup(x => x.AppendToOverview("Original description.", It.IsAny<string>()))
+            .Returns("Original description.\n\n<!-- DTDD_START -->\nTest trigger\n<!-- DTDD_END -->");
+
+        // Act
+        var result = await _provider.FetchAsync(series, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        _overviewFormatterMock.Verify(
+            x => x.AppendToOverview("Original description.", It.IsAny<string>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task FetchAsync_AddDescriptionWarningsDisabled_RemovesStaleSection()
+    {
+        // Arrange
+        var config = new PluginConfiguration
+        {
+            EnableSeries = true,
+            AddWarningTags = false,
+            AddDescriptionWarnings = false,
+            MinVotesThreshold = 0
+        };
+        SetupConfiguration(config);
+        var series = CreateSeries("tt0944947");
+        var staleOverview = "Original description.\n\n<!-- DTDD_START -->\nOld trigger\n<!-- DTDD_END -->";
+        series.Overview = staleOverview;
+
+        var details = CreateMediaDetailsWithTriggers(12345, "Game of Thrones");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt0944947", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        _overviewFormatterMock
+            .Setup(x => x.HasDtddSection(staleOverview))
+            .Returns(true);
+        _overviewFormatterMock
+            .Setup(x => x.RemoveDtddSection(staleOverview))
+            .Returns("Original description.");
+
+        // Act
+        var result = await _provider.FetchAsync(series, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Equal("Original description.", series.Overview);
+    }
+
+    [Fact]
+    public async Task FetchAsync_AddDescriptionWarningsDisabled_DoesNotUpdateOverview()
+    {
+        // Arrange
+        SetupConfiguration(new PluginConfiguration
+        {
+            EnableSeries = true,
+            AddWarningTags = false,
+            AddDescriptionWarnings = false,
+            MinVotesThreshold = 0
+        });
+        var series = CreateSeries("tt0944947");
+        series.Overview = "Original description.";
+
+        var details = CreateMediaDetailsWithTriggers(12345, "Game of Thrones");
+        _apiClientMock
+            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt0944947", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(details);
+
+        // Act
+        var result = await _provider.FetchAsync(series, _defaultOptions, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(ItemUpdateType.MetadataDownload, result);
+        Assert.Equal("Original description.", series.Overview);
+        _overviewFormatterMock.Verify(
+            x => x.FormatTriggerSummary(It.IsAny<DtddMediaDetails>(), It.IsAny<PluginConfiguration>()),
             Times.Never);
     }
 

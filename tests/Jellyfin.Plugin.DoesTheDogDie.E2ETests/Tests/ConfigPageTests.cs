@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Jellyfin.Plugin.DoesTheDogDie.E2ETests.Fixtures;
@@ -52,5 +53,29 @@ public sealed class ConfigPageTests
         html.Should().Contain("<title>Does The Dog Die</title>");
         html.Should().Contain("ApiClient.getPluginConfiguration", "save/load JS must hit the plugin configuration endpoint via the Jellyfin web ApiClient");
         html.Should().Contain("ApiClient.updatePluginConfiguration");
+    }
+
+    [Fact]
+    public async Task TopicsEndpoint_ReturnsPopulatedCategories()
+    {
+        using var http = new System.Net.Http.HttpClient { BaseAddress = _fixture.JellyfinBaseAddress };
+        http.DefaultRequestHeaders.Add("X-Emby-Token", _fixture.Client.AccessToken);
+
+        using var resp = await http.GetAsync("/Plugins/DoesTheDogDie/Topics");
+        resp.StatusCode.Should().Be(HttpStatusCode.OK, "Topics endpoint must be accessible and return trigger categories");
+        resp.Content.Headers.ContentType?.MediaType.Should().Be("application/json");
+
+        var json = await resp.Content.ReadAsStringAsync();
+        using var doc = JsonDocument.Parse(json);
+        var categories = doc.RootElement.GetProperty("categories");
+        categories.GetArrayLength().Should().BeGreaterThan(0, "Topics endpoint must return populated categories for the config page to display triggers");
+
+        // Verify structure: each category should have id, name, and topics array
+        foreach (var category in categories.EnumerateArray())
+        {
+            category.GetProperty("id").GetInt32().Should().BeGreaterThan(0);
+            category.GetProperty("name").GetString().Should().NotBeNullOrEmpty();
+            category.GetProperty("topics").ValueKind.Should().Be(JsonValueKind.Array);
+        }
     }
 }

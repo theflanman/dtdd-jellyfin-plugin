@@ -1,0 +1,401 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+  id: PluginConfigurationAccessor
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.GetConfiguration
+  langs:
+  - csharp
+  - vb
+  name: PluginConfigurationAccessor
+  nameWithType: PluginConfigurationAccessor
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/IPluginConfigurationAccessor.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: PluginConfigurationAccessor
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/IPluginConfigurationAccessor.cs
+    startLine: 20
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Default implementation that reads from Plugin.Instance.
+  example: []
+  syntax:
+    content: >-
+      [ExcludeFromCodeCoverage]
+
+      public class PluginConfigurationAccessor : IPluginConfigurationAccessor
+    content.vb: >-
+      <ExcludeFromCodeCoverage>
+
+      Public Class PluginConfigurationAccessor Implements IPluginConfigurationAccessor
+  inheritance:
+  - System.Object
+  implements:
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute
+    ctor: System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute.#ctor
+    arguments: []
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.GetConfiguration
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.GetConfiguration
+  id: GetConfiguration
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+  langs:
+  - csharp
+  - vb
+  name: GetConfiguration()
+  nameWithType: PluginConfigurationAccessor.GetConfiguration()
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.GetConfiguration()
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/IPluginConfigurationAccessor.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: GetConfiguration
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/IPluginConfigurationAccessor.cs
+    startLine: 24
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets the current plugin configuration.
+  example: []
+  syntax:
+    content: public PluginConfiguration? GetConfiguration()
+    return:
+      type: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+      description: The plugin configuration, or null if the plugin is not loaded.
+    content.vb: Public Function GetConfiguration() As PluginConfiguration
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.GetConfiguration*
+  implements:
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.html
+  name: IPluginConfigurationAccessor
+  nameWithType: IPluginConfigurationAccessor
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.GetConfiguration*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.GetConfiguration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfigurationAccessor_GetConfiguration
+  name: GetConfiguration
+  nameWithType: PluginConfigurationAccessor.GetConfiguration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.GetConfiguration
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_IPluginConfigurationAccessor_GetConfiguration
+  name: GetConfiguration()
+  nameWithType: IPluginConfigurationAccessor.GetConfiguration()
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration()
+  spec.csharp:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+    name: GetConfiguration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_IPluginConfigurationAccessor_GetConfiguration
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+    name: GetConfiguration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_IPluginConfigurationAccessor_GetConfiguration
+  - name: (
+  - name: )
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  name: PluginConfiguration
+  nameWithType: PluginConfiguration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration

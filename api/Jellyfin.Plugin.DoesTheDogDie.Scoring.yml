@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Scoring
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Scoring
+  id: Jellyfin.Plugin.DoesTheDogDie.Scoring
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator
+  langs:
+  - csharp
+  - vb
+  name: Jellyfin.Plugin.DoesTheDogDie.Scoring
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Scoring
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Scoring
+  type: Namespace
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator
+  href: Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator.html
+  name: BetaConfidenceCalculator
+  nameWithType: BetaConfidenceCalculator
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator

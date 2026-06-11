@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>DoesTheDogDie API Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="DoesTheDogDie API Documentation ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="doesthedogdie-api-documentation">DoesTheDogDie API Documentation</h1>
+
+<p>Reverse-engineered API documentation for DoesTheDogDie.com integration.</p>
+<p><strong>Last Updated:</strong> 2026-01-30
+<strong>API Version:</strong> Unofficial (reverse-engineered)</p>
+<hr>
+<h2 id="authentication">Authentication</h2>
+<h3 id="headers-required">Headers Required</h3>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Value</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Accept</code></td>
+<td><code>application/json</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>X-API-KEY</code></td>
+<td>Your API key</td>
+<td>Recommended</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> Testing revealed the API may return results even without a valid API key. However, using a valid key is recommended for reliability and to respect rate limits.</p>
+<p><strong>Obtaining an API Key:</strong></p>
+<ul>
+<li>Create account at doesthedogdie.com</li>
+<li>Navigate to profile page</li>
+<li>API key is displayed there</li>
+</ul>
+<hr>
+<h2 id="endpoints">Endpoints</h2>
+<h3 id="1-search-media">1. Search Media</h3>
+<p><strong>URL:</strong> <code>GET https://www.doesthedogdie.com/dddsearch</code></p>
+<h4 id="query-parameters">Query Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>q</code></td>
+<td>string</td>
+<td>Search query (URL encoded)</td>
+</tr>
+<tr>
+<td><code>imdb</code></td>
+<td>string</td>
+<td>IMDB ID (e.g., <code>tt2911666</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> Use <code>q</code> OR <code>imdb</code>, not both.</p>
+<h4 id="example-requests">Example Requests</h4>
+<pre><code class="lang-bash"># Search by title
+curl -H &quot;Accept: application/json&quot; -H &quot;X-API-KEY: YOUR_KEY&quot; \
+  &quot;https://www.doesthedogdie.com/dddsearch?q=John+Wick&quot;
+
+# Search by IMDB ID
+curl -H &quot;Accept: application/json&quot; -H &quot;X-API-KEY: YOUR_KEY&quot; \
+  &quot;https://www.doesthedogdie.com/dddsearch?imdb=tt2911666&quot;
+</code></pre>
+<h4 id="response-schema">Response Schema</h4>
+<pre><code class="lang-json">{
+  &quot;items&quot;: [
+    {
+      &quot;id&quot;: 15713,
+      &quot;name&quot;: &quot;John Wick&quot;,
+      &quot;cleanName&quot;: &quot;john wick&quot;,
+      &quot;altName&quot;: &quot;&quot;,
+      &quot;genre&quot;: &quot;action&quot;,
+      &quot;releaseYear&quot;: &quot;2014&quot;,
+      &quot;tmdbId&quot;: 245891,
+      &quot;imdbId&quot;: &quot;tt2911666&quot;,
+      &quot;posterImage&quot;: &quot;wXqWR7dHncNRbxoEGybEy7QTe9h.jpg&quot;,
+      &quot;backgroundImage&quot;: &quot;ff2ti5DkA9UYLzyqhQfI2kZqEuh.jpg&quot;,
+      &quot;overview&quot;: &quot;Ex-hitman John Wick comes out of retirement...&quot;,
+      &quot;numRatings&quot;: 11399,
+      &quot;verified&quot;: true,
+      &quot;staffVerified&quot;: true,
+      &quot;ItemTypeId&quot;: 15,
+      &quot;itemType&quot;: {
+        &quot;id&quot;: 15,
+        &quot;name&quot;: &quot;Movie&quot;,
+        &quot;index1&quot;: null,
+        &quot;index2&quot;: null
+      },
+      &quot;createdAt&quot;: &quot;2018-08-02T01:33:07.000Z&quot;,
+      &quot;updatedAt&quot;: &quot;2026-01-27T12:05:21.000Z&quot;
+    }
+  ],
+  &quot;topics&quot;: []
+}
+</code></pre>
+<h4 id="response-fields">Response Fields</h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>number</td>
+<td>DTDD internal ID (use for <code>/media/{id}</code>)</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>Display title</td>
+</tr>
+<tr>
+<td><code>cleanName</code></td>
+<td>string</td>
+<td>Normalized title (lowercase, no articles)</td>
+</tr>
+<tr>
+<td><code>releaseYear</code></td>
+<td>string</td>
+<td>Year of release</td>
+</tr>
+<tr>
+<td><code>genre</code></td>
+<td>string</td>
+<td>Primary genre</td>
+</tr>
+<tr>
+<td><code>tmdbId</code></td>
+<td>number</td>
+<td>TMDB ID (nullable)</td>
+</tr>
+<tr>
+<td><code>imdbId</code></td>
+<td>string</td>
+<td>IMDB ID (nullable)</td>
+</tr>
+<tr>
+<td><code>posterImage</code></td>
+<td>string</td>
+<td>TMDB poster path (prepend TMDB base URL)</td>
+</tr>
+<tr>
+<td><code>backgroundImage</code></td>
+<td>string</td>
+<td>TMDB backdrop path</td>
+</tr>
+<tr>
+<td><code>overview</code></td>
+<td>string</td>
+<td>Synopsis</td>
+</tr>
+<tr>
+<td><code>numRatings</code></td>
+<td>number</td>
+<td>Total trigger votes</td>
+</tr>
+<tr>
+<td><code>verified</code></td>
+<td>boolean</td>
+<td>Content verified</td>
+</tr>
+<tr>
+<td><code>staffVerified</code></td>
+<td>boolean</td>
+<td>Staff verified</td>
+</tr>
+<tr>
+<td><code>ItemTypeId</code></td>
+<td>number</td>
+<td>Media type ID</td>
+</tr>
+<tr>
+<td><code>itemType</code></td>
+<td>object</td>
+<td>Media type details</td>
+</tr>
+</tbody>
+</table>
+<h4 id="item-type-ids">Item Type IDs</h4>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14</td>
+<td>Book</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Movie</td>
+</tr>
+<tr>
+<td>16</td>
+<td>TV Show</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Video Game</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Short Story</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Blog</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Magazine</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Podcast</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Comic Book</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Anime</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Manga</td>
+</tr>
+<tr>
+<td>26</td>
+<td>YouTube</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Stage Play</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Broadway Musical</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="2-get-media-details">2. Get Media Details</h3>
+<p><strong>URL:</strong> <code>GET https://www.doesthedogdie.com/media/{id}</code></p>
+<h4 id="path-parameters">Path Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>number</td>
+<td>DTDD media ID from search results</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-request">Example Request</h4>
+<pre><code class="lang-bash">curl -H &quot;Accept: application/json&quot; -H &quot;X-API-KEY: YOUR_KEY&quot; \
+  &quot;https://www.doesthedogdie.com/media/15713&quot;
+</code></pre>
+<h4 id="response-schema-1">Response Schema</h4>
+<pre><code class="lang-json">{
+  &quot;item&quot;: {
+    &quot;id&quot;: 15713,
+    &quot;name&quot;: &quot;John Wick&quot;,
+    &quot;imdbId&quot;: &quot;tt2911666&quot;,
+    &quot;tmdbId&quot;: 245891,
+    &quot;itemType&quot;: {
+      &quot;id&quot;: 15,
+      &quot;name&quot;: &quot;Movie&quot;
+    }
+    // ... same fields as search result
+  },
+  &quot;topicItemStats&quot;: [
+    {
+      &quot;topicItemId&quot;: 504377,
+      &quot;yesSum&quot;: 1336,
+      &quot;noSum&quot;: 118,
+      &quot;numComments&quot;: 59,
+      &quot;TopicId&quot;: 153,
+      &quot;ItemId&quot;: 15713,
+      &quot;comment&quot;: &quot;Yes, and it's terrible, BUT John Wick spends the rest of the movie deliberately, gloriously, and violently avenging the dog...&quot;,
+      &quot;username&quot;: &quot;egreen&quot;,
+      &quot;comments&quot;: [
+        {
+          &quot;id&quot;: 785021,
+          &quot;voteSum&quot;: 304,
+          &quot;comment&quot;: &quot;Yes, and it's terrible...&quot;,
+          &quot;index1&quot;: -1,
+          &quot;index2&quot;: -1,
+          &quot;User&quot;: {
+            &quot;id&quot;: 31856,
+            &quot;displayName&quot;: &quot;egreen&quot;
+          }
+        }
+      ],
+      &quot;topic&quot;: {
+        &quot;id&quot;: 153,
+        &quot;name&quot;: &quot;a dog dies&quot;,
+        &quot;notName&quot;: &quot;no dogs die&quot;,
+        &quot;survivesName&quot;: &quot;the dog survives&quot;,
+        &quot;doesName&quot;: &quot;Does the dog die&quot;,
+        &quot;description&quot;: &quot;This trigger is for people who are upset by the death of a canine companion...&quot;,
+        &quot;isSpoiler&quot;: false,
+        &quot;isSensitive&quot;: false,
+        &quot;isVisible&quot;: true,
+        &quot;smmwDescription&quot;: &quot;dogs dying&quot;,
+        &quot;TopicCategoryId&quot;: 2,
+        &quot;TopicCategory&quot;: {
+          &quot;id&quot;: 2,
+          &quot;name&quot;: &quot;Animal&quot;
+        }
+      },
+      &quot;TopicCategory&quot;: {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Animal&quot;
+      },
+      &quot;slug&quot;: &quot;does-the-dog-die&quot;
+    }
+  ]
+}
+</code></pre>
+<h4 id="topicitemstats-fields">TopicItemStats Fields</h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>topicItemId</code></td>
+<td>number</td>
+<td>Unique ID for this topic-item pair</td>
+</tr>
+<tr>
+<td><code>yesSum</code></td>
+<td>number</td>
+<td>&quot;Yes&quot; votes for this trigger</td>
+</tr>
+<tr>
+<td><code>noSum</code></td>
+<td>number</td>
+<td>&quot;No&quot; votes for this trigger</td>
+</tr>
+<tr>
+<td><code>numComments</code></td>
+<td>number</td>
+<td>Number of user comments</td>
+</tr>
+<tr>
+<td><code>TopicId</code></td>
+<td>number</td>
+<td>Topic/trigger ID</td>
+</tr>
+<tr>
+<td><code>ItemId</code></td>
+<td>number</td>
+<td>Media item ID</td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td>string</td>
+<td>Top-voted comment</td>
+</tr>
+<tr>
+<td><code>username</code></td>
+<td>string</td>
+<td>Comment author</td>
+</tr>
+<tr>
+<td><code>comments</code></td>
+<td>array</td>
+<td>Array of comment objects</td>
+</tr>
+<tr>
+<td><code>topic</code></td>
+<td>object</td>
+<td>Full topic details</td>
+</tr>
+<tr>
+<td><code>TopicCategory</code></td>
+<td>object</td>
+<td>Category of the topic</td>
+</tr>
+<tr>
+<td><code>slug</code></td>
+<td>string</td>
+<td>URL-friendly topic name</td>
+</tr>
+</tbody>
+</table>
+<h4 id="topic-fields">Topic Fields</h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>number</td>
+<td>Topic ID</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>Trigger name (e.g., &quot;a dog dies&quot;)</td>
+</tr>
+<tr>
+<td><code>notName</code></td>
+<td>string</td>
+<td>Negative form (e.g., &quot;no dogs die&quot;)</td>
+</tr>
+<tr>
+<td><code>survivesName</code></td>
+<td>string</td>
+<td>Survival form (e.g., &quot;the dog survives&quot;)</td>
+</tr>
+<tr>
+<td><code>doesName</code></td>
+<td>string</td>
+<td>Question form (e.g., &quot;Does the dog die&quot;)</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string</td>
+<td>Detailed description</td>
+</tr>
+<tr>
+<td><code>isSpoiler</code></td>
+<td>boolean</td>
+<td>Contains spoilers</td>
+</tr>
+<tr>
+<td><code>isSensitive</code></td>
+<td>boolean</td>
+<td>Sensitive content</td>
+</tr>
+<tr>
+<td><code>isVisible</code></td>
+<td>boolean</td>
+<td>Publicly visible</td>
+</tr>
+<tr>
+<td><code>smmwDescription</code></td>
+<td>string</td>
+<td>Short description</td>
+</tr>
+<tr>
+<td><code>TopicCategoryId</code></td>
+<td>number</td>
+<td>Category ID</td>
+</tr>
+<tr>
+<td><code>TopicCategory</code></td>
+<td>object</td>
+<td>Category details</td>
+</tr>
+</tbody>
+</table>
+<h4 id="topic-categories">Topic Categories</h4>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>Animal</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Violence</td>
+</tr>
+<tr>
+<td>(varies)</td>
+<td>Mental Health, Sexual, Phobias, etc.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="invalid-imdb-id">Invalid IMDB ID</h3>
+<p><strong>Response:</strong> HTTP 200 with empty results</p>
+<pre><code class="lang-json">{
+  &quot;items&quot;: [],
+  &quot;topics&quot;: []
+}
+</code></pre>
+<h3 id="invalid-media-id">Invalid Media ID</h3>
+<p><strong>Response:</strong> HTTP 404 with HTML error page (not JSON!)</p>
+<p><strong>Handling:</strong> Check Content-Type header or try parsing JSON; if it fails, treat as not found.</p>
+<h3 id="authentication-errors">Authentication Errors</h3>
+<p>Testing revealed the API may not strictly enforce API keys. However, implement proper error handling:</p>
+<table>
+<thead>
+<tr>
+<th>HTTP Code</th>
+<th>Meaning</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Success</td>
+<td>Process response</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>Check API key</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not found</td>
+<td>Item doesn't exist</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Rate limited</td>
+<td>Back off and retry</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server error</td>
+<td>Retry with backoff</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="rate-limits">Rate Limits</h2>
+<p><strong>Status:</strong> No official documentation found.</p>
+<p><strong>Recommendations:</strong></p>
+<ul>
+<li>Implement caching (1-7 days for trigger data)</li>
+<li>Rate limit requests to 1/second</li>
+<li>Use exponential backoff on errors</li>
+<li>Batch requests where possible</li>
+</ul>
+<hr>
+<h2 id="image-urls">Image URLs</h2>
+<p>Poster and background images are TMDB paths. Construct full URLs:</p>
+<pre><code>https://image.tmdb.org/t/p/w500/{posterImage}
+https://image.tmdb.org/t/p/original/{backgroundImage}
+</code></pre>
+<hr>
+<h2 id="interpreting-trigger-results">Interpreting Trigger Results</h2>
+<pre><code class="lang-csharp">// Determine if trigger applies
+if (topicItemStat.YesSum &gt; topicItemStat.NoSum)
+{
+    // Trigger applies (e.g., &quot;a dog dies&quot; = YES)
+    confidence = (double)topicItemStat.YesSum / (topicItemStat.YesSum + topicItemStat.NoSum);
+}
+else if (topicItemStat.NoSum &gt; topicItemStat.YesSum)
+{
+    // Trigger does NOT apply (e.g., &quot;no dogs die&quot;)
+    confidence = (double)topicItemStat.NoSum / (topicItemStat.YesSum + topicItemStat.NoSum);
+}
+else
+{
+    // Inconclusive (equal votes)
+}
+</code></pre>
+<hr>
+<h2 id="c-model-classes">C# Model Classes</h2>
+<pre><code class="lang-csharp">public class DtddSearchResponse
+{
+    public List&lt;DtddMediaItem&gt; Items { get; set; } = new();
+    public List&lt;DtddTopic&gt; Topics { get; set; } = new();
+}
+
+public class DtddMediaItem
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string? CleanName { get; set; }
+    public string? Genre { get; set; }
+    public string? ReleaseYear { get; set; }
+    public int? TmdbId { get; set; }
+    public string? ImdbId { get; set; }
+    public string? PosterImage { get; set; }
+    public string? BackgroundImage { get; set; }
+    public string? Overview { get; set; }
+    public int NumRatings { get; set; }
+    public bool Verified { get; set; }
+    public bool StaffVerified { get; set; }
+    public int ItemTypeId { get; set; }
+    public DtddItemType? ItemType { get; set; }
+}
+
+public class DtddItemType
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+}
+
+public class DtddMediaDetails
+{
+    public DtddMediaItem Item { get; set; } = new();
+    public List&lt;DtddTopicItemStat&gt; TopicItemStats { get; set; } = new();
+}
+
+public class DtddTopicItemStat
+{
+    public int TopicItemId { get; set; }
+    public int YesSum { get; set; }
+    public int NoSum { get; set; }
+    public int NumComments { get; set; }
+    public int TopicId { get; set; }
+    public int ItemId { get; set; }
+    public string? Comment { get; set; }
+    public string? Username { get; set; }
+    public DtddTopic? Topic { get; set; }
+    public DtddTopicCategory? TopicCategory { get; set; }
+    public string? Slug { get; set; }
+}
+
+public class DtddTopic
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string? NotName { get; set; }
+    public string? SurvivesName { get; set; }
+    public string? DoesName { get; set; }
+    public string? Description { get; set; }
+    public bool IsSpoiler { get; set; }
+    public bool IsSensitive { get; set; }
+    public bool IsVisible { get; set; }
+    public string? SmmwDescription { get; set; }
+    public int? TopicCategoryId { get; set; }
+    public DtddTopicCategory? TopicCategory { get; set; }
+}
+
+public class DtddTopicCategory
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+}
+</code></pre>
+<hr>
+<h2 id="test-data">Test Data</h2>
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th>IMDB ID</th>
+<th>DTDD ID</th>
+<th>Notable Triggers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>John Wick</td>
+<td>tt2911666</td>
+<td>15713</td>
+<td>Dog death, violence, animal abuse</td>
+</tr>
+<tr>
+<td>Marley &amp; Me</td>
+<td>tt0822832</td>
+<td>?</td>
+<td>Dog death</td>
+</tr>
+<tr>
+<td>Game of Thrones</td>
+<td>tt0944947</td>
+<td>?</td>
+<td>Violence, nudity, animal death</td>
+</tr>
+<tr>
+<td>A Quiet Place</td>
+<td>tt6644200</td>
+<td>?</td>
+<td>Jump scares, child peril</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="references">References</h2>
+<ul>
+<li>Official (limited): <a href="https://www.doesthedogdie.com/api">https://www.doesthedogdie.com/api</a></li>
+<li>TypeScript wrapper: <a href="https://github.com/jayshoo/doesthedogdie-api">https://github.com/jayshoo/doesthedogdie-api</a></li>
+</ul>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/docs/API_DOCUMENTATION.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
