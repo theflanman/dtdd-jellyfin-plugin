@@ -111,7 +111,7 @@ public class TriggerCacheService
                     continue;
                 }
 
-                ExtractCategoriesAndTopics(details.TopicItemStats, allCategories);
+                ExtractCategoriesAndTopics(details.TopicItemStats, allCategories, _logger);
 
                 // Small delay to avoid hammering the API
                 await Task.Delay(200, cancellationToken).ConfigureAwait(false);
@@ -189,8 +189,15 @@ public class TriggerCacheService
 
     internal static void ExtractCategoriesAndTopics(
         List<DtddTopicItemStat> topicItemStats,
-        Dictionary<int, CachedCategory> categories)
+        Dictionary<int, CachedCategory> categories,
+        ILogger<TriggerCacheService>? logger = null)
     {
+        const int DefaultCategoryId = -1;
+        const string DefaultCategoryName = "Other";
+
+        int statsWithCategory = 0;
+        int statsWithoutCategory = 0;
+
         foreach (var stat in topicItemStats)
         {
             var topic = stat.Topic;
@@ -199,12 +206,27 @@ public class TriggerCacheService
                 continue;
             }
 
-            var categoryId = topic.TopicCategoryId ?? stat.TopicCategory?.Id ?? 0;
-            var categoryName = topic.TopicCategory?.Name ?? stat.TopicCategory?.Name ?? "Other";
-
-            if (categoryId == 0)
+            // Debug: log the actual structure from real API on first item
+            if (stat == topicItemStats.FirstOrDefault())
             {
-                continue;
+                logger?.LogInformation(
+                    "DEBUG: First TopicItemStat structure - Topic.TopicCategoryId={TopicCategoryId}, Topic.TopicCategory.Name={TopicCategoryName}, Stat.TopicCategory.Name={StatCategoryName}",
+                    topic.TopicCategoryId,
+                    topic.TopicCategory?.Name ?? "null",
+                    stat.TopicCategory?.Name ?? "null");
+            }
+
+            // Try to get category from topic or stat; use default if missing
+            var categoryId = topic.TopicCategoryId ?? stat.TopicCategory?.Id ?? DefaultCategoryId;
+            var categoryName = topic.TopicCategory?.Name ?? stat.TopicCategory?.Name ?? DefaultCategoryName;
+
+            if (categoryId != DefaultCategoryId)
+            {
+                statsWithCategory++;
+            }
+            else
+            {
+                statsWithoutCategory++;
             }
 
             if (!categories.TryGetValue(categoryId, out var category))
@@ -228,6 +250,14 @@ public class TriggerCacheService
                     DoesName = topic.DoesName
                 });
             }
+        }
+
+        if (statsWithoutCategory > 0)
+        {
+            logger?.LogInformation(
+                "DEBUG: Topic category distribution - {WithCategory} with explicit category, {WithoutCategory} using default 'Other'",
+                statsWithCategory,
+                statsWithoutCategory);
         }
     }
 }
