@@ -1,0 +1,1148 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  id: PluginConfiguration
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.#ctor
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.AddWarningTags
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.CacheDurationHours
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableBooks
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableMovies
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableSeries
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledCategoryIds
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledTopicIds
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinConfidenceThreshold
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.RefreshIntervalHours
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.SafeTagPrefix
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowAllTriggers
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowConfidenceInTags
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.TagPrefix
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring
+  langs:
+  - csharp
+  - vb
+  name: PluginConfiguration
+  nameWithType: PluginConfiguration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: PluginConfiguration
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 8
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Plugin configuration.
+  example: []
+  syntax:
+    content: 'public class PluginConfiguration : BasePluginConfiguration'
+    content.vb: Public Class PluginConfiguration Inherits BasePluginConfiguration
+  inheritance:
+  - System.Object
+  - MediaBrowser.Model.Plugins.BasePluginConfiguration
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.#ctor
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.#ctor
+  id: '#ctor'
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: PluginConfiguration()
+  nameWithType: PluginConfiguration.PluginConfiguration()
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.PluginConfiguration()
+  type: Constructor
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: .ctor
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 13
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Initializes a new instance of the <xref href="Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public PluginConfiguration()
+    content.vb: Public Sub New()
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.#ctor*
+  nameWithType.vb: PluginConfiguration.New()
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.New()
+  name.vb: New()
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableMovies
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableMovies
+  id: EnableMovies
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: EnableMovies
+  nameWithType: PluginConfiguration.EnableMovies
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableMovies
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: EnableMovies
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 35
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets a value indicating whether to fetch warnings for movies.
+  example: []
+  syntax:
+    content: public bool EnableMovies { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property EnableMovies As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableMovies*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableSeries
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableSeries
+  id: EnableSeries
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: EnableSeries
+  nameWithType: PluginConfiguration.EnableSeries
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableSeries
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: EnableSeries
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 40
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets a value indicating whether to fetch warnings for TV series.
+  example: []
+  syntax:
+    content: public bool EnableSeries { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property EnableSeries As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableSeries*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableBooks
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableBooks
+  id: EnableBooks
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: EnableBooks
+  nameWithType: PluginConfiguration.EnableBooks
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableBooks
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: EnableBooks
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 45
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets a value indicating whether to fetch warnings for books.
+  example: []
+  syntax:
+    content: public bool EnableBooks { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property EnableBooks As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableBooks*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.CacheDurationHours
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.CacheDurationHours
+  id: CacheDurationHours
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: CacheDurationHours
+  nameWithType: PluginConfiguration.CacheDurationHours
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.CacheDurationHours
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: CacheDurationHours
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 50
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets the cache duration in hours.
+  example: []
+  syntax:
+    content: public int CacheDurationHours { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property CacheDurationHours As Integer
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.CacheDurationHours*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold
+  id: MinVotesThreshold
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: MinVotesThreshold
+  nameWithType: PluginConfiguration.MinVotesThreshold
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: MinVotesThreshold
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 55
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets the minimum number of votes required to display a trigger.
+  example: []
+  syntax:
+    content: public int MinVotesThreshold { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MinVotesThreshold As Integer
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.AddWarningTags
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.AddWarningTags
+  id: AddWarningTags
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: AddWarningTags
+  nameWithType: PluginConfiguration.AddWarningTags
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.AddWarningTags
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: AddWarningTags
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 60
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets a value indicating whether to add warning tags to items.
+  example: []
+  syntax:
+    content: public bool AddWarningTags { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AddWarningTags As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.AddWarningTags*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.TagPrefix
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.TagPrefix
+  id: TagPrefix
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: TagPrefix
+  nameWithType: PluginConfiguration.TagPrefix
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.TagPrefix
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: TagPrefix
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 65
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets the prefix for warning tags (content has this trigger).
+  example: []
+  syntax:
+    content: public string TagPrefix { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TagPrefix As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.TagPrefix*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.SafeTagPrefix
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.SafeTagPrefix
+  id: SafeTagPrefix
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: SafeTagPrefix
+  nameWithType: PluginConfiguration.SafeTagPrefix
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.SafeTagPrefix
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: SafeTagPrefix
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 70
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets the prefix for safe tags (content confirmed safe from this trigger).
+  example: []
+  syntax:
+    content: public string SafeTagPrefix { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property SafeTagPrefix As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.SafeTagPrefix*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.RefreshIntervalHours
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.RefreshIntervalHours
+  id: RefreshIntervalHours
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: RefreshIntervalHours
+  nameWithType: PluginConfiguration.RefreshIntervalHours
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.RefreshIntervalHours
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: RefreshIntervalHours
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 75
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets the refresh interval in hours for the scheduled task.
+  example: []
+  syntax:
+    content: public int RefreshIntervalHours { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property RefreshIntervalHours As Integer
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.RefreshIntervalHours*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring
+  id: UseConfidenceScoring
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: UseConfidenceScoring
+  nameWithType: PluginConfiguration.UseConfidenceScoring
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: UseConfidenceScoring
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 82
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: >-
+    Gets or sets a value indicating whether to filter triggers using
+
+    statistical confidence (Wilson score) instead of raw vote counts alone.
+
+    When false, only <xref href="Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold" data-throw-if-not-resolved="false"></xref> applies.
+  example: []
+  syntax:
+    content: public bool UseConfidenceScoring { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property UseConfidenceScoring As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinConfidenceThreshold
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinConfidenceThreshold
+  id: MinConfidenceThreshold
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: MinConfidenceThreshold
+  nameWithType: PluginConfiguration.MinConfidenceThreshold
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinConfidenceThreshold
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: MinConfidenceThreshold
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 88
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: >-
+    Gets or sets the minimum confidence (0.0-1.0) required to include a
+
+    trigger when <xref href="Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring" data-throw-if-not-resolved="false"></xref> is enabled.
+  example: []
+  syntax:
+    content: public double MinConfidenceThreshold { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property MinConfidenceThreshold As Double
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinConfidenceThreshold*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowConfidenceInTags
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowConfidenceInTags
+  id: ShowConfidenceInTags
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: ShowConfidenceInTags
+  nameWithType: PluginConfiguration.ShowConfidenceInTags
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowConfidenceInTags
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: ShowConfidenceInTags
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 94
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: >-
+    Gets or sets a value indicating whether to append the confidence
+
+    percentage to tag names, e.g. "CW: a dog dies (95%)".
+  example: []
+  syntax:
+    content: public bool ShowConfidenceInTags { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property ShowConfidenceInTags As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowConfidenceInTags*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowAllTriggers
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowAllTriggers
+  id: ShowAllTriggers
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: ShowAllTriggers
+  nameWithType: PluginConfiguration.ShowAllTriggers
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowAllTriggers
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: ShowAllTriggers
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 100
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: >-
+    Gets or sets a value indicating whether to include all triggers.
+
+    When false, uses category/topic filtering.
+  example: []
+  syntax:
+    content: public bool ShowAllTriggers { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property ShowAllTriggers As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowAllTriggers*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledCategoryIds
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledCategoryIds
+  id: EnabledCategoryIds
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: EnabledCategoryIds
+  nameWithType: PluginConfiguration.EnabledCategoryIds
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledCategoryIds
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: EnabledCategoryIds
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 106
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: >-
+    Gets or sets the list of enabled category IDs.
+
+    When ShowAllTriggers is false and this list is empty, all triggers are shown with a warning.
+  example: []
+  syntax:
+    content: public List<int> EnabledCategoryIds { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{System.Int32}
+    content.vb: Public Property EnabledCategoryIds As List(Of Integer)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledCategoryIds*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledTopicIds
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledTopicIds
+  id: EnabledTopicIds
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  langs:
+  - csharp
+  - vb
+  name: EnabledTopicIds
+  nameWithType: PluginConfiguration.EnabledTopicIds
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledTopicIds
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: EnabledTopicIds
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/PluginConfiguration.cs
+    startLine: 112
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: >-
+    Gets or sets the list of enabled topic IDs for fine-grained control.
+
+    When empty, all topics in enabled categories are shown.
+  example: []
+  syntax:
+    content: public List<int> EnabledTopicIds { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{System.Int32}
+    content.vb: Public Property EnabledTopicIds As List(Of Integer)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledTopicIds*
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: MediaBrowser.Model.Plugins.BasePluginConfiguration
+  commentId: T:MediaBrowser.Model.Plugins.BasePluginConfiguration
+  parent: MediaBrowser.Model.Plugins
+  isExternal: true
+  name: BasePluginConfiguration
+  nameWithType: BasePluginConfiguration
+  fullName: MediaBrowser.Model.Plugins.BasePluginConfiguration
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: MediaBrowser.Model.Plugins
+  commentId: N:MediaBrowser.Model.Plugins
+  isExternal: true
+  name: MediaBrowser.Model.Plugins
+  nameWithType: MediaBrowser.Model.Plugins
+  fullName: MediaBrowser.Model.Plugins
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Plugins
+    name: Plugins
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Plugins
+    name: Plugins
+    isExternal: true
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  name: PluginConfiguration
+  nameWithType: PluginConfiguration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.#ctor*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.#ctor
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration__ctor
+  name: PluginConfiguration
+  nameWithType: PluginConfiguration.PluginConfiguration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.PluginConfiguration
+  nameWithType.vb: PluginConfiguration.New
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.New
+  name.vb: New
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableMovies*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableMovies
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_EnableMovies
+  name: EnableMovies
+  nameWithType: PluginConfiguration.EnableMovies
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableMovies
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableSeries*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableSeries
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_EnableSeries
+  name: EnableSeries
+  nameWithType: PluginConfiguration.EnableSeries
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableSeries
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableBooks*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableBooks
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_EnableBooks
+  name: EnableBooks
+  nameWithType: PluginConfiguration.EnableBooks
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnableBooks
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.CacheDurationHours*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.CacheDurationHours
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_CacheDurationHours
+  name: CacheDurationHours
+  nameWithType: PluginConfiguration.CacheDurationHours
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.CacheDurationHours
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_MinVotesThreshold
+  name: MinVotesThreshold
+  nameWithType: PluginConfiguration.MinVotesThreshold
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.AddWarningTags*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.AddWarningTags
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_AddWarningTags
+  name: AddWarningTags
+  nameWithType: PluginConfiguration.AddWarningTags
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.AddWarningTags
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.TagPrefix*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.TagPrefix
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_TagPrefix
+  name: TagPrefix
+  nameWithType: PluginConfiguration.TagPrefix
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.TagPrefix
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.SafeTagPrefix*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.SafeTagPrefix
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_SafeTagPrefix
+  name: SafeTagPrefix
+  nameWithType: PluginConfiguration.SafeTagPrefix
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.SafeTagPrefix
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.RefreshIntervalHours*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.RefreshIntervalHours
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_RefreshIntervalHours
+  name: RefreshIntervalHours
+  nameWithType: PluginConfiguration.RefreshIntervalHours
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.RefreshIntervalHours
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_MinVotesThreshold
+  name: MinVotesThreshold
+  nameWithType: PluginConfiguration.MinVotesThreshold
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinVotesThreshold
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_UseConfidenceScoring
+  name: UseConfidenceScoring
+  nameWithType: PluginConfiguration.UseConfidenceScoring
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_UseConfidenceScoring
+  name: UseConfidenceScoring
+  nameWithType: PluginConfiguration.UseConfidenceScoring
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.UseConfidenceScoring
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinConfidenceThreshold*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinConfidenceThreshold
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_MinConfidenceThreshold
+  name: MinConfidenceThreshold
+  nameWithType: PluginConfiguration.MinConfidenceThreshold
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.MinConfidenceThreshold
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowConfidenceInTags*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowConfidenceInTags
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_ShowConfidenceInTags
+  name: ShowConfidenceInTags
+  nameWithType: PluginConfiguration.ShowConfidenceInTags
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowConfidenceInTags
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowAllTriggers*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowAllTriggers
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_ShowAllTriggers
+  name: ShowAllTriggers
+  nameWithType: PluginConfiguration.ShowAllTriggers
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.ShowAllTriggers
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledCategoryIds*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledCategoryIds
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_EnabledCategoryIds
+  name: EnabledCategoryIds
+  nameWithType: PluginConfiguration.EnabledCategoryIds
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledCategoryIds
+- uid: System.Collections.Generic.List{System.Int32}
+  commentId: T:System.Collections.Generic.List{System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<int>
+  nameWithType: List<int>
+  fullName: System.Collections.Generic.List<int>
+  nameWithType.vb: List(Of Integer)
+  fullName.vb: System.Collections.Generic.List(Of Integer)
+  name.vb: List(Of Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledTopicIds*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledTopicIds
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_PluginConfiguration_EnabledTopicIds
+  name: EnabledTopicIds
+  nameWithType: PluginConfiguration.EnabledTopicIds
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.EnabledTopicIds

@@ -27,12 +27,23 @@
           "numComments": 12,
           "TopicId": 101,
           "itemId": 1234,
+          "comment": "The dog dies in the first act, off screen but heartbreaking.",
+          "username": "dogwatcher",
           "topic": {
             "id": 101,
             "name": "an animal dies",
             "notName": "no animals die",
             "isSpoiler": false,
-            "isVisible": true
+            "isVisible": true,
+            "TopicCategoryId": 2,
+            "TopicCategory": {
+              "id": 2,
+              "name": "Animal"
+            }
+          },
+          "TopicCategory": {
+            "id": 2,
+            "name": "Animal"
           }
         },
         {
@@ -42,12 +53,49 @@
           "numComments": 30,
           "TopicId": 102,
           "itemId": 1234,
+          "comment": "Multiple shootouts throughout the entire film, starting early and continuing through the finale.",
+          "username": "actionfan",
           "topic": {
             "id": 102,
             "name": "someone is shot",
             "notName": "no one is shot",
             "isSpoiler": false,
-            "isVisible": true
+            "isVisible": true,
+            "TopicCategoryId": 3,
+            "TopicCategory": {
+              "id": 3,
+              "name": "Violence"
+            }
+          },
+          "TopicCategory": {
+            "id": 3,
+            "name": "Violence"
+          }
+        },
+        {
+          "topicItemId": 1003,
+          "yesSum": 45,
+          "noSum": 5,
+          "numComments": 8,
+          "TopicId": 103,
+          "itemId": 1234,
+          "comment": "His wife dies of illness before the film begins.",
+          "username": "spoilerguy",
+          "topic": {
+            "id": 103,
+            "name": "a major character dies",
+            "notName": "no major characters die",
+            "isSpoiler": true,
+            "isVisible": true,
+            "TopicCategoryId": 3,
+            "TopicCategory": {
+              "id": 3,
+              "name": "Violence"
+            }
+          },
+          "TopicCategory": {
+            "id": 3,
+            "name": "Violence"
           }
         }
       ]

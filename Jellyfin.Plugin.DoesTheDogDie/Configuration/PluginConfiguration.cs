@@ -28,6 +28,10 @@ public class PluginConfiguration : BasePluginConfiguration
         ShowAllTriggers = false;
         EnabledCategoryIds = new List<int>();
         EnabledTopicIds = new List<int>();
+        AddDescriptionWarnings = false;
+        IncludeTopComment = false;
+        MaxCommentLength = 200;
+        HideSpoilerComments = true;
     }
 
     /// <summary>
@@ -111,4 +115,24 @@ public class PluginConfiguration : BasePluginConfiguration
     /// When empty, all topics in enabled categories are shown.
     /// </summary>
     public List<int> EnabledTopicIds { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to inject warnings into description.
+    /// </summary>
+    public bool AddDescriptionWarnings { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to include top comments.
+    /// </summary>
+    public bool IncludeTopComment { get; set; }
+
+    /// <summary>
+    /// Gets or sets the maximum length for included comments.
+    /// </summary>
+    public int MaxCommentLength { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to hide spoiler comments.
+    /// </summary>
+    public bool HideSpoilerComments { get; set; }
 }

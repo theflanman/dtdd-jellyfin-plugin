@@ -1,0 +1,119 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  id: IPluginConfigurationAccessor
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+  langs:
+  - csharp
+  - vb
+  name: IPluginConfigurationAccessor
+  nameWithType: IPluginConfigurationAccessor
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  type: Interface
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/IPluginConfigurationAccessor.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: IPluginConfigurationAccessor
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/IPluginConfigurationAccessor.cs
+    startLine: 8
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: >-
+    Interface for accessing plugin configuration.
+
+    Enables dependency injection and testability.
+  example: []
+  syntax:
+    content: public interface IPluginConfigurationAccessor
+    content.vb: Public Interface IPluginConfigurationAccessor
+  derivedClasses:
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+  id: GetConfiguration
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  langs:
+  - csharp
+  - vb
+  name: GetConfiguration()
+  nameWithType: IPluginConfigurationAccessor.GetConfiguration()
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration()
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/IPluginConfigurationAccessor.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: GetConfiguration
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/IPluginConfigurationAccessor.cs
+    startLine: 14
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets the current plugin configuration.
+  example: []
+  syntax:
+    content: PluginConfiguration? GetConfiguration()
+    return:
+      type: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+      description: The plugin configuration, or null if the plugin is not loaded.
+    content.vb: Function GetConfiguration() As PluginConfiguration
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration*
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_IPluginConfigurationAccessor_GetConfiguration
+  name: GetConfiguration
+  nameWithType: IPluginConfigurationAccessor.GetConfiguration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.GetConfiguration
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  name: PluginConfiguration
+  nameWithType: PluginConfiguration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration

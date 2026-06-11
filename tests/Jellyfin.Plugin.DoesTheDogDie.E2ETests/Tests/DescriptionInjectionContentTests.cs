@@ -27,7 +27,7 @@ public sealed class DescriptionInjectionContentTests
         _fixture = fixture;
     }
 
-    [Fact(Skip = "Requires feature/description-injection to be merged")]
+    [Fact]
     public async Task InjectedOverview_ContainsContentWarningsHeading()
     {
         var johnWick = await GetJohnWickAsync();
@@ -45,7 +45,7 @@ public sealed class DescriptionInjectionContentTests
         }
     }
 
-    [Fact(Skip = "Requires feature/description-injection to be merged")]
+    [Fact]
     public async Task InjectedOverview_ContainsTriggerLines_WithCapitalizedNameAndVoteCounts()
     {
         var johnWick = await GetJohnWickAsync();
@@ -66,7 +66,7 @@ public sealed class DescriptionInjectionContentTests
         }
     }
 
-    [Fact(Skip = "Requires feature/description-injection to be merged")]
+    [Fact]
     public async Task InjectedOverview_OmitsLowVoteTrigger_WhenAboveMinVotesThreshold()
     {
         var johnWick = await GetJohnWickAsync();
@@ -129,7 +129,7 @@ public sealed class DescriptionInjectionContentTests
         }
     }
 
-    [Fact(Skip = "Requires feature/description-injection to be merged")]
+    [Fact]
     public async Task InjectedOverview_IsBoundedByDtddMarkers()
     {
         var johnWick = await GetJohnWickAsync();

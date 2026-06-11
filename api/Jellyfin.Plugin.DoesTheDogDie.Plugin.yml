@@ -1,0 +1,1389 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Plugin
+  id: Plugin
+  parent: Jellyfin.Plugin.DoesTheDogDie
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Plugin.#ctor(MediaBrowser.Common.Configuration.IApplicationPaths,MediaBrowser.Model.Serialization.IXmlSerializer)
+  - Jellyfin.Plugin.DoesTheDogDie.Plugin.GetPages
+  - Jellyfin.Plugin.DoesTheDogDie.Plugin.Id
+  - Jellyfin.Plugin.DoesTheDogDie.Plugin.Instance
+  - Jellyfin.Plugin.DoesTheDogDie.Plugin.Name
+  langs:
+  - csharp
+  - vb
+  name: Plugin
+  nameWithType: Plugin
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Plugin
+    path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+    startLine: 15
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie
+  summary: The main plugin.
+  example: []
+  syntax:
+    content: >-
+      [ExcludeFromCodeCoverage]
+
+      public class Plugin : BasePlugin<PluginConfiguration>, IPlugin, IPluginAssembly, IHasPluginConfiguration, IHasWebPages
+    content.vb: >-
+      <ExcludeFromCodeCoverage>
+
+      Public Class Plugin Inherits BasePlugin(Of PluginConfiguration) Implements IPlugin, IPluginAssembly, IHasPluginConfiguration, IHasWebPages
+  inheritance:
+  - System.Object
+  - MediaBrowser.Common.Plugins.BasePlugin
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  implements:
+  - MediaBrowser.Common.Plugins.IPlugin
+  - MediaBrowser.Common.Plugins.IPluginAssembly
+  - MediaBrowser.Common.Plugins.IHasPluginConfiguration
+  - MediaBrowser.Model.Plugins.IHasWebPages
+  inheritedMembers:
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration(Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration)
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.GetPluginInfo
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ApplicationPaths
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.XmlSerializer
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationType
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationChanged
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.AssemblyFileName
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.Configuration
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationFileName
+  - MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationFilePath
+  - MediaBrowser.Common.Plugins.BasePlugin.OnUninstalling
+  - MediaBrowser.Common.Plugins.BasePlugin.SetAttributes(System.String,System.String,System.Version)
+  - MediaBrowser.Common.Plugins.BasePlugin.SetId(System.Guid)
+  - MediaBrowser.Common.Plugins.BasePlugin.Description
+  - MediaBrowser.Common.Plugins.BasePlugin.Version
+  - MediaBrowser.Common.Plugins.BasePlugin.AssemblyFilePath
+  - MediaBrowser.Common.Plugins.BasePlugin.DataFolderPath
+  - MediaBrowser.Common.Plugins.BasePlugin.CanUninstall
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute
+    ctor: System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute.#ctor
+    arguments: []
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.#ctor(MediaBrowser.Common.Configuration.IApplicationPaths,MediaBrowser.Model.Serialization.IXmlSerializer)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Plugin.#ctor(MediaBrowser.Common.Configuration.IApplicationPaths,MediaBrowser.Model.Serialization.IXmlSerializer)
+  id: '#ctor(MediaBrowser.Common.Configuration.IApplicationPaths,MediaBrowser.Model.Serialization.IXmlSerializer)'
+  parent: Jellyfin.Plugin.DoesTheDogDie.Plugin
+  langs:
+  - csharp
+  - vb
+  name: Plugin(IApplicationPaths, IXmlSerializer)
+  nameWithType: Plugin.Plugin(IApplicationPaths, IXmlSerializer)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.Plugin(MediaBrowser.Common.Configuration.IApplicationPaths, MediaBrowser.Model.Serialization.IXmlSerializer)
+  type: Constructor
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: .ctor
+    path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+    startLine: 23
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie
+  summary: Initializes a new instance of the <xref href="Jellyfin.Plugin.DoesTheDogDie.Plugin" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer)
+    parameters:
+    - id: applicationPaths
+      type: MediaBrowser.Common.Configuration.IApplicationPaths
+      description: Instance of the <xref href="MediaBrowser.Common.Configuration.IApplicationPaths" data-throw-if-not-resolved="false"></xref> interface.
+    - id: xmlSerializer
+      type: MediaBrowser.Model.Serialization.IXmlSerializer
+      description: Instance of the <xref href="MediaBrowser.Model.Serialization.IXmlSerializer" data-throw-if-not-resolved="false"></xref> interface.
+    content.vb: Public Sub New(applicationPaths As IApplicationPaths, xmlSerializer As IXmlSerializer)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Plugin.#ctor*
+  nameWithType.vb: Plugin.New(IApplicationPaths, IXmlSerializer)
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Plugin.New(MediaBrowser.Common.Configuration.IApplicationPaths, MediaBrowser.Model.Serialization.IXmlSerializer)
+  name.vb: New(IApplicationPaths, IXmlSerializer)
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.Name
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Plugin.Name
+  id: Name
+  parent: Jellyfin.Plugin.DoesTheDogDie.Plugin
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Plugin.Name
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.Name
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Name
+    path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+    startLine: 30
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie
+  summary: Gets the name of the plugin.
+  example: []
+  syntax:
+    content: public override string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+      description: The name.
+    content.vb: Public Overrides ReadOnly Property Name As String
+  overridden: MediaBrowser.Common.Plugins.BasePlugin.Name
+  overload: Jellyfin.Plugin.DoesTheDogDie.Plugin.Name*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.Id
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Plugin.Id
+  id: Id
+  parent: Jellyfin.Plugin.DoesTheDogDie.Plugin
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: Plugin.Id
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.Id
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Id
+    path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+    startLine: 33
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie
+  summary: Gets the unique id.
+  example: []
+  syntax:
+    content: public override Guid Id { get; }
+    parameters: []
+    return:
+      type: System.Guid
+      description: The unique id.
+    content.vb: Public Overrides ReadOnly Property Id As Guid
+  overridden: MediaBrowser.Common.Plugins.BasePlugin.Id
+  overload: Jellyfin.Plugin.DoesTheDogDie.Plugin.Id*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.Instance
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Plugin.Instance
+  id: Instance
+  parent: Jellyfin.Plugin.DoesTheDogDie.Plugin
+  langs:
+  - csharp
+  - vb
+  name: Instance
+  nameWithType: Plugin.Instance
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.Instance
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Instance
+    path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+    startLine: 38
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie
+  summary: Gets the current plugin instance.
+  example: []
+  syntax:
+    content: public static Plugin? Instance { get; }
+    parameters: []
+    return:
+      type: Jellyfin.Plugin.DoesTheDogDie.Plugin
+    content.vb: Public Shared Property Instance As Plugin
+  overload: Jellyfin.Plugin.DoesTheDogDie.Plugin.Instance*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.GetPages
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Plugin.GetPages
+  id: GetPages
+  parent: Jellyfin.Plugin.DoesTheDogDie.Plugin
+  langs:
+  - csharp
+  - vb
+  name: GetPages()
+  nameWithType: Plugin.GetPages()
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.GetPages()
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: GetPages
+    path: Jellyfin.Plugin.DoesTheDogDie/Plugin.cs
+    startLine: 41
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie
+  example: []
+  syntax:
+    content: public IEnumerable<PluginPageInfo> GetPages()
+    return:
+      type: System.Collections.Generic.IEnumerable{MediaBrowser.Model.Plugins.PluginPageInfo}
+    content.vb: Public Function GetPages() As IEnumerable(Of PluginPageInfo)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Plugin.GetPages*
+  implements:
+  - MediaBrowser.Model.Plugins.IHasWebPages.GetPages
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie
+  fullName: Jellyfin.Plugin.DoesTheDogDie
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: MediaBrowser.Common.Plugins.BasePlugin
+  commentId: T:MediaBrowser.Common.Plugins.BasePlugin
+  parent: MediaBrowser.Common.Plugins
+  isExternal: true
+  name: BasePlugin
+  nameWithType: BasePlugin
+  fullName: MediaBrowser.Common.Plugins.BasePlugin
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  commentId: T:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  parent: MediaBrowser.Common.Plugins
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  name: BasePlugin<PluginConfiguration>
+  nameWithType: BasePlugin<PluginConfiguration>
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>
+  nameWithType.vb: BasePlugin(Of PluginConfiguration)
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration)
+  name.vb: BasePlugin(Of PluginConfiguration)
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1
+    name: BasePlugin
+    isExternal: true
+  - name: <
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+    name: PluginConfiguration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  - name: '>'
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1
+    name: BasePlugin
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+    name: PluginConfiguration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  - name: )
+- uid: MediaBrowser.Common.Plugins.IPlugin
+  commentId: T:MediaBrowser.Common.Plugins.IPlugin
+  parent: MediaBrowser.Common.Plugins
+  isExternal: true
+  name: IPlugin
+  nameWithType: IPlugin
+  fullName: MediaBrowser.Common.Plugins.IPlugin
+- uid: MediaBrowser.Common.Plugins.IPluginAssembly
+  commentId: T:MediaBrowser.Common.Plugins.IPluginAssembly
+  parent: MediaBrowser.Common.Plugins
+  isExternal: true
+  name: IPluginAssembly
+  nameWithType: IPluginAssembly
+  fullName: MediaBrowser.Common.Plugins.IPluginAssembly
+- uid: MediaBrowser.Common.Plugins.IHasPluginConfiguration
+  commentId: T:MediaBrowser.Common.Plugins.IHasPluginConfiguration
+  parent: MediaBrowser.Common.Plugins
+  isExternal: true
+  name: IHasPluginConfiguration
+  nameWithType: IHasPluginConfiguration
+  fullName: MediaBrowser.Common.Plugins.IHasPluginConfiguration
+- uid: MediaBrowser.Model.Plugins.IHasWebPages
+  commentId: T:MediaBrowser.Model.Plugins.IHasWebPages
+  parent: MediaBrowser.Model.Plugins
+  isExternal: true
+  name: IHasWebPages
+  nameWithType: IHasWebPages
+  fullName: MediaBrowser.Model.Plugins.IHasWebPages
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration(Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration)
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration(Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration)
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration(`0)
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  name: SaveConfiguration(PluginConfiguration)
+  nameWithType: BasePlugin<PluginConfiguration>.SaveConfiguration(PluginConfiguration)
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.SaveConfiguration(Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration)
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).SaveConfiguration(PluginConfiguration)
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).SaveConfiguration(Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration)
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration(Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration)
+    name: SaveConfiguration
+    isExternal: true
+  - name: (
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+    name: PluginConfiguration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration(Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration)
+    name: SaveConfiguration
+    isExternal: true
+  - name: (
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+    name: PluginConfiguration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration
+  name: SaveConfiguration()
+  nameWithType: BasePlugin<PluginConfiguration>.SaveConfiguration()
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.SaveConfiguration()
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).SaveConfiguration()
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).SaveConfiguration()
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration
+    name: SaveConfiguration
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.SaveConfiguration
+    name: SaveConfiguration
+    isExternal: true
+  - name: (
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  name: UpdateConfiguration(BasePluginConfiguration)
+  nameWithType: BasePlugin<PluginConfiguration>.UpdateConfiguration(BasePluginConfiguration)
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).UpdateConfiguration(BasePluginConfiguration)
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+    name: UpdateConfiguration
+    isExternal: true
+  - name: (
+  - uid: MediaBrowser.Model.Plugins.BasePluginConfiguration
+    name: BasePluginConfiguration
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+    name: UpdateConfiguration
+    isExternal: true
+  - name: (
+  - uid: MediaBrowser.Model.Plugins.BasePluginConfiguration
+    name: BasePluginConfiguration
+    isExternal: true
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.GetPluginInfo
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.GetPluginInfo
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.GetPluginInfo
+  name: GetPluginInfo()
+  nameWithType: BasePlugin<PluginConfiguration>.GetPluginInfo()
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.GetPluginInfo()
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).GetPluginInfo()
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).GetPluginInfo()
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.GetPluginInfo
+    name: GetPluginInfo
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.GetPluginInfo
+    name: GetPluginInfo
+    isExternal: true
+  - name: (
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ApplicationPaths
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ApplicationPaths
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.ApplicationPaths
+  name: ApplicationPaths
+  nameWithType: BasePlugin<PluginConfiguration>.ApplicationPaths
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.ApplicationPaths
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).ApplicationPaths
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).ApplicationPaths
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.XmlSerializer
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.XmlSerializer
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.XmlSerializer
+  name: XmlSerializer
+  nameWithType: BasePlugin<PluginConfiguration>.XmlSerializer
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.XmlSerializer
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).XmlSerializer
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).XmlSerializer
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationType
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationType
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationType
+  name: ConfigurationType
+  nameWithType: BasePlugin<PluginConfiguration>.ConfigurationType
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.ConfigurationType
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).ConfigurationType
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).ConfigurationType
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationChanged
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationChanged
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationChanged
+  name: ConfigurationChanged
+  nameWithType: BasePlugin<PluginConfiguration>.ConfigurationChanged
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.ConfigurationChanged
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).ConfigurationChanged
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).ConfigurationChanged
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.AssemblyFileName
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.AssemblyFileName
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.AssemblyFileName
+  name: AssemblyFileName
+  nameWithType: BasePlugin<PluginConfiguration>.AssemblyFileName
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.AssemblyFileName
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).AssemblyFileName
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).AssemblyFileName
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.Configuration
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.Configuration
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.Configuration
+  name: Configuration
+  nameWithType: BasePlugin<PluginConfiguration>.Configuration
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.Configuration
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).Configuration
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).Configuration
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationFileName
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationFileName
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationFileName
+  name: ConfigurationFileName
+  nameWithType: BasePlugin<PluginConfiguration>.ConfigurationFileName
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.ConfigurationFileName
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).ConfigurationFileName
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).ConfigurationFileName
+- uid: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationFilePath
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}.ConfigurationFilePath
+  parent: MediaBrowser.Common.Plugins.BasePlugin{Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration}
+  definition: MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationFilePath
+  name: ConfigurationFilePath
+  nameWithType: BasePlugin<PluginConfiguration>.ConfigurationFilePath
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration>.ConfigurationFilePath
+  nameWithType.vb: BasePlugin(Of PluginConfiguration).ConfigurationFilePath
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration).ConfigurationFilePath
+- uid: MediaBrowser.Common.Plugins.BasePlugin.OnUninstalling
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin.OnUninstalling
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  name: OnUninstalling()
+  nameWithType: BasePlugin.OnUninstalling()
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.OnUninstalling()
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin.OnUninstalling
+    name: OnUninstalling
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin.OnUninstalling
+    name: OnUninstalling
+    isExternal: true
+  - name: (
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin.SetAttributes(System.String,System.String,System.Version)
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin.SetAttributes(System.String,System.String,System.Version)
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: SetAttributes(string, string, Version)
+  nameWithType: BasePlugin.SetAttributes(string, string, Version)
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.SetAttributes(string, string, System.Version)
+  nameWithType.vb: BasePlugin.SetAttributes(String, String, Version)
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin.SetAttributes(String, String, System.Version)
+  name.vb: SetAttributes(String, String, Version)
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin.SetAttributes(System.String,System.String,System.Version)
+    name: SetAttributes
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Version
+    name: Version
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.version
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin.SetAttributes(System.String,System.String,System.Version)
+    name: SetAttributes
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Version
+    name: Version
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.version
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin.SetId(System.Guid)
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin.SetId(System.Guid)
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: SetId(Guid)
+  nameWithType: BasePlugin.SetId(Guid)
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.SetId(System.Guid)
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin.SetId(System.Guid)
+    name: SetId
+    isExternal: true
+  - name: (
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin.SetId(System.Guid)
+    name: SetId
+    isExternal: true
+  - name: (
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin.Description
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin.Description
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  name: Description
+  nameWithType: BasePlugin.Description
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.Description
+- uid: MediaBrowser.Common.Plugins.BasePlugin.Version
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin.Version
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  name: Version
+  nameWithType: BasePlugin.Version
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.Version
+- uid: MediaBrowser.Common.Plugins.BasePlugin.AssemblyFilePath
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin.AssemblyFilePath
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  name: AssemblyFilePath
+  nameWithType: BasePlugin.AssemblyFilePath
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.AssemblyFilePath
+- uid: MediaBrowser.Common.Plugins.BasePlugin.DataFolderPath
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin.DataFolderPath
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  name: DataFolderPath
+  nameWithType: BasePlugin.DataFolderPath
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.DataFolderPath
+- uid: MediaBrowser.Common.Plugins.BasePlugin.CanUninstall
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin.CanUninstall
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  name: CanUninstall
+  nameWithType: BasePlugin.CanUninstall
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.CanUninstall
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: MediaBrowser.Common.Plugins
+  commentId: N:MediaBrowser.Common.Plugins
+  isExternal: true
+  name: MediaBrowser.Common.Plugins
+  nameWithType: MediaBrowser.Common.Plugins
+  fullName: MediaBrowser.Common.Plugins
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Common
+    name: Common
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Common.Plugins
+    name: Plugins
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Common
+    name: Common
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Common.Plugins
+    name: Plugins
+    isExternal: true
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1
+  commentId: T:MediaBrowser.Common.Plugins.BasePlugin`1
+  isExternal: true
+  name: BasePlugin<TConfigurationType>
+  nameWithType: BasePlugin<TConfigurationType>
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>
+  nameWithType.vb: BasePlugin(Of TConfigurationType)
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType)
+  name.vb: BasePlugin(Of TConfigurationType)
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1
+    name: BasePlugin
+    isExternal: true
+  - name: <
+  - name: TConfigurationType
+  - name: '>'
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1
+    name: BasePlugin
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TConfigurationType
+  - name: )
+- uid: MediaBrowser.Model.Plugins
+  commentId: N:MediaBrowser.Model.Plugins
+  isExternal: true
+  name: MediaBrowser.Model.Plugins
+  nameWithType: MediaBrowser.Model.Plugins
+  fullName: MediaBrowser.Model.Plugins
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Plugins
+    name: Plugins
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Plugins
+    name: Plugins
+    isExternal: true
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration(`0)
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration(`0)
+  isExternal: true
+  name: SaveConfiguration(TConfigurationType)
+  nameWithType: BasePlugin<TConfigurationType>.SaveConfiguration(TConfigurationType)
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.SaveConfiguration(TConfigurationType)
+  nameWithType.vb: BasePlugin(Of TConfigurationType).SaveConfiguration(TConfigurationType)
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).SaveConfiguration(TConfigurationType)
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration(`0)
+    name: SaveConfiguration
+    isExternal: true
+  - name: (
+  - name: TConfigurationType
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration(`0)
+    name: SaveConfiguration
+    isExternal: true
+  - name: (
+  - name: TConfigurationType
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration
+  isExternal: true
+  name: SaveConfiguration()
+  nameWithType: BasePlugin<TConfigurationType>.SaveConfiguration()
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.SaveConfiguration()
+  nameWithType.vb: BasePlugin(Of TConfigurationType).SaveConfiguration()
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).SaveConfiguration()
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration
+    name: SaveConfiguration
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1.SaveConfiguration
+    name: SaveConfiguration
+    isExternal: true
+  - name: (
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin`1.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  isExternal: true
+  name: UpdateConfiguration(BasePluginConfiguration)
+  nameWithType: BasePlugin<TConfigurationType>.UpdateConfiguration(BasePluginConfiguration)
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  nameWithType.vb: BasePlugin(Of TConfigurationType).UpdateConfiguration(BasePluginConfiguration)
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+    name: UpdateConfiguration
+    isExternal: true
+  - name: (
+  - uid: MediaBrowser.Model.Plugins.BasePluginConfiguration
+    name: BasePluginConfiguration
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1.UpdateConfiguration(MediaBrowser.Model.Plugins.BasePluginConfiguration)
+    name: UpdateConfiguration
+    isExternal: true
+  - name: (
+  - uid: MediaBrowser.Model.Plugins.BasePluginConfiguration
+    name: BasePluginConfiguration
+    isExternal: true
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.GetPluginInfo
+  commentId: M:MediaBrowser.Common.Plugins.BasePlugin`1.GetPluginInfo
+  isExternal: true
+  name: GetPluginInfo()
+  nameWithType: BasePlugin<TConfigurationType>.GetPluginInfo()
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.GetPluginInfo()
+  nameWithType.vb: BasePlugin(Of TConfigurationType).GetPluginInfo()
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).GetPluginInfo()
+  spec.csharp:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1.GetPluginInfo
+    name: GetPluginInfo
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Common.Plugins.BasePlugin`1.GetPluginInfo
+    name: GetPluginInfo
+    isExternal: true
+  - name: (
+  - name: )
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.ApplicationPaths
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin`1.ApplicationPaths
+  isExternal: true
+  name: ApplicationPaths
+  nameWithType: BasePlugin<TConfigurationType>.ApplicationPaths
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.ApplicationPaths
+  nameWithType.vb: BasePlugin(Of TConfigurationType).ApplicationPaths
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).ApplicationPaths
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.XmlSerializer
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin`1.XmlSerializer
+  isExternal: true
+  name: XmlSerializer
+  nameWithType: BasePlugin<TConfigurationType>.XmlSerializer
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.XmlSerializer
+  nameWithType.vb: BasePlugin(Of TConfigurationType).XmlSerializer
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).XmlSerializer
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationType
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationType
+  isExternal: true
+  name: ConfigurationType
+  nameWithType: BasePlugin<TConfigurationType>.ConfigurationType
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.ConfigurationType
+  nameWithType.vb: BasePlugin(Of TConfigurationType).ConfigurationType
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).ConfigurationType
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationChanged
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationChanged
+  isExternal: true
+  name: ConfigurationChanged
+  nameWithType: BasePlugin<TConfigurationType>.ConfigurationChanged
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.ConfigurationChanged
+  nameWithType.vb: BasePlugin(Of TConfigurationType).ConfigurationChanged
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).ConfigurationChanged
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.AssemblyFileName
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin`1.AssemblyFileName
+  isExternal: true
+  name: AssemblyFileName
+  nameWithType: BasePlugin<TConfigurationType>.AssemblyFileName
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.AssemblyFileName
+  nameWithType.vb: BasePlugin(Of TConfigurationType).AssemblyFileName
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).AssemblyFileName
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.Configuration
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin`1.Configuration
+  isExternal: true
+  name: Configuration
+  nameWithType: BasePlugin<TConfigurationType>.Configuration
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.Configuration
+  nameWithType.vb: BasePlugin(Of TConfigurationType).Configuration
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).Configuration
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationFileName
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationFileName
+  isExternal: true
+  name: ConfigurationFileName
+  nameWithType: BasePlugin<TConfigurationType>.ConfigurationFileName
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.ConfigurationFileName
+  nameWithType.vb: BasePlugin(Of TConfigurationType).ConfigurationFileName
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).ConfigurationFileName
+- uid: MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationFilePath
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin`1.ConfigurationFilePath
+  isExternal: true
+  name: ConfigurationFilePath
+  nameWithType: BasePlugin<TConfigurationType>.ConfigurationFilePath
+  fullName: MediaBrowser.Common.Plugins.BasePlugin<TConfigurationType>.ConfigurationFilePath
+  nameWithType.vb: BasePlugin(Of TConfigurationType).ConfigurationFilePath
+  fullName.vb: MediaBrowser.Common.Plugins.BasePlugin(Of TConfigurationType).ConfigurationFilePath
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Plugin
+  parent: Jellyfin.Plugin.DoesTheDogDie
+  href: Jellyfin.Plugin.DoesTheDogDie.Plugin.html
+  name: Plugin
+  nameWithType: Plugin
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin
+- uid: MediaBrowser.Common.Configuration.IApplicationPaths
+  commentId: T:MediaBrowser.Common.Configuration.IApplicationPaths
+  parent: MediaBrowser.Common.Configuration
+  isExternal: true
+  name: IApplicationPaths
+  nameWithType: IApplicationPaths
+  fullName: MediaBrowser.Common.Configuration.IApplicationPaths
+- uid: MediaBrowser.Model.Serialization.IXmlSerializer
+  commentId: T:MediaBrowser.Model.Serialization.IXmlSerializer
+  parent: MediaBrowser.Model.Serialization
+  isExternal: true
+  name: IXmlSerializer
+  nameWithType: IXmlSerializer
+  fullName: MediaBrowser.Model.Serialization.IXmlSerializer
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.#ctor*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Plugin.#ctor
+  href: Jellyfin.Plugin.DoesTheDogDie.Plugin.html#Jellyfin_Plugin_DoesTheDogDie_Plugin__ctor_MediaBrowser_Common_Configuration_IApplicationPaths_MediaBrowser_Model_Serialization_IXmlSerializer_
+  name: Plugin
+  nameWithType: Plugin.Plugin
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.Plugin
+  nameWithType.vb: Plugin.New
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Plugin.New
+  name.vb: New
+- uid: MediaBrowser.Common.Configuration
+  commentId: N:MediaBrowser.Common.Configuration
+  isExternal: true
+  name: MediaBrowser.Common.Configuration
+  nameWithType: MediaBrowser.Common.Configuration
+  fullName: MediaBrowser.Common.Configuration
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Common
+    name: Common
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Common.Configuration
+    name: Configuration
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Common
+    name: Common
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Common.Configuration
+    name: Configuration
+    isExternal: true
+- uid: MediaBrowser.Model.Serialization
+  commentId: N:MediaBrowser.Model.Serialization
+  isExternal: true
+  name: MediaBrowser.Model.Serialization
+  nameWithType: MediaBrowser.Model.Serialization
+  fullName: MediaBrowser.Model.Serialization
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Serialization
+    name: Serialization
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Serialization
+    name: Serialization
+    isExternal: true
+- uid: MediaBrowser.Common.Plugins.BasePlugin.Name
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin.Name
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  name: Name
+  nameWithType: BasePlugin.Name
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.Name
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.Name*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Plugin.Name
+  href: Jellyfin.Plugin.DoesTheDogDie.Plugin.html#Jellyfin_Plugin_DoesTheDogDie_Plugin_Name
+  name: Name
+  nameWithType: Plugin.Name
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: MediaBrowser.Common.Plugins.BasePlugin.Id
+  commentId: P:MediaBrowser.Common.Plugins.BasePlugin.Id
+  parent: MediaBrowser.Common.Plugins.BasePlugin
+  isExternal: true
+  name: Id
+  nameWithType: BasePlugin.Id
+  fullName: MediaBrowser.Common.Plugins.BasePlugin.Id
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.Id*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Plugin.Id
+  href: Jellyfin.Plugin.DoesTheDogDie.Plugin.html#Jellyfin_Plugin_DoesTheDogDie_Plugin_Id
+  name: Id
+  nameWithType: Plugin.Id
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.Id
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.Instance*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Plugin.Instance
+  href: Jellyfin.Plugin.DoesTheDogDie.Plugin.html#Jellyfin_Plugin_DoesTheDogDie_Plugin_Instance
+  name: Instance
+  nameWithType: Plugin.Instance
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.Instance
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin.GetPages*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Plugin.GetPages
+  href: Jellyfin.Plugin.DoesTheDogDie.Plugin.html#Jellyfin_Plugin_DoesTheDogDie_Plugin_GetPages
+  name: GetPages
+  nameWithType: Plugin.GetPages
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin.GetPages
+- uid: MediaBrowser.Model.Plugins.IHasWebPages.GetPages
+  commentId: M:MediaBrowser.Model.Plugins.IHasWebPages.GetPages
+  parent: MediaBrowser.Model.Plugins.IHasWebPages
+  isExternal: true
+  name: GetPages()
+  nameWithType: IHasWebPages.GetPages()
+  fullName: MediaBrowser.Model.Plugins.IHasWebPages.GetPages()
+  spec.csharp:
+  - uid: MediaBrowser.Model.Plugins.IHasWebPages.GetPages
+    name: GetPages
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Model.Plugins.IHasWebPages.GetPages
+    name: GetPages
+    isExternal: true
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{MediaBrowser.Model.Plugins.PluginPageInfo}
+  commentId: T:System.Collections.Generic.IEnumerable{MediaBrowser.Model.Plugins.PluginPageInfo}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<PluginPageInfo>
+  nameWithType: IEnumerable<PluginPageInfo>
+  fullName: System.Collections.Generic.IEnumerable<MediaBrowser.Model.Plugins.PluginPageInfo>
+  nameWithType.vb: IEnumerable(Of PluginPageInfo)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of MediaBrowser.Model.Plugins.PluginPageInfo)
+  name.vb: IEnumerable(Of PluginPageInfo)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: MediaBrowser.Model.Plugins.PluginPageInfo
+    name: PluginPageInfo
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MediaBrowser.Model.Plugins.PluginPageInfo
+    name: PluginPageInfo
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

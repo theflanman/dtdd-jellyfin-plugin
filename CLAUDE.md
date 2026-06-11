@@ -4,125 +4,144 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Jellyfin plugin that integrates DoesTheDogDie.com content warnings into Jellyfin media libraries. It fetches trigger warnings (animal death, violence, jump scares, etc.) and adds them as metadata tags to movies and TV shows.
+Jellyfin plugin that integrates DoesTheDogDie.com content warnings into media libraries. Fetches trigger warnings (animal death, violence, jump scares, etc.) and adds them as metadata tags to movies and TV shows.
 
 ## Build Commands
 
 ```bash
-# Build the plugin
+# Build
 dotnet build Jellyfin.Plugin.DoesTheDogDie.sln
-
-# Build with full paths for IDE integration
-dotnet build Jellyfin.Plugin.DoesTheDogDie.sln /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary
 
 # Publish for deployment
 dotnet publish Jellyfin.Plugin.DoesTheDogDie.sln
+
+# Run unit tests only (default, fast, no Docker)
+dotnet test --filter "Category!=E2E"
+
+# Run E2E suite (requires Docker; starts WireMock + Jellyfin containers)
+dotnet test --filter "Category=E2E"
+
+# Run everything
+dotnet test
+
+# Run single test
+dotnet test --filter "FullyQualifiedName~DtddApiClientTests.SearchByImdbIdAsync_ValidId_ReturnsResponse"
+
+# Tests with coverage
+dotnet test --collect:"XPlat Code Coverage" --filter "Category!=E2E"
+
+# Generate HTML coverage report (requires: dotnet tool install -g dotnet-reportgenerator-globaltool)
+reportgenerator -reports:"TestResults/**/coverage.cobertura.xml" \
+  -targetdir:"TestResults/CoverageReport" -reporttypes:Html
 ```
 
 ## Testing with Jellyfin
 
-The plugin must be tested within a running Jellyfin instance:
+### Automated (preferred)
 
-1. Build the plugin: `dotnet publish`
-2. Copy output from `Jellyfin.Plugin.DoesTheDogDie/bin/Debug/net9.0/publish/` to Jellyfin's plugin directory
-3. Restart Jellyfin server
-4. Plugin appears in Dashboard > Plugins
+`tests/Jellyfin.Plugin.DoesTheDogDie.E2ETests/` spins up `lscr.io/linuxserver/jellyfin:10.11.8` + `wiremock/wiremock:3.10.0` via Testcontainers, drives the startup wizard, adds NFO-backed fixture libraries, scans, and asserts plugin behavior. DTDD API is stubbed via WireMock — no real traffic.
 
-For Docker-based testing, see `docker-compose.test.yml` (to be created).
+```bash
+dotnet test --filter "Category=E2E"
+```
+
+Plugin DLLs are auto-published before the run via a `BeforeTargets="Build"` step in the E2E csproj, so it always tests the current source.
+
+### Manual install against a running Jellyfin
+
+1. `dotnet publish`
+2. Copy `Jellyfin.Plugin.DoesTheDogDie/bin/Debug/net9.0/publish/` into `<jellyfin-data>/plugins/DoesTheDogDie_<version>/`
+3. Add a `meta.json` (the E2E fixture's copy in `tests/.../Fixtures/JellyfinFixture.cs::WriteMetaJson` is a working reference; `status` must be `"Active"`)
+4. Restart Jellyfin server
+
+### Redirecting DTDD calls
+
+`Constants.ApiBaseUrl` honors the `DTDD_API_BASE_URL` env var and falls back to `https://www.doesthedogdie.com`. Used by the E2E harness to point at WireMock; safe to leave unset in production.
 
 ## Architecture
 
-### Plugin Entry Point
-- `Plugin.cs` - Main plugin class extending `BasePlugin<PluginConfiguration>`, implements `IHasWebPages`
-- Plugin GUID: `eb5d7894-8eef-4b36-aa6f-5d124e828ce1`
-- Plugin Name: "Does The Dog Die"
+### Data Flow
 
-### Key Jellyfin Interfaces to Implement
+1. **Metadata providers** (`ICustomMetadataProvider<T>`) run after TMDB/TVDB providers (Order=100)
+2. Provider gets IMDB ID from item, calls `DtddApiClient.GetMediaDetailsByImdbIdAsync()`
+3. API client searches DTDD by IMDB ID, then fetches full media details with triggers
+4. `TriggerFilter` applies user configuration (categories, topics, vote threshold)
+5. Warnings added as tags (e.g., "CW: Animal Death", "Safe: No Dogs Die")
 
-| Interface | Purpose |
+### Key Components
+
+| Component | Purpose |
 |-----------|---------|
-| `ICustomMetadataProvider<T>` | Supplements existing metadata during refresh (primary interface) |
-| `IExternalId` | Maps DTDD IDs to Jellyfin items |
-| `IExternalUrlProvider` | Generates links to doesthedogdie.com |
-| `IPluginServiceRegistrator` | Registers DI services (API client) |
-| `IHostedService` | Pre-fetches warnings on library changes |
-| `IScheduledTask` | Periodic metadata refresh |
+| `Plugin.cs` | Entry point, extends `BasePlugin<PluginConfiguration>`, GUID: `eb5d7894-8eef-4b36-aa6f-5d124e828ce1` |
+| `DtddApiClient` | HTTP client for DTDD API (search + media details) |
+| `DtddMovieProvider`, `DtddSeriesProvider` | `ICustomMetadataProvider` implementations that fetch and apply warnings |
+| `DtddSeasonProvider`, `DtddEpisodeProvider` | Inherit DTDD ID and warnings from parent Series |
+| `TriggerFilter` | Filters triggers by category/topic/vote threshold |
+| `DtddLibraryScanService` | `IHostedService` - auto-fetches DTDD data when items with IMDB IDs are added |
+| `DtddRefreshTask` | `IScheduledTask` - daily refresh at 2 AM |
+| `TriggerCacheService` | Caches trigger categories/topics from API |
 
-### Planned Directory Structure
-```
-Jellyfin.Plugin.DoesTheDogDie/
-├── Plugin.cs                      # Entry point
-├── PluginServiceRegistrator.cs    # DI registration
-├── Constants.cs                   # API key, provider names
-├── Configuration/
-│   ├── PluginConfiguration.cs     # Settings
-│   └── configPage.html            # UI
-├── Api/
-│   ├── DtddApiClient.cs           # HTTP client
-│   └── Models/                    # API response DTOs
-├── Providers/                     # ICustomMetadataProvider implementations
-├── Services/                      # IHostedService, IScheduledTask
-└── Storage/                       # Cache management
-```
+### Configuration Options (`PluginConfiguration`)
+
+- `EnableMovies/EnableSeries/EnableBooks` - Enable per media type (all true by default)
+- `MinVotesThreshold` - Minimum votes to include a trigger (default: 3)
+- `TagPrefix`/`SafeTagPrefix` - Tag prefixes (default: "CW:", "Safe:")
+- `ShowAllTriggers` - Master switch; when false, uses category/topic filtering
+- `EnabledCategoryIds`/`EnabledTopicIds` - Filter to specific triggers
 
 ### DoesTheDogDie API
 
 Base URL: `https://www.doesthedogdie.com`
 
-Headers required:
-- `Accept: application/json`
-- `X-API-KEY: {key}` (from `.env` file as `DTDD_API_KEY`)
-
 Key endpoints:
+- `/dddsearch?imdb={id}` - Search by IMDB ID (preferred)
 - `/dddsearch?q={term}` - Search by title
-- `/dddsearch?imdb={id}` - Search by IMDB ID
-- `/media/{id}` - Get trigger data
+- `/media/{id}` - Get trigger data with vote counts
 
-### Data Storage Strategy
+Headers: `Accept: application/json`, `X-API-KEY: {key}`
 
-1. **ProviderIds**: Store DTDD ID in `item.ProviderIds["Dtdd"]`
-2. **Tags**: Add warnings as tags with configurable prefix (e.g., "CW: Animal Death")
-3. **Plugin Cache**: Store full trigger data as JSON files
+**Important:** Invalid media IDs return HTML (not JSON), so `DtddApiClient.GetMediaDetailsAsync()` checks Content-Type header.
 
 ## Code Style
 
-- Target: .NET 9.0
-- Nullable reference types enabled
-- StyleCop and Roslyn analyzers enforced (see `jellyfin.ruleset`)
-- Warnings treated as errors
-- Private fields use `_camelCase` prefix
-- XML documentation required for public members
+- .NET 9.0, nullable reference types enabled
+- StyleCop/Roslyn analyzers enforced (`jellyfin.ruleset`), warnings as errors
+- Private fields: `_camelCase`
+- XML docs required for public members
+- Bootstrap code (`Plugin.cs`, `PluginServiceRegistrator.cs`) marked `[ExcludeFromCodeCoverage]`
 
-## Environment Variables
+## Testing Patterns
 
-The `.env` file contains:
-- `DTDD_API_KEY` - DoesTheDogDie API key (embedded in builds)
-- `JELLYFIN_API_KEY` - For testing against local Jellyfin instance
+API client methods are `virtual` for mocking. Use `IPluginConfigurationAccessor` for config mocking:
 
-## Testing
+```csharp
+_apiClientMock.Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
+    .ReturnsAsync(details);
 
-```bash
-# Run all tests
-dotnet test
-
-# Run tests with coverage
-dotnet test --collect:"XPlat Code Coverage"
-
-# Generate HTML coverage report (requires ReportGenerator)
-reportgenerator -reports:"TestResults/**/coverage.cobertura.xml" \
-  -targetdir:"TestResults/CoverageReport" -reporttypes:Html
+_configAccessorMock.Setup(x => x.GetConfiguration())
+    .Returns(new PluginConfiguration { EnableMovies = true });
 ```
 
-See [docs/TESTING.md](./docs/TESTING.md) for detailed testing documentation.
+### Known Test Limitation
 
-## Key References
+Season/Episode providers get IMDB ID from parent Series via `item.Series.GetProviderId()`. The `Series` property is null in unit tests (no public setter), so only the "no parent series" path is testable (~44% coverage on these providers). E2E tests cover the real inheritance path against a running Jellyfin.
 
-- [TVDB Plugin](https://github.com/jellyfin/jellyfin-plugin-tvdb) - Reference implementation for metadata plugins
-- [Jellyfin Plugin Docs](https://jellyfin.org/docs/general/server/plugins/) - Official documentation
+### E2E Internals
+
+- **Fixture:** `tests/Jellyfin.Plugin.DoesTheDogDie.E2ETests/Fixtures/JellyfinFixture.cs` — Testcontainers network + WireMock + Jellyfin LSIO containers, runs startup wizard, adds libraries, triggers initial scan.
+- **REST wrapper:** `JellyfinClient.cs` — wraps wizard, login, library mgmt, plugin config, refresh + poll. Retries 5xx during wizard window. Authenticates via `MediaBrowser` auth header.
+- **Stubs:** `Stubs/wiremock-mappings/*.json` — canned `DtddSearchResponse` / `DtddMediaDetails` for known IMDB IDs (`tt2911666`, `tt0903747`).
+- **Fixture media:** `Fixtures/media/{movies,tv}/` — minimal NFO-only tree (stub `.mkv` files); IMDB IDs match the WireMock stubs.
+- **Refresh gotcha:** when a `Dtdd` ProviderId is already set and `replaceAllMetadata=false`, `DtddMovieProvider` / `DtddSeriesProvider` only re-apply tags/overview if `AddWarningTags` or `AddDescriptionWarnings` is enabled (cached-id path); otherwise they skip entirely. Mutation tests usually pass `replaceAllMetadata=true` to force a full re-fetch.
+- **meta.json:** must include `"status": "Active"` and live at `/config/data/plugins/<Name>_<Version>/`. Without `Active`, `PluginManager` treats the plugin as Disabled and silently skips loading it.
+
+## Implementation Status
+
+Phases 0-4 complete (core infrastructure, metadata providers, background services, UI integration: `IExternalId`, `IExternalUrlProvider`, real config page). Description injection (`OverviewFormatter`) added on `feature/description-injection`. Automated E2E harness in place.
 
 ## Documentation
 
-- [docs/IMPLEMENTATION_PLAN.md](./docs/IMPLEMENTATION_PLAN.md) - Detailed implementation plan with interface analysis
-- [docs/API_DOCUMENTATION.md](./docs/API_DOCUMENTATION.md) - DoesTheDogDie API reference
-- [docs/PROGRESS.md](./docs/PROGRESS.md) - Current implementation progress
-- [docs/TESTING.md](./docs/TESTING.md) - Testing guide and coverage
+- [docs/PROGRESS.md](./docs/PROGRESS.md) - Implementation status and test coverage
+- [docs/API_DOCUMENTATION.md](./docs/API_DOCUMENTATION.md) - DTDD API reference with response schemas
+- [docs/IMPLEMENTATION_PLAN.md](./docs/IMPLEMENTATION_PLAN.md) - Original architecture decisions
+- [docs/TESTING.md](./docs/TESTING.md) - Testing guide and patterns

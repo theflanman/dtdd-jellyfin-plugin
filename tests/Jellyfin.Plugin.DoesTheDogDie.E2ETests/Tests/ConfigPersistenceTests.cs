@@ -100,7 +100,7 @@ public sealed class ConfigPersistenceTests
         }
     }
 
-    [Fact(Skip = "Requires feature/description-injection to be merged")]
+    [Fact]
     public async Task DescriptionInjectionFlags_RoundTripTogetherAfterPost()
     {
         try

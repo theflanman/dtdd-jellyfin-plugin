@@ -1,0 +1,1356 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  id: DtddMediaItem
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.AltName
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.BackgroundImage
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CleanName
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CreatedAt
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Genre
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Id
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ImdbId
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemType
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemTypeId
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Name
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.NumRatings
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Overview
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.PosterImage
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ReleaseYear
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.StaffVerified
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.TmdbId
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.UpdatedAt
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Verified
+  langs:
+  - csharp
+  - vb
+  name: DtddMediaItem
+  nameWithType: DtddMediaItem
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: DtddMediaItem
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 8
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Represents a media item from DoesTheDogDie search results.
+  example: []
+  syntax:
+    content: public class DtddMediaItem
+    content.vb: Public Class DtddMediaItem
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Id
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Id
+  id: Id
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: DtddMediaItem.Id
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Id
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Id
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 13
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the DTDD internal ID.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("id")]
+
+      public int Id { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <JsonPropertyName("id")>
+
+      Public Property Id As Integer
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Id*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: id
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Name
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Name
+  id: Name
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: DtddMediaItem.Name
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Name
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Name
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 19
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the display title.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("name")]
+
+      public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("name")>
+
+      Public Property Name As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Name*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: name
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CleanName
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CleanName
+  id: CleanName
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: CleanName
+  nameWithType: DtddMediaItem.CleanName
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CleanName
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: CleanName
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 25
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the normalized title (lowercase, no articles).
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("cleanName")]
+
+      public string? CleanName { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("cleanName")>
+
+      Public Property CleanName As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CleanName*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: cleanName
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.AltName
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.AltName
+  id: AltName
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: AltName
+  nameWithType: DtddMediaItem.AltName
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.AltName
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: AltName
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 31
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the alternate name.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("altName")]
+
+      public string? AltName { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("altName")>
+
+      Public Property AltName As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.AltName*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: altName
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Genre
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Genre
+  id: Genre
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: Genre
+  nameWithType: DtddMediaItem.Genre
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Genre
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Genre
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 37
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the primary genre.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("genre")]
+
+      public string? Genre { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("genre")>
+
+      Public Property Genre As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Genre*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: genre
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ReleaseYear
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ReleaseYear
+  id: ReleaseYear
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: ReleaseYear
+  nameWithType: DtddMediaItem.ReleaseYear
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ReleaseYear
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: ReleaseYear
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 43
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the release year.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("releaseYear")]
+
+      public string? ReleaseYear { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("releaseYear")>
+
+      Public Property ReleaseYear As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ReleaseYear*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: releaseYear
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.TmdbId
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.TmdbId
+  id: TmdbId
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: TmdbId
+  nameWithType: DtddMediaItem.TmdbId
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.TmdbId
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: TmdbId
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 49
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the TMDB ID.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("tmdbId")]
+
+      public int? TmdbId { get; set; }
+    parameters: []
+    return:
+      type: System.Nullable{System.Int32}
+    content.vb: >-
+      <JsonPropertyName("tmdbId")>
+
+      Public Property TmdbId As Integer?
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.TmdbId*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: tmdbId
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ImdbId
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ImdbId
+  id: ImdbId
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: ImdbId
+  nameWithType: DtddMediaItem.ImdbId
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ImdbId
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: ImdbId
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 55
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the IMDB ID.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("imdbId")]
+
+      public string? ImdbId { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("imdbId")>
+
+      Public Property ImdbId As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ImdbId*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: imdbId
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.PosterImage
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.PosterImage
+  id: PosterImage
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: PosterImage
+  nameWithType: DtddMediaItem.PosterImage
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.PosterImage
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: PosterImage
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 61
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the TMDB poster path.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("posterImage")]
+
+      public string? PosterImage { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("posterImage")>
+
+      Public Property PosterImage As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.PosterImage*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: posterImage
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.BackgroundImage
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.BackgroundImage
+  id: BackgroundImage
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: BackgroundImage
+  nameWithType: DtddMediaItem.BackgroundImage
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.BackgroundImage
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: BackgroundImage
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 67
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the TMDB backdrop path.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("backgroundImage")]
+
+      public string? BackgroundImage { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("backgroundImage")>
+
+      Public Property BackgroundImage As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.BackgroundImage*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: backgroundImage
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Overview
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Overview
+  id: Overview
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: Overview
+  nameWithType: DtddMediaItem.Overview
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Overview
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Overview
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 73
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the synopsis.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("overview")]
+
+      public string? Overview { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("overview")>
+
+      Public Property Overview As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Overview*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: overview
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.NumRatings
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.NumRatings
+  id: NumRatings
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: NumRatings
+  nameWithType: DtddMediaItem.NumRatings
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.NumRatings
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: NumRatings
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 79
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the total number of trigger votes.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("numRatings")]
+
+      public int NumRatings { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <JsonPropertyName("numRatings")>
+
+      Public Property NumRatings As Integer
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.NumRatings*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: numRatings
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Verified
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Verified
+  id: Verified
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: Verified
+  nameWithType: DtddMediaItem.Verified
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Verified
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Verified
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 85
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets a value indicating whether the content is verified.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("verified")]
+
+      [JsonConverter(typeof(BooleanOrIntConverter))]
+
+      public bool Verified { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <JsonPropertyName("verified")>
+
+      <JsonConverter(GetType(BooleanOrIntConverter))>
+
+      Public Property Verified As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Verified*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: verified
+  - type: System.Text.Json.Serialization.JsonConverterAttribute
+    ctor: System.Text.Json.Serialization.JsonConverterAttribute.#ctor(System.Type)
+    arguments:
+    - type: System.Type
+      value: Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.StaffVerified
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.StaffVerified
+  id: StaffVerified
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: StaffVerified
+  nameWithType: DtddMediaItem.StaffVerified
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.StaffVerified
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: StaffVerified
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 92
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets a value indicating whether the content is staff verified.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("staffVerified")]
+
+      [JsonConverter(typeof(BooleanOrIntConverter))]
+
+      public bool StaffVerified { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <JsonPropertyName("staffVerified")>
+
+      <JsonConverter(GetType(BooleanOrIntConverter))>
+
+      Public Property StaffVerified As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.StaffVerified*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: staffVerified
+  - type: System.Text.Json.Serialization.JsonConverterAttribute
+    ctor: System.Text.Json.Serialization.JsonConverterAttribute.#ctor(System.Type)
+    arguments:
+    - type: System.Type
+      value: Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemTypeId
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemTypeId
+  id: ItemTypeId
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: ItemTypeId
+  nameWithType: DtddMediaItem.ItemTypeId
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemTypeId
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: ItemTypeId
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 99
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the media type ID.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("ItemTypeId")]
+
+      public int ItemTypeId { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <JsonPropertyName("ItemTypeId")>
+
+      Public Property ItemTypeId As Integer
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemTypeId*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: ItemTypeId
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemType
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemType
+  id: ItemType
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: ItemType
+  nameWithType: DtddMediaItem.ItemType
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemType
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: ItemType
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 105
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the media type details.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("itemType")]
+
+      public DtddItemType? ItemType { get; set; }
+    parameters: []
+    return:
+      type: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType
+    content.vb: >-
+      <JsonPropertyName("itemType")>
+
+      Public Property ItemType As DtddItemType
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemType*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: itemType
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CreatedAt
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CreatedAt
+  id: CreatedAt
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: CreatedAt
+  nameWithType: DtddMediaItem.CreatedAt
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CreatedAt
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: CreatedAt
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 111
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the creation timestamp.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("createdAt")]
+
+      public DateTime? CreatedAt { get; set; }
+    parameters: []
+    return:
+      type: System.Nullable{System.DateTime}
+    content.vb: >-
+      <JsonPropertyName("createdAt")>
+
+      Public Property CreatedAt As Date?
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CreatedAt*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: createdAt
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.UpdatedAt
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.UpdatedAt
+  id: UpdatedAt
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  langs:
+  - csharp
+  - vb
+  name: UpdatedAt
+  nameWithType: DtddMediaItem.UpdatedAt
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.UpdatedAt
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: UpdatedAt
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/Models/DtddMediaItem.cs
+    startLine: 117
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  summary: Gets or sets the last update timestamp.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("updatedAt")]
+
+      public DateTime? UpdatedAt { get; set; }
+    parameters: []
+    return:
+      type: System.Nullable{System.DateTime}
+    content.vb: >-
+      <JsonPropertyName("updatedAt")>
+
+      Public Property UpdatedAt As Date?
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.UpdatedAt*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: updatedAt
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+    name: Models
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+    name: Models
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Id*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Id
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_Id
+  name: Id
+  nameWithType: DtddMediaItem.Id
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Id
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Name*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Name
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_Name
+  name: Name
+  nameWithType: DtddMediaItem.Name
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CleanName*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CleanName
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_CleanName
+  name: CleanName
+  nameWithType: DtddMediaItem.CleanName
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CleanName
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.AltName*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.AltName
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_AltName
+  name: AltName
+  nameWithType: DtddMediaItem.AltName
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.AltName
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Genre*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Genre
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_Genre
+  name: Genre
+  nameWithType: DtddMediaItem.Genre
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Genre
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ReleaseYear*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ReleaseYear
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_ReleaseYear
+  name: ReleaseYear
+  nameWithType: DtddMediaItem.ReleaseYear
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ReleaseYear
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.TmdbId*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.TmdbId
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_TmdbId
+  name: TmdbId
+  nameWithType: DtddMediaItem.TmdbId
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.TmdbId
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ImdbId*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ImdbId
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_ImdbId
+  name: ImdbId
+  nameWithType: DtddMediaItem.ImdbId
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ImdbId
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.PosterImage*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.PosterImage
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_PosterImage
+  name: PosterImage
+  nameWithType: DtddMediaItem.PosterImage
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.PosterImage
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.BackgroundImage*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.BackgroundImage
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_BackgroundImage
+  name: BackgroundImage
+  nameWithType: DtddMediaItem.BackgroundImage
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.BackgroundImage
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Overview*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Overview
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_Overview
+  name: Overview
+  nameWithType: DtddMediaItem.Overview
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Overview
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.NumRatings*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.NumRatings
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_NumRatings
+  name: NumRatings
+  nameWithType: DtddMediaItem.NumRatings
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.NumRatings
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Verified*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Verified
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_Verified
+  name: Verified
+  nameWithType: DtddMediaItem.Verified
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.Verified
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.StaffVerified*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.StaffVerified
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_StaffVerified
+  name: StaffVerified
+  nameWithType: DtddMediaItem.StaffVerified
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.StaffVerified
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemTypeId*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemTypeId
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_ItemTypeId
+  name: ItemTypeId
+  nameWithType: DtddMediaItem.ItemTypeId
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemTypeId
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemType*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemType
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_ItemType
+  name: ItemType
+  nameWithType: DtddMediaItem.ItemType
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.ItemType
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType.html
+  name: DtddItemType
+  nameWithType: DtddItemType
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CreatedAt*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CreatedAt
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_CreatedAt
+  name: CreatedAt
+  nameWithType: DtddMediaItem.CreatedAt
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.CreatedAt
+- uid: System.Nullable{System.DateTime}
+  commentId: T:System.Nullable{System.DateTime}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.datetime
+  name: DateTime?
+  nameWithType: DateTime?
+  fullName: System.DateTime?
+  nameWithType.vb: Date?
+  fullName.vb: Date?
+  name.vb: Date?
+  spec.csharp:
+  - uid: System.DateTime
+    name: DateTime
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.datetime
+  - name: '?'
+  spec.vb:
+  - uid: System.DateTime
+    name: Date
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.datetime
+  - name: '?'
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.UpdatedAt*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.UpdatedAt
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html#Jellyfin_Plugin_DoesTheDogDie_Api_Models_DtddMediaItem_UpdatedAt
+  name: UpdatedAt
+  nameWithType: DtddMediaItem.UpdatedAt
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.UpdatedAt
