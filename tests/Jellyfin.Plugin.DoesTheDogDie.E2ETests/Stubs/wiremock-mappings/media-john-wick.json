@@ -34,7 +34,16 @@
             "name": "an animal dies",
             "notName": "no animals die",
             "isSpoiler": false,
-            "isVisible": true
+            "isVisible": true,
+            "TopicCategoryId": 2,
+            "TopicCategory": {
+              "id": 2,
+              "name": "Animal"
+            }
+          },
+          "TopicCategory": {
+            "id": 2,
+            "name": "Animal"
           }
         },
         {
@@ -51,7 +60,16 @@
             "name": "someone is shot",
             "notName": "no one is shot",
             "isSpoiler": false,
-            "isVisible": true
+            "isVisible": true,
+            "TopicCategoryId": 3,
+            "TopicCategory": {
+              "id": 3,
+              "name": "Violence"
+            }
+          },
+          "TopicCategory": {
+            "id": 3,
+            "name": "Violence"
           }
         },
         {
@@ -68,7 +86,16 @@
             "name": "a major character dies",
             "notName": "no major characters die",
             "isSpoiler": true,
-            "isVisible": true
+            "isVisible": true,
+            "TopicCategoryId": 3,
+            "TopicCategory": {
+              "id": 3,
+              "name": "Violence"
+            }
+          },
+          "TopicCategory": {
+            "id": 3,
+            "name": "Violence"
           }
         }
       ]

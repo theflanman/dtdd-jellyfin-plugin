@@ -1,0 +1,1252 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  id: DtddRefreshTask
+  parent: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.#ctor(MediaBrowser.Controller.Library.ILibraryManager,Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask})
+  - Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Category
+  - Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Description
+  - Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.ExecuteAsync(System.IProgress{System.Double},System.Threading.CancellationToken)
+  - Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.GetDefaultTriggers
+  - Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Key
+  - Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Name
+  langs:
+  - csharp
+  - vb
+  name: DtddRefreshTask
+  nameWithType: DtddRefreshTask
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: DtddRefreshTask
+    path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+    startLine: 23
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  summary: >-
+    Scheduled task that periodically refreshes DTDD data for all items
+
+    that already have DTDD provider IDs.
+  example: []
+  syntax:
+    content: 'public class DtddRefreshTask : IScheduledTask'
+    content.vb: Public Class DtddRefreshTask Implements IScheduledTask
+  inheritance:
+  - System.Object
+  implements:
+  - MediaBrowser.Model.Tasks.IScheduledTask
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.#ctor(MediaBrowser.Controller.Library.ILibraryManager,Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask})
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.#ctor(MediaBrowser.Controller.Library.ILibraryManager,Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask})
+  id: '#ctor(MediaBrowser.Controller.Library.ILibraryManager,Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask})'
+  parent: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  langs:
+  - csharp
+  - vb
+  name: DtddRefreshTask(ILibraryManager, DtddApiClient, IPluginConfigurationAccessor, ILogger<DtddRefreshTask>)
+  nameWithType: DtddRefreshTask.DtddRefreshTask(ILibraryManager, DtddApiClient, IPluginConfigurationAccessor, ILogger<DtddRefreshTask>)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.DtddRefreshTask(MediaBrowser.Controller.Library.ILibraryManager, Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient, Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor, Microsoft.Extensions.Logging.ILogger<Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask>)
+  type: Constructor
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: .ctor
+    path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+    startLine: 37
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  summary: Initializes a new instance of the <xref href="Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public DtddRefreshTask(ILibraryManager libraryManager, DtddApiClient apiClient, IPluginConfigurationAccessor configAccessor, ILogger<DtddRefreshTask> logger)
+    parameters:
+    - id: libraryManager
+      type: MediaBrowser.Controller.Library.ILibraryManager
+      description: The library manager.
+    - id: apiClient
+      type: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+      description: The DTDD API client.
+    - id: configAccessor
+      type: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+      description: The configuration accessor.
+    - id: logger
+      type: Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask}
+      description: The logger.
+    content.vb: Public Sub New(libraryManager As ILibraryManager, apiClient As DtddApiClient, configAccessor As IPluginConfigurationAccessor, logger As ILogger(Of DtddRefreshTask))
+  overload: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.#ctor*
+  nameWithType.vb: DtddRefreshTask.New(ILibraryManager, DtddApiClient, IPluginConfigurationAccessor, ILogger(Of DtddRefreshTask))
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.New(MediaBrowser.Controller.Library.ILibraryManager, Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient, Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor, Microsoft.Extensions.Logging.ILogger(Of Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask))
+  name.vb: New(ILibraryManager, DtddApiClient, IPluginConfigurationAccessor, ILogger(Of DtddRefreshTask))
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Name
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Name
+  id: Name
+  parent: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: DtddRefreshTask.Name
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Name
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Name
+    path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+    startLine: 50
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  summary: Gets the name of the task.
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+      description: The name.
+    content.vb: Public ReadOnly Property Name As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Name*
+  implements:
+  - MediaBrowser.Model.Tasks.IScheduledTask.Name
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Description
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Description
+  id: Description
+  parent: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  langs:
+  - csharp
+  - vb
+  name: Description
+  nameWithType: DtddRefreshTask.Description
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Description
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Description
+    path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+    startLine: 53
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  summary: Gets the description.
+  example: []
+  syntax:
+    content: public string Description { get; }
+    parameters: []
+    return:
+      type: System.String
+      description: The description.
+    content.vb: Public ReadOnly Property Description As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Description*
+  implements:
+  - MediaBrowser.Model.Tasks.IScheduledTask.Description
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Key
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Key
+  id: Key
+  parent: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  langs:
+  - csharp
+  - vb
+  name: Key
+  nameWithType: DtddRefreshTask.Key
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Key
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Key
+    path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+    startLine: 56
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  summary: Gets the key of the task.
+  example: []
+  syntax:
+    content: public string Key { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Key As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Key*
+  implements:
+  - MediaBrowser.Model.Tasks.IScheduledTask.Key
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Category
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Category
+  id: Category
+  parent: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  langs:
+  - csharp
+  - vb
+  name: Category
+  nameWithType: DtddRefreshTask.Category
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Category
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Category
+    path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+    startLine: 59
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  summary: Gets the category.
+  example: []
+  syntax:
+    content: public string Category { get; }
+    parameters: []
+    return:
+      type: System.String
+      description: The category.
+    content.vb: Public ReadOnly Property Category As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Category*
+  implements:
+  - MediaBrowser.Model.Tasks.IScheduledTask.Category
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.GetDefaultTriggers
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.GetDefaultTriggers
+  id: GetDefaultTriggers
+  parent: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  langs:
+  - csharp
+  - vb
+  name: GetDefaultTriggers()
+  nameWithType: DtddRefreshTask.GetDefaultTriggers()
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.GetDefaultTriggers()
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: GetDefaultTriggers
+    path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+    startLine: 62
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  summary: Gets the default triggers that define when the task will run.
+  example: []
+  syntax:
+    content: public IEnumerable<TaskTriggerInfo> GetDefaultTriggers()
+    return:
+      type: System.Collections.Generic.IEnumerable{MediaBrowser.Model.Tasks.TaskTriggerInfo}
+      description: The default triggers that define when the task will run.
+    content.vb: Public Function GetDefaultTriggers() As IEnumerable(Of TaskTriggerInfo)
+  overload: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.GetDefaultTriggers*
+  implements:
+  - MediaBrowser.Model.Tasks.IScheduledTask.GetDefaultTriggers
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.ExecuteAsync(System.IProgress{System.Double},System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.ExecuteAsync(System.IProgress{System.Double},System.Threading.CancellationToken)
+  id: ExecuteAsync(System.IProgress{System.Double},System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  langs:
+  - csharp
+  - vb
+  name: ExecuteAsync(IProgress<double>, CancellationToken)
+  nameWithType: DtddRefreshTask.ExecuteAsync(IProgress<double>, CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.ExecuteAsync(System.IProgress<double>, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: ExecuteAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/ScheduledTasks/DtddRefreshTask.cs
+    startLine: 76
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  summary: Executes the task.
+  example: []
+  syntax:
+    content: public Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
+    parameters:
+    - id: progress
+      type: System.IProgress{System.Double}
+      description: The progress.
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: The cancellation token.
+    return:
+      type: System.Threading.Tasks.Task
+      description: Task.
+    content.vb: Public Function ExecuteAsync(progress As IProgress(Of Double), cancellationToken As CancellationToken) As Task
+  overload: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.ExecuteAsync*
+  implements:
+  - MediaBrowser.Model.Tasks.IScheduledTask.ExecuteAsync(System.IProgress{System.Double},System.Threading.CancellationToken)
+  nameWithType.vb: DtddRefreshTask.ExecuteAsync(IProgress(Of Double), CancellationToken)
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.ExecuteAsync(System.IProgress(Of Double), System.Threading.CancellationToken)
+  name.vb: ExecuteAsync(IProgress(Of Double), CancellationToken)
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+    name: ScheduledTasks
+    href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+    name: ScheduledTasks
+    href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: MediaBrowser.Model.Tasks.IScheduledTask
+  commentId: T:MediaBrowser.Model.Tasks.IScheduledTask
+  parent: MediaBrowser.Model.Tasks
+  isExternal: true
+  name: IScheduledTask
+  nameWithType: IScheduledTask
+  fullName: MediaBrowser.Model.Tasks.IScheduledTask
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: MediaBrowser.Model.Tasks
+  commentId: N:MediaBrowser.Model.Tasks
+  isExternal: true
+  name: MediaBrowser.Model.Tasks
+  nameWithType: MediaBrowser.Model.Tasks
+  fullName: MediaBrowser.Model.Tasks
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Tasks
+    name: Tasks
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Tasks
+    name: Tasks
+    isExternal: true
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html
+  name: DtddRefreshTask
+  nameWithType: DtddRefreshTask
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.#ctor*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.#ctor
+  href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html#Jellyfin_Plugin_DoesTheDogDie_ScheduledTasks_DtddRefreshTask__ctor_MediaBrowser_Controller_Library_ILibraryManager_Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_Jellyfin_Plugin_DoesTheDogDie_Configuration_IPluginConfigurationAccessor_Microsoft_Extensions_Logging_ILogger_Jellyfin_Plugin_DoesTheDogDie_ScheduledTasks_DtddRefreshTask__
+  name: DtddRefreshTask
+  nameWithType: DtddRefreshTask.DtddRefreshTask
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.DtddRefreshTask
+  nameWithType.vb: DtddRefreshTask.New
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.New
+  name.vb: New
+- uid: MediaBrowser.Controller.Library.ILibraryManager
+  commentId: T:MediaBrowser.Controller.Library.ILibraryManager
+  parent: MediaBrowser.Controller.Library
+  isExternal: true
+  name: ILibraryManager
+  nameWithType: ILibraryManager
+  fullName: MediaBrowser.Controller.Library.ILibraryManager
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html
+  name: DtddApiClient
+  nameWithType: DtddApiClient
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.html
+  name: IPluginConfigurationAccessor
+  nameWithType: IPluginConfigurationAccessor
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+- uid: Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask}
+  commentId: T:Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask}
+  parent: Microsoft.Extensions.Logging
+  definition: Microsoft.Extensions.Logging.ILogger`1
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<DtddRefreshTask>
+  nameWithType: ILogger<DtddRefreshTask>
+  fullName: Microsoft.Extensions.Logging.ILogger<Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask>
+  nameWithType.vb: ILogger(Of DtddRefreshTask)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask)
+  name.vb: ILogger(Of DtddRefreshTask)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+    name: DtddRefreshTask
+    href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+    name: DtddRefreshTask
+    href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html
+  - name: )
+- uid: MediaBrowser.Controller.Library
+  commentId: N:MediaBrowser.Controller.Library
+  isExternal: true
+  name: MediaBrowser.Controller.Library
+  nameWithType: MediaBrowser.Controller.Library
+  fullName: MediaBrowser.Controller.Library
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller
+    name: Controller
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller.Library
+    name: Library
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller
+    name: Controller
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller.Library
+    name: Library
+    isExternal: true
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Api
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Api
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+- uid: Microsoft.Extensions.Logging.ILogger`1
+  commentId: T:Microsoft.Extensions.Logging.ILogger`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<TCategoryName>
+  nameWithType: ILogger<TCategoryName>
+  fullName: Microsoft.Extensions.Logging.ILogger<TCategoryName>
+  nameWithType.vb: ILogger(Of TCategoryName)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of TCategoryName)
+  name.vb: ILogger(Of TCategoryName)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - name: TCategoryName
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TCategoryName
+  - name: )
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Name*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Name
+  href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html#Jellyfin_Plugin_DoesTheDogDie_ScheduledTasks_DtddRefreshTask_Name
+  name: Name
+  nameWithType: DtddRefreshTask.Name
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Name
+- uid: MediaBrowser.Model.Tasks.IScheduledTask.Name
+  commentId: P:MediaBrowser.Model.Tasks.IScheduledTask.Name
+  parent: MediaBrowser.Model.Tasks.IScheduledTask
+  isExternal: true
+  name: Name
+  nameWithType: IScheduledTask.Name
+  fullName: MediaBrowser.Model.Tasks.IScheduledTask.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Description*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Description
+  href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html#Jellyfin_Plugin_DoesTheDogDie_ScheduledTasks_DtddRefreshTask_Description
+  name: Description
+  nameWithType: DtddRefreshTask.Description
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Description
+- uid: MediaBrowser.Model.Tasks.IScheduledTask.Description
+  commentId: P:MediaBrowser.Model.Tasks.IScheduledTask.Description
+  parent: MediaBrowser.Model.Tasks.IScheduledTask
+  isExternal: true
+  name: Description
+  nameWithType: IScheduledTask.Description
+  fullName: MediaBrowser.Model.Tasks.IScheduledTask.Description
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Key*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Key
+  href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html#Jellyfin_Plugin_DoesTheDogDie_ScheduledTasks_DtddRefreshTask_Key
+  name: Key
+  nameWithType: DtddRefreshTask.Key
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Key
+- uid: MediaBrowser.Model.Tasks.IScheduledTask.Key
+  commentId: P:MediaBrowser.Model.Tasks.IScheduledTask.Key
+  parent: MediaBrowser.Model.Tasks.IScheduledTask
+  isExternal: true
+  name: Key
+  nameWithType: IScheduledTask.Key
+  fullName: MediaBrowser.Model.Tasks.IScheduledTask.Key
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Category*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Category
+  href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html#Jellyfin_Plugin_DoesTheDogDie_ScheduledTasks_DtddRefreshTask_Category
+  name: Category
+  nameWithType: DtddRefreshTask.Category
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.Category
+- uid: MediaBrowser.Model.Tasks.IScheduledTask.Category
+  commentId: P:MediaBrowser.Model.Tasks.IScheduledTask.Category
+  parent: MediaBrowser.Model.Tasks.IScheduledTask
+  isExternal: true
+  name: Category
+  nameWithType: IScheduledTask.Category
+  fullName: MediaBrowser.Model.Tasks.IScheduledTask.Category
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.GetDefaultTriggers*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.GetDefaultTriggers
+  href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html#Jellyfin_Plugin_DoesTheDogDie_ScheduledTasks_DtddRefreshTask_GetDefaultTriggers
+  name: GetDefaultTriggers
+  nameWithType: DtddRefreshTask.GetDefaultTriggers
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.GetDefaultTriggers
+- uid: MediaBrowser.Model.Tasks.IScheduledTask.GetDefaultTriggers
+  commentId: M:MediaBrowser.Model.Tasks.IScheduledTask.GetDefaultTriggers
+  parent: MediaBrowser.Model.Tasks.IScheduledTask
+  isExternal: true
+  name: GetDefaultTriggers()
+  nameWithType: IScheduledTask.GetDefaultTriggers()
+  fullName: MediaBrowser.Model.Tasks.IScheduledTask.GetDefaultTriggers()
+  spec.csharp:
+  - uid: MediaBrowser.Model.Tasks.IScheduledTask.GetDefaultTriggers
+    name: GetDefaultTriggers
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Model.Tasks.IScheduledTask.GetDefaultTriggers
+    name: GetDefaultTriggers
+    isExternal: true
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{MediaBrowser.Model.Tasks.TaskTriggerInfo}
+  commentId: T:System.Collections.Generic.IEnumerable{MediaBrowser.Model.Tasks.TaskTriggerInfo}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<TaskTriggerInfo>
+  nameWithType: IEnumerable<TaskTriggerInfo>
+  fullName: System.Collections.Generic.IEnumerable<MediaBrowser.Model.Tasks.TaskTriggerInfo>
+  nameWithType.vb: IEnumerable(Of TaskTriggerInfo)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of MediaBrowser.Model.Tasks.TaskTriggerInfo)
+  name.vb: IEnumerable(Of TaskTriggerInfo)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: MediaBrowser.Model.Tasks.TaskTriggerInfo
+    name: TaskTriggerInfo
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MediaBrowser.Model.Tasks.TaskTriggerInfo
+    name: TaskTriggerInfo
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.ExecuteAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.ExecuteAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html#Jellyfin_Plugin_DoesTheDogDie_ScheduledTasks_DtddRefreshTask_ExecuteAsync_System_IProgress_System_Double__System_Threading_CancellationToken_
+  name: ExecuteAsync
+  nameWithType: DtddRefreshTask.ExecuteAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.ExecuteAsync
+- uid: MediaBrowser.Model.Tasks.IScheduledTask.ExecuteAsync(System.IProgress{System.Double},System.Threading.CancellationToken)
+  commentId: M:MediaBrowser.Model.Tasks.IScheduledTask.ExecuteAsync(System.IProgress{System.Double},System.Threading.CancellationToken)
+  parent: MediaBrowser.Model.Tasks.IScheduledTask
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: ExecuteAsync(IProgress<double>, CancellationToken)
+  nameWithType: IScheduledTask.ExecuteAsync(IProgress<double>, CancellationToken)
+  fullName: MediaBrowser.Model.Tasks.IScheduledTask.ExecuteAsync(System.IProgress<double>, System.Threading.CancellationToken)
+  nameWithType.vb: IScheduledTask.ExecuteAsync(IProgress(Of Double), CancellationToken)
+  fullName.vb: MediaBrowser.Model.Tasks.IScheduledTask.ExecuteAsync(System.IProgress(Of Double), System.Threading.CancellationToken)
+  name.vb: ExecuteAsync(IProgress(Of Double), CancellationToken)
+  spec.csharp:
+  - uid: MediaBrowser.Model.Tasks.IScheduledTask.ExecuteAsync(System.IProgress{System.Double},System.Threading.CancellationToken)
+    name: ExecuteAsync
+    isExternal: true
+  - name: (
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Model.Tasks.IScheduledTask.ExecuteAsync(System.IProgress{System.Double},System.Threading.CancellationToken)
+    name: ExecuteAsync
+    isExternal: true
+  - name: (
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+- uid: System.IProgress{System.Double}
+  commentId: T:System.IProgress{System.Double}
+  parent: System
+  definition: System.IProgress`1
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<double>
+  nameWithType: IProgress<double>
+  fullName: System.IProgress<double>
+  nameWithType.vb: IProgress(Of Double)
+  fullName.vb: System.IProgress(Of Double)
+  name.vb: IProgress(Of Double)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.IProgress`1
+  commentId: T:System.IProgress`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  name: IProgress<T>
+  nameWithType: IProgress<T>
+  fullName: System.IProgress<T>
+  nameWithType.vb: IProgress(Of T)
+  fullName.vb: System.IProgress(Of T)
+  name.vb: IProgress(Of T)
+  spec.csharp:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IProgress`1
+    name: IProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iprogress-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks

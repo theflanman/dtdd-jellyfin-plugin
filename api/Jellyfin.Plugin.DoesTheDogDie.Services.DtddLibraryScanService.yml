@@ -1,0 +1,879 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  id: DtddLibraryScanService
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.#ctor(MediaBrowser.Controller.Library.ILibraryManager,Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService})
+  - Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StartAsync(System.Threading.CancellationToken)
+  - Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StopAsync(System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: DtddLibraryScanService
+  nameWithType: DtddLibraryScanService
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/DtddLibraryScanService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: DtddLibraryScanService
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/DtddLibraryScanService.cs
+    startLine: 21
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: >-
+    Background service that listens for library changes and triggers DTDD lookups
+
+    for new items that have IMDB IDs but no DTDD data.
+  example: []
+  syntax:
+    content: 'public class DtddLibraryScanService : IHostedService'
+    content.vb: Public Class DtddLibraryScanService Implements IHostedService
+  inheritance:
+  - System.Object
+  implements:
+  - Microsoft.Extensions.Hosting.IHostedService
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.#ctor(MediaBrowser.Controller.Library.ILibraryManager,Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService})
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.#ctor(MediaBrowser.Controller.Library.ILibraryManager,Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService})
+  id: '#ctor(MediaBrowser.Controller.Library.ILibraryManager,Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService})'
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  langs:
+  - csharp
+  - vb
+  name: DtddLibraryScanService(ILibraryManager, DtddApiClient, IPluginConfigurationAccessor, ILogger<DtddLibraryScanService>)
+  nameWithType: DtddLibraryScanService.DtddLibraryScanService(ILibraryManager, DtddApiClient, IPluginConfigurationAccessor, ILogger<DtddLibraryScanService>)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.DtddLibraryScanService(MediaBrowser.Controller.Library.ILibraryManager, Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient, Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor, Microsoft.Extensions.Logging.ILogger<Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService>)
+  type: Constructor
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/DtddLibraryScanService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: .ctor
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/DtddLibraryScanService.cs
+    startLine: 35
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: Initializes a new instance of the <xref href="Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public DtddLibraryScanService(ILibraryManager libraryManager, DtddApiClient apiClient, IPluginConfigurationAccessor configAccessor, ILogger<DtddLibraryScanService> logger)
+    parameters:
+    - id: libraryManager
+      type: MediaBrowser.Controller.Library.ILibraryManager
+      description: The library manager.
+    - id: apiClient
+      type: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+      description: The DTDD API client.
+    - id: configAccessor
+      type: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+      description: The configuration accessor.
+    - id: logger
+      type: Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService}
+      description: The logger.
+    content.vb: Public Sub New(libraryManager As ILibraryManager, apiClient As DtddApiClient, configAccessor As IPluginConfigurationAccessor, logger As ILogger(Of DtddLibraryScanService))
+  overload: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.#ctor*
+  nameWithType.vb: DtddLibraryScanService.New(ILibraryManager, DtddApiClient, IPluginConfigurationAccessor, ILogger(Of DtddLibraryScanService))
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.New(MediaBrowser.Controller.Library.ILibraryManager, Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient, Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor, Microsoft.Extensions.Logging.ILogger(Of Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService))
+  name.vb: New(ILibraryManager, DtddApiClient, IPluginConfigurationAccessor, ILogger(Of DtddLibraryScanService))
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StartAsync(System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StartAsync(System.Threading.CancellationToken)
+  id: StartAsync(System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  langs:
+  - csharp
+  - vb
+  name: StartAsync(CancellationToken)
+  nameWithType: DtddLibraryScanService.StartAsync(CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StartAsync(System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/DtddLibraryScanService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: StartAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/DtddLibraryScanService.cs
+    startLine: 48
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: Triggered when the application host is ready to start the service.
+  example: []
+  syntax:
+    content: public Task StartAsync(CancellationToken cancellationToken)
+    parameters:
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: Indicates that the start process has been aborted.
+    return:
+      type: System.Threading.Tasks.Task
+      description: A <xref href="System.Threading.Tasks.Task" data-throw-if-not-resolved="false"></xref> that represents the asynchronous Start operation.
+    content.vb: Public Function StartAsync(cancellationToken As CancellationToken) As Task
+  overload: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StartAsync*
+  implements:
+  - Microsoft.Extensions.Hosting.IHostedService.StartAsync(System.Threading.CancellationToken)
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StopAsync(System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StopAsync(System.Threading.CancellationToken)
+  id: StopAsync(System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  langs:
+  - csharp
+  - vb
+  name: StopAsync(CancellationToken)
+  nameWithType: DtddLibraryScanService.StopAsync(CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StopAsync(System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/DtddLibraryScanService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: StopAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/DtddLibraryScanService.cs
+    startLine: 57
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: Triggered when the application host is performing a graceful shutdown.
+  example: []
+  syntax:
+    content: public Task StopAsync(CancellationToken cancellationToken)
+    parameters:
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: Indicates that the shutdown process should no longer be graceful.
+    return:
+      type: System.Threading.Tasks.Task
+      description: A <xref href="System.Threading.Tasks.Task" data-throw-if-not-resolved="false"></xref> that represents the asynchronous Stop operation.
+    content.vb: Public Function StopAsync(cancellationToken As CancellationToken) As Task
+  overload: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StopAsync*
+  implements:
+  - Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Services
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Services
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Services
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services
+    name: Services
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services
+    name: Services
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Microsoft.Extensions.Hosting.IHostedService
+  commentId: T:Microsoft.Extensions.Hosting.IHostedService
+  parent: Microsoft.Extensions.Hosting
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice
+  name: IHostedService
+  nameWithType: IHostedService
+  fullName: Microsoft.Extensions.Hosting.IHostedService
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Microsoft.Extensions.Hosting
+  commentId: N:Microsoft.Extensions.Hosting
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Hosting
+  nameWithType: Microsoft.Extensions.Hosting
+  fullName: Microsoft.Extensions.Hosting
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Hosting
+    name: Hosting
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Hosting
+    name: Hosting
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.html
+  name: DtddLibraryScanService
+  nameWithType: DtddLibraryScanService
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.#ctor*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.#ctor
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.html#Jellyfin_Plugin_DoesTheDogDie_Services_DtddLibraryScanService__ctor_MediaBrowser_Controller_Library_ILibraryManager_Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_Jellyfin_Plugin_DoesTheDogDie_Configuration_IPluginConfigurationAccessor_Microsoft_Extensions_Logging_ILogger_Jellyfin_Plugin_DoesTheDogDie_Services_DtddLibraryScanService__
+  name: DtddLibraryScanService
+  nameWithType: DtddLibraryScanService.DtddLibraryScanService
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.DtddLibraryScanService
+  nameWithType.vb: DtddLibraryScanService.New
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.New
+  name.vb: New
+- uid: MediaBrowser.Controller.Library.ILibraryManager
+  commentId: T:MediaBrowser.Controller.Library.ILibraryManager
+  parent: MediaBrowser.Controller.Library
+  isExternal: true
+  name: ILibraryManager
+  nameWithType: ILibraryManager
+  fullName: MediaBrowser.Controller.Library.ILibraryManager
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html
+  name: DtddApiClient
+  nameWithType: DtddApiClient
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.html
+  name: IPluginConfigurationAccessor
+  nameWithType: IPluginConfigurationAccessor
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+- uid: Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService}
+  commentId: T:Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService}
+  parent: Microsoft.Extensions.Logging
+  definition: Microsoft.Extensions.Logging.ILogger`1
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<DtddLibraryScanService>
+  nameWithType: ILogger<DtddLibraryScanService>
+  fullName: Microsoft.Extensions.Logging.ILogger<Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService>
+  nameWithType.vb: ILogger(Of DtddLibraryScanService)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService)
+  name.vb: ILogger(Of DtddLibraryScanService)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+    name: DtddLibraryScanService
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.html
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+    name: DtddLibraryScanService
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.html
+  - name: )
+- uid: MediaBrowser.Controller.Library
+  commentId: N:MediaBrowser.Controller.Library
+  isExternal: true
+  name: MediaBrowser.Controller.Library
+  nameWithType: MediaBrowser.Controller.Library
+  fullName: MediaBrowser.Controller.Library
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller
+    name: Controller
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller.Library
+    name: Library
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller
+    name: Controller
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller.Library
+    name: Library
+    isExternal: true
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Api
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Api
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+- uid: Microsoft.Extensions.Logging.ILogger`1
+  commentId: T:Microsoft.Extensions.Logging.ILogger`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<TCategoryName>
+  nameWithType: ILogger<TCategoryName>
+  fullName: Microsoft.Extensions.Logging.ILogger<TCategoryName>
+  nameWithType.vb: ILogger(Of TCategoryName)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of TCategoryName)
+  name.vb: ILogger(Of TCategoryName)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - name: TCategoryName
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TCategoryName
+  - name: )
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StartAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StartAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.html#Jellyfin_Plugin_DoesTheDogDie_Services_DtddLibraryScanService_StartAsync_System_Threading_CancellationToken_
+  name: StartAsync
+  nameWithType: DtddLibraryScanService.StartAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StartAsync
+- uid: Microsoft.Extensions.Hosting.IHostedService.StartAsync(System.Threading.CancellationToken)
+  commentId: M:Microsoft.Extensions.Hosting.IHostedService.StartAsync(System.Threading.CancellationToken)
+  parent: Microsoft.Extensions.Hosting.IHostedService
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice.startasync
+  name: StartAsync(CancellationToken)
+  nameWithType: IHostedService.StartAsync(CancellationToken)
+  fullName: Microsoft.Extensions.Hosting.IHostedService.StartAsync(System.Threading.CancellationToken)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Hosting.IHostedService.StartAsync(System.Threading.CancellationToken)
+    name: StartAsync
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice.startasync
+  - name: (
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Extensions.Hosting.IHostedService.StartAsync(System.Threading.CancellationToken)
+    name: StartAsync
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice.startasync
+  - name: (
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StopAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StopAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.html#Jellyfin_Plugin_DoesTheDogDie_Services_DtddLibraryScanService_StopAsync_System_Threading_CancellationToken_
+  name: StopAsync
+  nameWithType: DtddLibraryScanService.StopAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.StopAsync
+- uid: Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
+  commentId: M:Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
+  parent: Microsoft.Extensions.Hosting.IHostedService
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice.stopasync
+  name: StopAsync(CancellationToken)
+  nameWithType: IHostedService.StopAsync(CancellationToken)
+  fullName: Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
+    name: StopAsync
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice.stopasync
+  - name: (
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)
+    name: StopAsync
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihostedservice.stopasync
+  - name: (
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )

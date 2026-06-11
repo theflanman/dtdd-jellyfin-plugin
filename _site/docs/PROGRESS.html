@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>DoesTheDogDie Plugin - Progress Tracker </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="DoesTheDogDie Plugin - Progress Tracker ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="doesthedogdie-plugin---progress-tracker">DoesTheDogDie Plugin - Progress Tracker</h1>
+
+<h2 id="implementation-phases">Implementation Phases</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Description</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 0</strong></td>
+<td>API reverse engineering</td>
+<td>✅ Complete</td>
+<td>API documented in <code>API_DOCUMENTATION.md</code></td>
+</tr>
+<tr>
+<td><strong>Phase 1</strong></td>
+<td>Core infrastructure</td>
+<td>✅ Complete</td>
+<td>Plugin, config, API client</td>
+</tr>
+<tr>
+<td><strong>Phase 1.5</strong></td>
+<td>API client unit tests</td>
+<td>✅ Complete</td>
+<td>20 tests</td>
+</tr>
+<tr>
+<td><strong>Phase 2</strong></td>
+<td>Metadata providers</td>
+<td>✅ Complete</td>
+<td>Movie, Series, Season, Episode</td>
+</tr>
+<tr>
+<td><strong>Phase 2.5</strong></td>
+<td>Provider tests</td>
+<td>✅ Complete</td>
+<td>34 tests</td>
+</tr>
+<tr>
+<td><strong>Phase 3</strong></td>
+<td>Background services</td>
+<td>✅ Complete</td>
+<td>IHostedService, IScheduledTask</td>
+</tr>
+<tr>
+<td><strong>Phase 4</strong></td>
+<td>UI integration</td>
+<td>❌ Not Started</td>
+<td>ExternalIds, URLs, config page</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="test-coverage">Test Coverage</h2>
+<p><strong>Last Updated:</strong> 2026-01-30</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total Tests</td>
+<td>66</td>
+</tr>
+<tr>
+<td>Line Coverage</td>
+<td>~75%</td>
+</tr>
+<tr>
+<td>Branch Coverage</td>
+<td>~70%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="coverage-by-component">Coverage by Component</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Coverage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DtddApiClient</td>
+<td>High</td>
+<td>Well tested</td>
+</tr>
+<tr>
+<td>DtddMovieProvider</td>
+<td>High</td>
+<td>Well tested</td>
+</tr>
+<tr>
+<td>DtddSeriesProvider</td>
+<td>High</td>
+<td>Well tested</td>
+</tr>
+<tr>
+<td>DtddSeasonProvider</td>
+<td>44%</td>
+<td>Parent series lookup untestable</td>
+</tr>
+<tr>
+<td>DtddEpisodeProvider</td>
+<td>44%</td>
+<td>Parent series lookup untestable</td>
+</tr>
+<tr>
+<td>DtddLibraryScanService</td>
+<td>Partial</td>
+<td>Event subscription path tested</td>
+</tr>
+<tr>
+<td>DtddRefreshTask</td>
+<td>High</td>
+<td>Properties and triggers tested</td>
+</tr>
+<tr>
+<td>Plugin.cs</td>
+<td>0%</td>
+<td>Excluded - bootstrap code</td>
+</tr>
+<tr>
+<td>PluginServiceRegistrator</td>
+<td>0%</td>
+<td>Excluded - DI registration</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="whats-working">What's Working</h2>
+<ul>
+<li>[x] API client fetches data from DoesTheDogDie.com</li>
+<li>[x] Movie metadata provider adds DTDD ID and warning tags</li>
+<li>[x] Series metadata provider adds DTDD ID and warning tags</li>
+<li>[x] Season/Episode providers inherit from parent series</li>
+<li>[x] Configuration options (EnableMovies, EnableSeries, TagPrefix, MinVotesThreshold)</li>
+<li>[x] Warning tags respect vote threshold filtering</li>
+<li>[x] Background library scan service (auto-fetch for new items with IMDB IDs)</li>
+<li>[x] Scheduled refresh task (daily at 2 AM)</li>
+</ul>
+<hr>
+<h2 id="whats-not-yet-implemented">What's Not Yet Implemented</h2>
+<ul>
+<li>[ ] External ID display in Jellyfin UI</li>
+<li>[ ] External URL links to DTDD website</li>
+<li>[ ] Configuration page HTML (currently placeholder)</li>
+<li>[ ] Full trigger data cache</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next Steps</h2>
+<ol>
+<li><p><strong>Test in Jellyfin</strong> (Ready Now!)</p>
+<ul>
+<li>Plugin is functional with default settings</li>
+<li>Config page is placeholder - settings use defaults</li>
+<li>Test by adding movie/series with IMDB ID</li>
+</ul>
+</li>
+<li><p><strong>Phase 4: UI Integration</strong></p>
+<ul>
+<li>Implement <code>IExternalId</code> providers</li>
+<li>Implement <code>IExternalUrlProvider</code></li>
+<li>Create configuration HTML page</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="known-issues--blockers">Known Issues / Blockers</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Impact</th>
+<th>Workaround</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Season/Episode parent lookup untestable</td>
+<td>Low coverage</td>
+<td>Integration tests needed</td>
+</tr>
+<tr>
+<td>Plugin.cs requires Jellyfin runtime</td>
+<td>0% coverage</td>
+<td>Excluded from coverage</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="commands">Commands</h2>
+<pre><code class="lang-bash"># Build
+dotnet build
+
+# Run tests
+dotnet test
+
+# Run tests with coverage
+dotnet test --collect:&quot;XPlat Code Coverage&quot;
+
+# Generate coverage report (requires ReportGenerator)
+reportgenerator -reports:&quot;TestResults/**/coverage.cobertura.xml&quot; \
+  -targetdir:&quot;TestResults/CoverageReport&quot; -reporttypes:Html
+</code></pre>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/docs/PROGRESS.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

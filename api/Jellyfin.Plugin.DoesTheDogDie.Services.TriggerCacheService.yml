@@ -1,0 +1,870 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  id: TriggerCacheService
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.#ctor(Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService})
+  - Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync(System.Boolean,System.Threading.CancellationToken)
+  - Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache
+  - Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync(System.Threading.CancellationToken)
+  - Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache(Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache)
+  langs:
+  - csharp
+  - vb
+  name: TriggerCacheService
+  nameWithType: TriggerCacheService
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: TriggerCacheService
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+    startLine: 17
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: Service for managing the trigger category/topic cache.
+  example: []
+  syntax:
+    content: public class TriggerCacheService
+    content.vb: Public Class TriggerCacheService
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.#ctor(Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService})
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.#ctor(Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService})
+  id: '#ctor(Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService})'
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  langs:
+  - csharp
+  - vb
+  name: TriggerCacheService(DtddApiClient, ILogger<TriggerCacheService>)
+  nameWithType: TriggerCacheService.TriggerCacheService(DtddApiClient, ILogger<TriggerCacheService>)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.TriggerCacheService(Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient, Microsoft.Extensions.Logging.ILogger<Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService>)
+  type: Constructor
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: .ctor
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+    startLine: 52
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: Initializes a new instance of the <xref href="Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public TriggerCacheService(DtddApiClient apiClient, ILogger<TriggerCacheService> logger)
+    parameters:
+    - id: apiClient
+      type: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+      description: The DTDD API client.
+    - id: logger
+      type: Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService}
+      description: The logger.
+    content.vb: Public Sub New(apiClient As DtddApiClient, logger As ILogger(Of TriggerCacheService))
+  overload: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.#ctor*
+  nameWithType.vb: TriggerCacheService.New(DtddApiClient, ILogger(Of TriggerCacheService))
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.New(Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient, Microsoft.Extensions.Logging.ILogger(Of Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService))
+  name.vb: New(DtddApiClient, ILogger(Of TriggerCacheService))
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync(System.Boolean,System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync(System.Boolean,System.Threading.CancellationToken)
+  id: GetOrRefreshCacheAsync(System.Boolean,System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  langs:
+  - csharp
+  - vb
+  name: GetOrRefreshCacheAsync(bool, CancellationToken)
+  nameWithType: TriggerCacheService.GetOrRefreshCacheAsync(bool, CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync(bool, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: GetOrRefreshCacheAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+    startLine: 71
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: Gets the cached triggers, optionally refreshing if the cache is empty or stale.
+  example: []
+  syntax:
+    content: public virtual Task<TriggerCache> GetOrRefreshCacheAsync(bool forceRefresh = false, CancellationToken cancellationToken = default)
+    parameters:
+    - id: forceRefresh
+      type: System.Boolean
+      description: Force a refresh even if cache exists.
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: The cancellation token.
+    return:
+      type: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache}
+      description: The trigger cache.
+    content.vb: Public Overridable Function GetOrRefreshCacheAsync(forceRefresh As Boolean = False, cancellationToken As CancellationToken = Nothing) As Task(Of TriggerCache)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync*
+  nameWithType.vb: TriggerCacheService.GetOrRefreshCacheAsync(Boolean, CancellationToken)
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync(Boolean, System.Threading.CancellationToken)
+  name.vb: GetOrRefreshCacheAsync(Boolean, CancellationToken)
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync(System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync(System.Threading.CancellationToken)
+  id: RefreshCacheAsync(System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  langs:
+  - csharp
+  - vb
+  name: RefreshCacheAsync(CancellationToken)
+  nameWithType: TriggerCacheService.RefreshCacheAsync(CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync(System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: RefreshCacheAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+    startLine: 90
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: Refreshes the trigger cache by fetching data from multiple seed titles.
+  example: []
+  syntax:
+    content: public virtual Task<TriggerCache> RefreshCacheAsync(CancellationToken cancellationToken = default)
+    parameters:
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: The cancellation token.
+    return:
+      type: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache}
+      description: The refreshed trigger cache.
+    content.vb: Public Overridable Function RefreshCacheAsync(cancellationToken As CancellationToken = Nothing) As Task(Of TriggerCache)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache
+  id: LoadCache
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  langs:
+  - csharp
+  - vb
+  name: LoadCache()
+  nameWithType: TriggerCacheService.LoadCache()
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache()
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: LoadCache
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+    startLine: 152
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: Loads the trigger cache from disk.
+  example: []
+  syntax:
+    content: public TriggerCache? LoadCache()
+    return:
+      type: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+      description: The cached triggers, or null if not found.
+    content.vb: Public Function LoadCache() As TriggerCache
+  overload: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache(Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache(Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache)
+  id: SaveCache(Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  langs:
+  - csharp
+  - vb
+  name: SaveCache(TriggerCache)
+  nameWithType: TriggerCacheService.SaveCache(TriggerCache)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache(Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: SaveCache
+    path: Jellyfin.Plugin.DoesTheDogDie/Services/TriggerCacheService.cs
+    startLine: 175
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Services
+  summary: Saves the trigger cache to disk.
+  example: []
+  syntax:
+    content: public void SaveCache(TriggerCache cache)
+    parameters:
+    - id: cache
+      type: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+      description: The cache to save.
+    content.vb: Public Sub SaveCache(cache As TriggerCache)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache*
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Services
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Services
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Services
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services
+    name: Services
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services
+    name: Services
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html
+  name: TriggerCacheService
+  nameWithType: TriggerCacheService
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.#ctor*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.#ctor
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html#Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService__ctor_Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_Microsoft_Extensions_Logging_ILogger_Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService__
+  name: TriggerCacheService
+  nameWithType: TriggerCacheService.TriggerCacheService
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.TriggerCacheService
+  nameWithType.vb: TriggerCacheService.New
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.New
+  name.vb: New
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html
+  name: DtddApiClient
+  nameWithType: DtddApiClient
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+- uid: Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService}
+  commentId: T:Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService}
+  parent: Microsoft.Extensions.Logging
+  definition: Microsoft.Extensions.Logging.ILogger`1
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<TriggerCacheService>
+  nameWithType: ILogger<TriggerCacheService>
+  fullName: Microsoft.Extensions.Logging.ILogger<Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService>
+  nameWithType.vb: ILogger(Of TriggerCacheService)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService)
+  name.vb: ILogger(Of TriggerCacheService)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+    name: TriggerCacheService
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+    name: TriggerCacheService
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html
+  - name: )
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Api
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Api
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+- uid: Microsoft.Extensions.Logging.ILogger`1
+  commentId: T:Microsoft.Extensions.Logging.ILogger`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<TCategoryName>
+  nameWithType: ILogger<TCategoryName>
+  fullName: Microsoft.Extensions.Logging.ILogger<TCategoryName>
+  nameWithType.vb: ILogger(Of TCategoryName)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of TCategoryName)
+  name.vb: ILogger(Of TCategoryName)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - name: TCategoryName
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TCategoryName
+  - name: )
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html#Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_GetOrRefreshCacheAsync_System_Boolean_System_Threading_CancellationToken_
+  name: GetOrRefreshCacheAsync
+  nameWithType: TriggerCacheService.GetOrRefreshCacheAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.GetOrRefreshCacheAsync
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache}
+  commentId: T:System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TriggerCache>
+  nameWithType: Task<TriggerCache>
+  fullName: System.Threading.Tasks.Task<Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache>
+  nameWithType.vb: Task(Of TriggerCache)
+  fullName.vb: System.Threading.Tasks.Task(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache)
+  name.vb: Task(Of TriggerCache)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+    name: TriggerCache
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+    name: TriggerCache
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.html
+  - name: )
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html#Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_RefreshCacheAsync_System_Threading_CancellationToken_
+  name: RefreshCacheAsync
+  nameWithType: TriggerCacheService.RefreshCacheAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.RefreshCacheAsync
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html#Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_LoadCache
+  name: LoadCache
+  nameWithType: TriggerCacheService.LoadCache
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.LoadCache
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.html
+  name: TriggerCache
+  nameWithType: TriggerCache
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html#Jellyfin_Plugin_DoesTheDogDie_Services_TriggerCacheService_SaveCache_Jellyfin_Plugin_DoesTheDogDie_Configuration_TriggerCache_
+  name: SaveCache
+  nameWithType: TriggerCacheService.SaveCache
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.SaveCache

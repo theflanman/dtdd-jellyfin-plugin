@@ -1,0 +1,65 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Providers
+  id: Jellyfin.Plugin.DoesTheDogDie.Providers
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider
+  langs:
+  - csharp
+  - vb
+  name: Jellyfin.Plugin.DoesTheDogDie.Providers
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Providers
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers
+  type: Namespace
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider.html
+  name: DtddEpisodeProvider
+  nameWithType: DtddEpisodeProvider
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider.html
+  name: DtddExternalUrlProvider
+  nameWithType: DtddExternalUrlProvider
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId.html
+  name: DtddMovieExternalId
+  nameWithType: DtddMovieExternalId
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider.html
+  name: DtddMovieProvider
+  nameWithType: DtddMovieProvider
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider.html
+  name: DtddSeasonProvider
+  nameWithType: DtddSeasonProvider
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.html
+  name: DtddSeriesExternalId
+  nameWithType: DtddSeriesExternalId
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider.html
+  name: DtddSeriesProvider
+  nameWithType: DtddSeriesProvider
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider

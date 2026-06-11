@@ -1,0 +1,69 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Services
+  id: Jellyfin.Plugin.DoesTheDogDie.Services
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  - Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  langs:
+  - csharp
+  - vb
+  name: Jellyfin.Plugin.DoesTheDogDie.Services
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Services
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services
+  type: Namespace
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.html
+  name: DtddLibraryScanService
+  nameWithType: DtddLibraryScanService
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+  parent: Jellyfin.Plugin.DoesTheDogDie.Services
+  href: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html
+  name: TriggerCacheService
+  nameWithType: TriggerCacheService
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService
+- uid: Jellyfin.Plugin.DoesTheDogDie.Services
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Services
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Services
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Services
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Services
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services
+    name: Services
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Services
+    name: Services
+    href: Jellyfin.Plugin.DoesTheDogDie.Services.html

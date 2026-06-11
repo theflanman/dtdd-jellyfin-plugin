@@ -1,0 +1,707 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  id: DtddSeriesExternalId
+  parent: Jellyfin.Plugin.DoesTheDogDie.Providers
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Key
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.ProviderName
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Type
+  - Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.UrlFormatString
+  langs:
+  - csharp
+  - vb
+  name: DtddSeriesExternalId
+  nameWithType: DtddSeriesExternalId
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: DtddSeriesExternalId
+    path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+    startLine: 10
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Providers
+  summary: External ID provider for DoesTheDogDie TV series IDs.
+  example: []
+  syntax:
+    content: 'public class DtddSeriesExternalId : IExternalId'
+    content.vb: Public Class DtddSeriesExternalId Implements IExternalId
+  inheritance:
+  - System.Object
+  implements:
+  - MediaBrowser.Controller.Providers.IExternalId
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.ProviderName
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.ProviderName
+  id: ProviderName
+  parent: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  langs:
+  - csharp
+  - vb
+  name: ProviderName
+  nameWithType: DtddSeriesExternalId.ProviderName
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.ProviderName
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: ProviderName
+    path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+    startLine: 15
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Providers
+  summary: Gets the provider name displayed in the UI.
+  example: []
+  syntax:
+    content: public string ProviderName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property ProviderName As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.ProviderName*
+  implements:
+  - MediaBrowser.Controller.Providers.IExternalId.ProviderName
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Key
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Key
+  id: Key
+  parent: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  langs:
+  - csharp
+  - vb
+  name: Key
+  nameWithType: DtddSeriesExternalId.Key
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Key
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Key
+    path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+    startLine: 20
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Providers
+  summary: Gets the key used to store this external ID in provider IDs.
+  example: []
+  syntax:
+    content: public string Key { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Key As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Key*
+  implements:
+  - MediaBrowser.Controller.Providers.IExternalId.Key
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Type
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Type
+  id: Type
+  parent: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: DtddSeriesExternalId.Type
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Type
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Type
+    path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+    startLine: 25
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Providers
+  summary: Gets the media type this external ID applies to.
+  example: []
+  syntax:
+    content: public ExternalIdMediaType? Type { get; }
+    parameters: []
+    return:
+      type: System.Nullable{MediaBrowser.Model.Providers.ExternalIdMediaType}
+    content.vb: Public ReadOnly Property Type As ExternalIdMediaType?
+  overload: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Type*
+  implements:
+  - MediaBrowser.Controller.Providers.IExternalId.Type
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.UrlFormatString
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.UrlFormatString
+  id: UrlFormatString
+  parent: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  langs:
+  - csharp
+  - vb
+  name: UrlFormatString
+  nameWithType: DtddSeriesExternalId.UrlFormatString
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.UrlFormatString
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: UrlFormatString
+    path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+    startLine: 30
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Providers
+  summary: Gets the URL format string for linking to the external site.
+  example: []
+  syntax:
+    content: public string? UrlFormatString { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property UrlFormatString As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.UrlFormatString*
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+  id: Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId
+  langs:
+  - csharp
+  - vb
+  name: Supports(IHasProviderIds)
+  nameWithType: DtddSeriesExternalId.Supports(IHasProviderIds)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Supports
+    path: Jellyfin.Plugin.DoesTheDogDie/Providers/DtddSeriesExternalId.cs
+    startLine: 37
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Providers
+  summary: Determines if this external ID provider supports the given item type.
+  example: []
+  syntax:
+    content: public bool Supports(IHasProviderIds item)
+    parameters:
+    - id: item
+      type: MediaBrowser.Model.Entities.IHasProviderIds
+      description: The item to check.
+    return:
+      type: System.Boolean
+      description: True if the item is a TV series, false otherwise.
+    content.vb: Public Function Supports(item As IHasProviderIds) As Boolean
+  overload: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Supports*
+  implements:
+  - MediaBrowser.Controller.Providers.IExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Providers
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Providers
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Providers
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Providers
+    name: Providers
+    href: Jellyfin.Plugin.DoesTheDogDie.Providers.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Providers
+    name: Providers
+    href: Jellyfin.Plugin.DoesTheDogDie.Providers.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: MediaBrowser.Controller.Providers.IExternalId
+  commentId: T:MediaBrowser.Controller.Providers.IExternalId
+  parent: MediaBrowser.Controller.Providers
+  isExternal: true
+  name: IExternalId
+  nameWithType: IExternalId
+  fullName: MediaBrowser.Controller.Providers.IExternalId
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: MediaBrowser.Controller.Providers
+  commentId: N:MediaBrowser.Controller.Providers
+  isExternal: true
+  name: MediaBrowser.Controller.Providers
+  nameWithType: MediaBrowser.Controller.Providers
+  fullName: MediaBrowser.Controller.Providers
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller
+    name: Controller
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller.Providers
+    name: Providers
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller
+    name: Controller
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Controller.Providers
+    name: Providers
+    isExternal: true
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.ProviderName*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.ProviderName
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.html#Jellyfin_Plugin_DoesTheDogDie_Providers_DtddSeriesExternalId_ProviderName
+  name: ProviderName
+  nameWithType: DtddSeriesExternalId.ProviderName
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.ProviderName
+- uid: MediaBrowser.Controller.Providers.IExternalId.ProviderName
+  commentId: P:MediaBrowser.Controller.Providers.IExternalId.ProviderName
+  parent: MediaBrowser.Controller.Providers.IExternalId
+  isExternal: true
+  name: ProviderName
+  nameWithType: IExternalId.ProviderName
+  fullName: MediaBrowser.Controller.Providers.IExternalId.ProviderName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Key*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Key
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.html#Jellyfin_Plugin_DoesTheDogDie_Providers_DtddSeriesExternalId_Key
+  name: Key
+  nameWithType: DtddSeriesExternalId.Key
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Key
+- uid: MediaBrowser.Controller.Providers.IExternalId.Key
+  commentId: P:MediaBrowser.Controller.Providers.IExternalId.Key
+  parent: MediaBrowser.Controller.Providers.IExternalId
+  isExternal: true
+  name: Key
+  nameWithType: IExternalId.Key
+  fullName: MediaBrowser.Controller.Providers.IExternalId.Key
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Type*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Type
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.html#Jellyfin_Plugin_DoesTheDogDie_Providers_DtddSeriesExternalId_Type
+  name: Type
+  nameWithType: DtddSeriesExternalId.Type
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Type
+- uid: MediaBrowser.Controller.Providers.IExternalId.Type
+  commentId: P:MediaBrowser.Controller.Providers.IExternalId.Type
+  parent: MediaBrowser.Controller.Providers.IExternalId
+  isExternal: true
+  name: Type
+  nameWithType: IExternalId.Type
+  fullName: MediaBrowser.Controller.Providers.IExternalId.Type
+- uid: System.Nullable{MediaBrowser.Model.Providers.ExternalIdMediaType}
+  commentId: T:System.Nullable{MediaBrowser.Model.Providers.ExternalIdMediaType}
+  parent: System
+  definition: System.Nullable`1
+  name: ExternalIdMediaType?
+  nameWithType: ExternalIdMediaType?
+  fullName: MediaBrowser.Model.Providers.ExternalIdMediaType?
+  spec.csharp:
+  - uid: MediaBrowser.Model.Providers.ExternalIdMediaType
+    name: ExternalIdMediaType
+    isExternal: true
+  - name: '?'
+  spec.vb:
+  - uid: MediaBrowser.Model.Providers.ExternalIdMediaType
+    name: ExternalIdMediaType
+    isExternal: true
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.UrlFormatString*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.UrlFormatString
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.html#Jellyfin_Plugin_DoesTheDogDie_Providers_DtddSeriesExternalId_UrlFormatString
+  name: UrlFormatString
+  nameWithType: DtddSeriesExternalId.UrlFormatString
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.UrlFormatString
+- uid: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Supports*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Supports
+  href: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.html#Jellyfin_Plugin_DoesTheDogDie_Providers_DtddSeriesExternalId_Supports_MediaBrowser_Model_Entities_IHasProviderIds_
+  name: Supports
+  nameWithType: DtddSeriesExternalId.Supports
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.Supports
+- uid: MediaBrowser.Controller.Providers.IExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+  commentId: M:MediaBrowser.Controller.Providers.IExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+  parent: MediaBrowser.Controller.Providers.IExternalId
+  isExternal: true
+  name: Supports(IHasProviderIds)
+  nameWithType: IExternalId.Supports(IHasProviderIds)
+  fullName: MediaBrowser.Controller.Providers.IExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+  spec.csharp:
+  - uid: MediaBrowser.Controller.Providers.IExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+    name: Supports
+    isExternal: true
+  - name: (
+  - uid: MediaBrowser.Model.Entities.IHasProviderIds
+    name: IHasProviderIds
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: MediaBrowser.Controller.Providers.IExternalId.Supports(MediaBrowser.Model.Entities.IHasProviderIds)
+    name: Supports
+    isExternal: true
+  - name: (
+  - uid: MediaBrowser.Model.Entities.IHasProviderIds
+    name: IHasProviderIds
+    isExternal: true
+  - name: )
+- uid: MediaBrowser.Model.Entities.IHasProviderIds
+  commentId: T:MediaBrowser.Model.Entities.IHasProviderIds
+  parent: MediaBrowser.Model.Entities
+  isExternal: true
+  name: IHasProviderIds
+  nameWithType: IHasProviderIds
+  fullName: MediaBrowser.Model.Entities.IHasProviderIds
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: MediaBrowser.Model.Entities
+  commentId: N:MediaBrowser.Model.Entities
+  isExternal: true
+  name: MediaBrowser.Model.Entities
+  nameWithType: MediaBrowser.Model.Entities
+  fullName: MediaBrowser.Model.Entities
+  spec.csharp:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Entities
+    name: Entities
+    isExternal: true
+  spec.vb:
+  - uid: MediaBrowser
+    name: MediaBrowser
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model
+    name: Model
+    isExternal: true
+  - name: .
+  - uid: MediaBrowser.Model.Entities
+    name: Entities
+    isExternal: true

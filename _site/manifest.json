@@ -1,0 +1,647 @@
+{
+  "source_base_path": "/home/connor/projects/dtdd-jellyfin-plugin/dtdd-jellyfin-plugin",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.yml\" sourcestartlinenumber=\"1\">HTTP client for communicating with the DoesTheDogDie API.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController.yml\" sourcestartlinenumber=\"1\">REST API controller for the DoesTheDogDie plugin.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter.yml\" sourcestartlinenumber=\"1\">JSON converter that handles both boolean values and integer values (0/1).\nSome API endpoints return booleans while others return integers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType.yml\" sourcestartlinenumber=\"1\">Represents a media type in DoesTheDogDie.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails.yml\" sourcestartlinenumber=\"1\">Represents detailed media information including trigger data from DoesTheDogDie.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.yml\" sourcestartlinenumber=\"1\">Represents a media item from DoesTheDogDie search results.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse.yml\" sourcestartlinenumber=\"1\">Represents a search response from DoesTheDogDie API.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic.yml\" sourcestartlinenumber=\"1\">Represents a trigger/topic in DoesTheDogDie.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory.yml\" sourcestartlinenumber=\"1\">Represents a trigger category in DoesTheDogDie.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat.yml\" sourcestartlinenumber=\"1\">Represents trigger statistics for a specific media item.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Api.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Api",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.yml\" sourcestartlinenumber=\"1\">Represents a cached trigger category.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic.yml\" sourcestartlinenumber=\"1\">Represents a cached trigger topic.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.yml\" sourcestartlinenumber=\"1\">Interface for accessing plugin configuration.\nEnables dependency injection and testability.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.yml\" sourcestartlinenumber=\"1\">Plugin configuration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.yml\" sourcestartlinenumber=\"1\">Default implementation that reads from Plugin.Instance.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.yml\" sourcestartlinenumber=\"1\">Represents the cached trigger categories and topics from DTDD.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Configuration.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Configuration",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Constants.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Constants.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Constants",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Constants.yml\" sourcestartlinenumber=\"1\">Plugin constants.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Plugin.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Plugin.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Plugin",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Plugin.yml\" sourcestartlinenumber=\"1\">The main plugin.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator.yml\" sourcestartlinenumber=\"1\">Registers plugin services with the dependency injection container.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddEpisodeProvider.yml\" sourcestartlinenumber=\"1\">Custom metadata provider that fetches DoesTheDogDie content warnings for TV episodes.\nInherits warnings from the parent series since DTDD typically has series-level data.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddExternalUrlProvider.yml\" sourcestartlinenumber=\"1\">Provides external URLs to DoesTheDogDie.com for movies and series.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieExternalId.yml\" sourcestartlinenumber=\"1\">External ID provider for DoesTheDogDie movie IDs.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddMovieProvider.yml\" sourcestartlinenumber=\"1\">Custom metadata provider that fetches DoesTheDogDie content warnings for movies.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeasonProvider.yml\" sourcestartlinenumber=\"1\">Custom metadata provider that fetches DoesTheDogDie content warnings for TV seasons.\nInherits warnings from the parent series since DTDD typically has series-level data.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesExternalId.yml\" sourcestartlinenumber=\"1\">External ID provider for DoesTheDogDie TV series IDs.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Providers.DtddSeriesProvider.yml\" sourcestartlinenumber=\"1\">Custom metadata provider that fetches DoesTheDogDie content warnings for TV series.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Providers.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Providers",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.yml\" sourcestartlinenumber=\"1\">Scheduled task that periodically refreshes DTDD data for all items\nthat already have DTDD provider IDs.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Scoring.BetaConfidenceCalculator.yml\" sourcestartlinenumber=\"1\">Calculates statistical confidence that a trigger applies using the\nWilson score interval lower bound.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Scoring.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Scoring.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Scoring",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Services.DtddLibraryScanService.yml\" sourcestartlinenumber=\"1\">Background service that listens for library changes and triggers DTDD lookups\nfor new items that have IMDB IDs but no DTDD data.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.Services.TriggerCacheService.yml\" sourcestartlinenumber=\"1\">Service for managing the trigger category/topic cache.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Services.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.Services.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.Services",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.TriggerFilter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.TriggerFilter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.TriggerFilter",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.TriggerFilter.yml\" sourcestartlinenumber=\"1\">Helper class for filtering triggers based on user configuration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter",
+      "Summary": "<p sourcefile=\"api/Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter.yml\" sourcestartlinenumber=\"1\">Helper class for building tag names from triggers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Jellyfin.Plugin.DoesTheDogDie.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Jellyfin.Plugin.DoesTheDogDie",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "api/toc.json"
+        },
+        ".html": {
+          "relative_path": "api/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/API_DOCUMENTATION.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/API_DOCUMENTATION.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/IMPLEMENTATION_PLAN.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/IMPLEMENTATION_PLAN.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/PROGRESS.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/PROGRESS.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/TESTING.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/TESTING.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>DoesTheDogDie Plugin - Testing Guide </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="DoesTheDogDie Plugin - Testing Guide ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="doesthedogdie-plugin---testing-guide">DoesTheDogDie Plugin - Testing Guide</h1>
+
+<h2 id="test-framework">Test Framework</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Package</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test Framework</td>
+<td>xUnit</td>
+<td>2.9.2</td>
+</tr>
+<tr>
+<td>Mocking</td>
+<td>Moq</td>
+<td>4.20.72</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>coverlet.collector</td>
+<td>6.0.2</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="running-tests">Running Tests</h2>
+<h3 id="basic-test-run">Basic Test Run</h3>
+<pre><code class="lang-bash">dotnet test
+</code></pre>
+<h3 id="with-coverage-collection">With Coverage Collection</h3>
+<pre><code class="lang-bash">dotnet test --collect:&quot;XPlat Code Coverage&quot;
+</code></pre>
+<h3 id="verbose-output">Verbose Output</h3>
+<pre><code class="lang-bash">dotnet test --verbosity normal
+</code></pre>
+<hr>
+<h2 id="test-organization">Test Organization</h2>
+<pre><code>tests/Jellyfin.Plugin.DoesTheDogDie.Tests/
+├── Api/
+│   └── DtddApiClientTests.cs       # API client unit tests (20 tests)
+├── Providers/
+│   ├── DtddMovieProviderTests.cs   # Movie provider tests (12 tests)
+│   ├── DtddSeriesProviderTests.cs  # Series provider tests (10 tests)
+│   ├── DtddSeasonProviderTests.cs  # Season provider tests (6 tests)
+│   └── DtddEpisodeProviderTests.cs # Episode provider tests (6 tests)
+└── TestData/
+    └── *.json                       # Mock API response files
+</code></pre>
+<hr>
+<h2 id="test-data-location">Test Data Location</h2>
+<p>Real API responses are stored for reference:</p>
+<pre><code>tests/api-exploration/results/
+├── search-title.json      # Search by title response
+├── search-imdb.json       # Search by IMDB ID response
+└── media-detail-johnwick.json  # Full media details with triggers
+</code></pre>
+<p>These can be used to verify mock data accuracy.</p>
+<hr>
+<h2 id="coverage">Coverage</h2>
+<h3 id="collecting-coverage">Collecting Coverage</h3>
+<pre><code class="lang-bash">dotnet test --collect:&quot;XPlat Code Coverage&quot; --results-directory ./TestResults
+</code></pre>
+<h3 id="generating-html-report">Generating HTML Report</h3>
+<p>First install ReportGenerator:</p>
+<pre><code class="lang-bash">dotnet tool install -g dotnet-reportgenerator-globaltool
+</code></pre>
+<p>Then generate report:</p>
+<pre><code class="lang-bash">reportgenerator \
+  -reports:&quot;TestResults/**/coverage.cobertura.xml&quot; \
+  -targetdir:&quot;TestResults/CoverageReport&quot; \
+  -reporttypes:Html
+</code></pre>
+<p>Open <code>TestResults/CoverageReport/index.html</code> in browser.</p>
+<h3 id="coverage-targets">Coverage Targets</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Target</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API Client</td>
+<td>80%+</td>
+<td>Core functionality</td>
+</tr>
+<tr>
+<td>Providers</td>
+<td>70%+</td>
+<td>Some paths require Jellyfin runtime</td>
+</tr>
+<tr>
+<td>Bootstrap (Plugin, ServiceRegistrator)</td>
+<td>Excluded</td>
+<td>Can't be unit tested</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="known-limitations">Known Limitations</h2>
+<h3 id="1-parent-entity-relationships">1. Parent Entity Relationships</h3>
+<p>Season and Episode providers get IMDB ID from parent Series:</p>
+<pre><code class="lang-csharp">var series = item.Series;  // Always null in unit tests
+var imdbId = series.GetProviderId(MetadataProvider.Imdb);
+</code></pre>
+<p>The <code>Series</code> property can't be set in unit tests because Jellyfin doesn't expose a setter. Only the &quot;no parent series&quot; path is testable.</p>
+<p><strong>Impact:</strong> ~44% coverage on Season/Episode providers</p>
+<h3 id="2-plugin-bootstrap-code">2. Plugin Bootstrap Code</h3>
+<p><code>Plugin.cs</code> and <code>PluginServiceRegistrator.cs</code> require Jellyfin runtime to test. These are marked with <code>[ExcludeFromCodeCoverage]</code>.</p>
+<h3 id="3-integration-testing">3. Integration Testing</h3>
+<p>No automated integration tests against a real Jellyfin instance. Manual testing required for:</p>
+<ul>
+<li>Plugin installation</li>
+<li>Configuration page</li>
+<li>Tag application</li>
+<li>External URL display</li>
+</ul>
+<hr>
+<h2 id="mutation-testing-optional">Mutation Testing (Optional)</h2>
+<p>For additional test quality assurance, use Stryker.NET:</p>
+<pre><code class="lang-bash"># Install
+dotnet tool install -g dotnet-stryker
+
+# Run mutation testing
+cd tests/Jellyfin.Plugin.DoesTheDogDie.Tests
+dotnet stryker
+</code></pre>
+<p>Mutation testing verifies that tests actually catch bugs by introducing small changes to the code and ensuring tests fail.</p>
+<hr>
+<h2 id="writing-new-tests">Writing New Tests</h2>
+<h3 id="test-pattern">Test Pattern</h3>
+<pre><code class="lang-csharp">public class MyClassTests
+{
+    private readonly Mock&lt;IDependency&gt; _dependencyMock;
+    private readonly MyClass _sut;  // System Under Test
+
+    public MyClassTests()
+    {
+        _dependencyMock = new Mock&lt;IDependency&gt;();
+        _sut = new MyClass(_dependencyMock.Object);
+    }
+
+    [Fact]
+    public async Task MethodName_Scenario_ExpectedResult()
+    {
+        // Arrange
+        _dependencyMock.Setup(x =&gt; x.Method()).Returns(value);
+
+        // Act
+        var result = await _sut.MethodName();
+
+        // Assert
+        Assert.Equal(expected, result);
+    }
+}
+</code></pre>
+<h3 id="mocking-dtddapiclient">Mocking DtddApiClient</h3>
+<p>The API client methods are virtual for mocking:</p>
+<pre><code class="lang-csharp">_apiClientMock
+    .Setup(x =&gt; x.GetMediaDetailsByImdbIdAsync(&quot;tt2911666&quot;, It.IsAny&lt;CancellationToken&gt;()))
+    .ReturnsAsync(details);
+</code></pre>
+<h3 id="mocking-configuration">Mocking Configuration</h3>
+<p>Use <code>IPluginConfigurationAccessor</code>:</p>
+<pre><code class="lang-csharp">_configAccessorMock
+    .Setup(x =&gt; x.GetConfiguration())
+    .Returns(new PluginConfiguration { EnableMovies = true });
+</code></pre>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/docs/TESTING.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
