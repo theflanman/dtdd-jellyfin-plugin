@@ -226,7 +226,7 @@ public class TriggerCacheServiceTests
     }
 
     [Fact]
-    public void ExtractCategoriesAndTopics_SkipsZeroCategoryId()
+    public void ExtractCategoriesAndTopics_AssignsUncategorizedTopicsToOtherCategory()
     {
         // Arrange
         var categories = new Dictionary<int, CachedCategory>();
@@ -247,8 +247,13 @@ public class TriggerCacheServiceTests
         // Act
         TriggerCacheService.ExtractCategoriesAndTopics(stats, categories);
 
-        // Assert
-        Assert.Empty(categories);
+        // Assert - topics without explicit category are assigned to "Other" (ID -1)
+        Assert.Single(categories);
+        var otherCategory = categories[-1];
+        Assert.Equal("Other", otherCategory.Name);
+        Assert.Single(otherCategory.Topics);
+        Assert.Equal(153, otherCategory.Topics[0].Id);
+        Assert.Equal("a dog dies", otherCategory.Topics[0].Name);
     }
 
     [Fact]
