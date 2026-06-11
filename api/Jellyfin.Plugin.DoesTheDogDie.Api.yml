@@ -1,0 +1,69 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Api
+  id: Jellyfin.Plugin.DoesTheDogDie.Api
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  - Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController
+  langs:
+  - csharp
+  - vb
+  name: Jellyfin.Plugin.DoesTheDogDie.Api
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Api
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api
+  type: Namespace
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html
+  name: DtddApiClient
+  nameWithType: DtddApiClient
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController.html
+  name: DtddPluginController
+  nameWithType: DtddPluginController
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddPluginController
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Api
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Api
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html

@@ -1,0 +1,99 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Configuration
+  id: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+  langs:
+  - csharp
+  - vb
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  type: Namespace
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.html
+  name: CachedCategory
+  nameWithType: CachedCategory
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic.html
+  name: CachedTopic
+  nameWithType: CachedTopic
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor.html
+  name: IPluginConfigurationAccessor
+  nameWithType: IPluginConfigurationAccessor
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.IPluginConfigurationAccessor
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor.html
+  name: PluginConfigurationAccessor
+  nameWithType: PluginConfigurationAccessor
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfigurationAccessor
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration.html
+  name: PluginConfiguration
+  nameWithType: PluginConfiguration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.PluginConfiguration
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache.html
+  name: TriggerCache
+  nameWithType: TriggerCache
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.TriggerCache
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html

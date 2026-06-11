@@ -1,0 +1,999 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  id: DtddApiClient
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.#ctor(System.Net.Http.IHttpClientFactory,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient})
+  - Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsAsync(System.Int32,System.Threading.CancellationToken)
+  - Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByImdbIdAsync(System.String,System.Threading.CancellationToken)
+  - Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByTitleAsync(System.String,System.Nullable{System.Int32},System.Int32,System.Threading.CancellationToken)
+  - Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByImdbIdAsync(System.String,System.Threading.CancellationToken)
+  - Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByTitleAsync(System.String,System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: DtddApiClient
+  nameWithType: DtddApiClient
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: DtddApiClient
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+    startLine: 15
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api
+  summary: HTTP client for communicating with the DoesTheDogDie API.
+  example: []
+  syntax:
+    content: public class DtddApiClient
+    content.vb: Public Class DtddApiClient
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.#ctor(System.Net.Http.IHttpClientFactory,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient})
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.#ctor(System.Net.Http.IHttpClientFactory,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient})
+  id: '#ctor(System.Net.Http.IHttpClientFactory,Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient})'
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  langs:
+  - csharp
+  - vb
+  name: DtddApiClient(IHttpClientFactory, ILogger<DtddApiClient>)
+  nameWithType: DtddApiClient.DtddApiClient(IHttpClientFactory, ILogger<DtddApiClient>)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.DtddApiClient(System.Net.Http.IHttpClientFactory, Microsoft.Extensions.Logging.ILogger<Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient>)
+  type: Constructor
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: .ctor
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+    startLine: 30
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api
+  summary: Initializes a new instance of the <xref href="Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public DtddApiClient(IHttpClientFactory httpClientFactory, ILogger<DtddApiClient> logger)
+    parameters:
+    - id: httpClientFactory
+      type: System.Net.Http.IHttpClientFactory
+      description: The HTTP client factory.
+    - id: logger
+      type: Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient}
+      description: The logger.
+    content.vb: Public Sub New(httpClientFactory As IHttpClientFactory, logger As ILogger(Of DtddApiClient))
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.#ctor*
+  nameWithType.vb: DtddApiClient.New(IHttpClientFactory, ILogger(Of DtddApiClient))
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.New(System.Net.Http.IHttpClientFactory, Microsoft.Extensions.Logging.ILogger(Of Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient))
+  name.vb: New(IHttpClientFactory, ILogger(Of DtddApiClient))
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByImdbIdAsync(System.String,System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByImdbIdAsync(System.String,System.Threading.CancellationToken)
+  id: SearchByImdbIdAsync(System.String,System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  langs:
+  - csharp
+  - vb
+  name: SearchByImdbIdAsync(string, CancellationToken)
+  nameWithType: DtddApiClient.SearchByImdbIdAsync(string, CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByImdbIdAsync(string, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: SearchByImdbIdAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+    startLine: 42
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api
+  summary: Searches for media by IMDB ID.
+  example: []
+  syntax:
+    content: public virtual Task<DtddSearchResponse?> SearchByImdbIdAsync(string imdbId, CancellationToken cancellationToken = default)
+    parameters:
+    - id: imdbId
+      type: System.String
+      description: The IMDB ID (e.g., "tt2911666").
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: The cancellation token.
+    return:
+      type: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse}
+      description: The search response, or null if not found or on error.
+    content.vb: Public Overridable Function SearchByImdbIdAsync(imdbId As String, cancellationToken As CancellationToken = Nothing) As Task(Of DtddSearchResponse)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByImdbIdAsync*
+  nameWithType.vb: DtddApiClient.SearchByImdbIdAsync(String, CancellationToken)
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByImdbIdAsync(String, System.Threading.CancellationToken)
+  name.vb: SearchByImdbIdAsync(String, CancellationToken)
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByTitleAsync(System.String,System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByTitleAsync(System.String,System.Threading.CancellationToken)
+  id: SearchByTitleAsync(System.String,System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  langs:
+  - csharp
+  - vb
+  name: SearchByTitleAsync(string, CancellationToken)
+  nameWithType: DtddApiClient.SearchByTitleAsync(string, CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByTitleAsync(string, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: SearchByTitleAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+    startLine: 59
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api
+  summary: Searches for media by title.
+  example: []
+  syntax:
+    content: public virtual Task<DtddSearchResponse?> SearchByTitleAsync(string title, CancellationToken cancellationToken = default)
+    parameters:
+    - id: title
+      type: System.String
+      description: The media title.
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: The cancellation token.
+    return:
+      type: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse}
+      description: The search response, or null if not found or on error.
+    content.vb: Public Overridable Function SearchByTitleAsync(title As String, cancellationToken As CancellationToken = Nothing) As Task(Of DtddSearchResponse)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByTitleAsync*
+  nameWithType.vb: DtddApiClient.SearchByTitleAsync(String, CancellationToken)
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByTitleAsync(String, System.Threading.CancellationToken)
+  name.vb: SearchByTitleAsync(String, CancellationToken)
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsAsync(System.Int32,System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsAsync(System.Int32,System.Threading.CancellationToken)
+  id: GetMediaDetailsAsync(System.Int32,System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  langs:
+  - csharp
+  - vb
+  name: GetMediaDetailsAsync(int, CancellationToken)
+  nameWithType: DtddApiClient.GetMediaDetailsAsync(int, CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsAsync(int, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: GetMediaDetailsAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+    startLine: 76
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api
+  summary: Gets detailed media information including trigger data.
+  example: []
+  syntax:
+    content: public virtual Task<DtddMediaDetails?> GetMediaDetailsAsync(int dtddId, CancellationToken cancellationToken = default)
+    parameters:
+    - id: dtddId
+      type: System.Int32
+      description: The DoesTheDogDie media ID.
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: The cancellation token.
+    return:
+      type: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails}
+      description: The media details, or null if not found or on error.
+    content.vb: Public Overridable Function GetMediaDetailsAsync(dtddId As Integer, cancellationToken As CancellationToken = Nothing) As Task(Of DtddMediaDetails)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsAsync*
+  nameWithType.vb: DtddApiClient.GetMediaDetailsAsync(Integer, CancellationToken)
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsAsync(Integer, System.Threading.CancellationToken)
+  name.vb: GetMediaDetailsAsync(Integer, CancellationToken)
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByImdbIdAsync(System.String,System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByImdbIdAsync(System.String,System.Threading.CancellationToken)
+  id: GetMediaDetailsByImdbIdAsync(System.String,System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  langs:
+  - csharp
+  - vb
+  name: GetMediaDetailsByImdbIdAsync(string, CancellationToken)
+  nameWithType: DtddApiClient.GetMediaDetailsByImdbIdAsync(string, CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByImdbIdAsync(string, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: GetMediaDetailsByImdbIdAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+    startLine: 125
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api
+  summary: Searches for media and returns the first matching result's details.
+  example: []
+  syntax:
+    content: public virtual Task<DtddMediaDetails?> GetMediaDetailsByImdbIdAsync(string imdbId, CancellationToken cancellationToken = default)
+    parameters:
+    - id: imdbId
+      type: System.String
+      description: The IMDB ID to search for.
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: The cancellation token.
+    return:
+      type: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails}
+      description: The media details if found, otherwise null.
+    content.vb: Public Overridable Function GetMediaDetailsByImdbIdAsync(imdbId As String, cancellationToken As CancellationToken = Nothing) As Task(Of DtddMediaDetails)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByImdbIdAsync*
+  nameWithType.vb: DtddApiClient.GetMediaDetailsByImdbIdAsync(String, CancellationToken)
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByImdbIdAsync(String, System.Threading.CancellationToken)
+  name.vb: GetMediaDetailsByImdbIdAsync(String, CancellationToken)
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByTitleAsync(System.String,System.Nullable{System.Int32},System.Int32,System.Threading.CancellationToken)
+  commentId: M:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByTitleAsync(System.String,System.Nullable{System.Int32},System.Int32,System.Threading.CancellationToken)
+  id: GetMediaDetailsByTitleAsync(System.String,System.Nullable{System.Int32},System.Int32,System.Threading.CancellationToken)
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  langs:
+  - csharp
+  - vb
+  name: GetMediaDetailsByTitleAsync(string, int?, int, CancellationToken)
+  nameWithType: DtddApiClient.GetMediaDetailsByTitleAsync(string, int?, int, CancellationToken)
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByTitleAsync(string, int?, int, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: GetMediaDetailsByTitleAsync
+    path: Jellyfin.Plugin.DoesTheDogDie/Api/DtddApiClient.cs
+    startLine: 147
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Api
+  summary: Searches for media by title and returns the best matching result's details.
+  example: []
+  syntax:
+    content: public virtual Task<DtddMediaDetails?> GetMediaDetailsByTitleAsync(string title, int? year, int itemTypeId, CancellationToken cancellationToken = default)
+    parameters:
+    - id: title
+      type: System.String
+      description: The media title to search for.
+    - id: year
+      type: System.Nullable{System.Int32}
+      description: The release year for disambiguation (optional).
+    - id: itemTypeId
+      type: System.Int32
+      description: The DTDD item type ID to filter by (15=Movie, 16=TV Show).
+    - id: cancellationToken
+      type: System.Threading.CancellationToken
+      description: The cancellation token.
+    return:
+      type: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails}
+      description: The media details if found, otherwise null.
+    content.vb: Public Overridable Function GetMediaDetailsByTitleAsync(title As String, year As Integer?, itemTypeId As Integer, cancellationToken As CancellationToken = Nothing) As Task(Of DtddMediaDetails)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByTitleAsync*
+  nameWithType.vb: DtddApiClient.GetMediaDetailsByTitleAsync(String, Integer?, Integer, CancellationToken)
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByTitleAsync(String, Integer?, Integer, System.Threading.CancellationToken)
+  name.vb: GetMediaDetailsByTitleAsync(String, Integer?, Integer, CancellationToken)
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Api
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Api
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html
+  name: DtddApiClient
+  nameWithType: DtddApiClient
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.#ctor*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.#ctor
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html#Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient__ctor_System_Net_Http_IHttpClientFactory_Microsoft_Extensions_Logging_ILogger_Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient__
+  name: DtddApiClient
+  nameWithType: DtddApiClient.DtddApiClient
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.DtddApiClient
+  nameWithType.vb: DtddApiClient.New
+  fullName.vb: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.New
+  name.vb: New
+- uid: System.Net.Http.IHttpClientFactory
+  commentId: T:System.Net.Http.IHttpClientFactory
+  parent: System.Net.Http
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.net.http.ihttpclientfactory
+  name: IHttpClientFactory
+  nameWithType: IHttpClientFactory
+  fullName: System.Net.Http.IHttpClientFactory
+- uid: Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient}
+  commentId: T:Microsoft.Extensions.Logging.ILogger{Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient}
+  parent: Microsoft.Extensions.Logging
+  definition: Microsoft.Extensions.Logging.ILogger`1
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<DtddApiClient>
+  nameWithType: ILogger<DtddApiClient>
+  fullName: Microsoft.Extensions.Logging.ILogger<Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient>
+  nameWithType.vb: ILogger(Of DtddApiClient)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient)
+  name.vb: ILogger(Of DtddApiClient)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+    name: DtddApiClient
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient
+    name: DtddApiClient
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html
+  - name: )
+- uid: System.Net.Http
+  commentId: N:System.Net.Http
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Net.Http
+  nameWithType: System.Net.Http
+  fullName: System.Net.Http
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Net
+    name: Net
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net
+  - name: .
+  - uid: System.Net.Http
+    name: Http
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.http
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Net
+    name: Net
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net
+  - name: .
+  - uid: System.Net.Http
+    name: Http
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.http
+- uid: Microsoft.Extensions.Logging.ILogger`1
+  commentId: T:Microsoft.Extensions.Logging.ILogger`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  name: ILogger<TCategoryName>
+  nameWithType: ILogger<TCategoryName>
+  fullName: Microsoft.Extensions.Logging.ILogger<TCategoryName>
+  nameWithType.vb: ILogger(Of TCategoryName)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of TCategoryName)
+  name.vb: ILogger(Of TCategoryName)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: <
+  - name: TCategoryName
+  - name: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TCategoryName
+  - name: )
+- uid: Microsoft.Extensions.Logging
+  commentId: N:Microsoft.Extensions.Logging
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Logging
+  nameWithType: Microsoft.Extensions.Logging
+  fullName: Microsoft.Extensions.Logging
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Logging
+    name: Logging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByImdbIdAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByImdbIdAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html#Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_SearchByImdbIdAsync_System_String_System_Threading_CancellationToken_
+  name: SearchByImdbIdAsync
+  nameWithType: DtddApiClient.SearchByImdbIdAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByImdbIdAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse}
+  commentId: T:System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<DtddSearchResponse>
+  nameWithType: Task<DtddSearchResponse>
+  fullName: System.Threading.Tasks.Task<Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse>
+  nameWithType.vb: Task(Of DtddSearchResponse)
+  fullName.vb: System.Threading.Tasks.Task(Of Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse)
+  name.vb: Task(Of DtddSearchResponse)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse
+    name: DtddSearchResponse
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse
+    name: DtddSearchResponse
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse.html
+  - name: )
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByTitleAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByTitleAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html#Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_SearchByTitleAsync_System_String_System_Threading_CancellationToken_
+  name: SearchByTitleAsync
+  nameWithType: DtddApiClient.SearchByTitleAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.SearchByTitleAsync
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html#Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_GetMediaDetailsAsync_System_Int32_System_Threading_CancellationToken_
+  name: GetMediaDetailsAsync
+  nameWithType: DtddApiClient.GetMediaDetailsAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsAsync
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails}
+  commentId: T:System.Threading.Tasks.Task{Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<DtddMediaDetails>
+  nameWithType: Task<DtddMediaDetails>
+  fullName: System.Threading.Tasks.Task<Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails>
+  nameWithType.vb: Task(Of DtddMediaDetails)
+  fullName.vb: System.Threading.Tasks.Task(Of Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails)
+  name.vb: Task(Of DtddMediaDetails)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails
+    name: DtddMediaDetails
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails
+    name: DtddMediaDetails
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails.html
+  - name: )
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByImdbIdAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByImdbIdAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html#Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_GetMediaDetailsByImdbIdAsync_System_String_System_Threading_CancellationToken_
+  name: GetMediaDetailsByImdbIdAsync
+  nameWithType: DtddApiClient.GetMediaDetailsByImdbIdAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByImdbIdAsync
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByTitleAsync*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByTitleAsync
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.html#Jellyfin_Plugin_DoesTheDogDie_Api_DtddApiClient_GetMediaDetailsByTitleAsync_System_String_System_Nullable_System_Int32__System_Int32_System_Threading_CancellationToken_
+  name: GetMediaDetailsByTitleAsync
+  nameWithType: DtddApiClient.GetMediaDetailsByTitleAsync
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.DtddApiClient.GetMediaDetailsByTitleAsync
+- uid: System.Nullable{System.Int32}
+  commentId: T:System.Nullable{System.Int32}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int?
+  nameWithType: int?
+  fullName: int?
+  nameWithType.vb: Integer?
+  fullName.vb: Integer?
+  name.vb: Integer?
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

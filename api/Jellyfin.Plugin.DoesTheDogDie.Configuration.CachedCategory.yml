@@ -1,0 +1,586 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+  id: CachedCategory
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Id
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Name
+  - Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Topics
+  langs:
+  - csharp
+  - vb
+  name: CachedCategory
+  nameWithType: CachedCategory
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+  type: Class
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/CachedCategory.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: CachedCategory
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/CachedCategory.cs
+    startLine: 8
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Represents a cached trigger category.
+  example: []
+  syntax:
+    content: public class CachedCategory
+    content.vb: Public Class CachedCategory
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Id
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Id
+  id: Id
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: CachedCategory.Id
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Id
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/CachedCategory.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Id
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/CachedCategory.cs
+    startLine: 13
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets the category ID.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("id")]
+
+      public int Id { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <JsonPropertyName("id")>
+
+      Public Property Id As Integer
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Id*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: id
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Name
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Name
+  id: Name
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: CachedCategory.Name
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Name
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/CachedCategory.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Name
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/CachedCategory.cs
+    startLine: 19
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets the category name.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("name")]
+
+      public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <JsonPropertyName("name")>
+
+      Public Property Name As String
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Name*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: name
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Topics
+  commentId: P:Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Topics
+  id: Topics
+  parent: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory
+  langs:
+  - csharp
+  - vb
+  name: Topics
+  nameWithType: CachedCategory.Topics
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Topics
+  type: Property
+  source:
+    remote:
+      path: Jellyfin.Plugin.DoesTheDogDie/Configuration/CachedCategory.cs
+      branch: feature/docfx-setup
+      repo: git@github.com:theflanman/dtdd-jellyfin-plugin.git
+    id: Topics
+    path: Jellyfin.Plugin.DoesTheDogDie/Configuration/CachedCategory.cs
+    startLine: 25
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+  namespace: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  summary: Gets or sets the topics in this category.
+  example: []
+  syntax:
+    content: >-
+      [JsonPropertyName("topics")]
+
+      public List<CachedTopic> Topics { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic}
+    content.vb: >-
+      <JsonPropertyName("topics")>
+
+      Public Property Topics As List(Of CachedTopic)
+  overload: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Topics*
+  attributes:
+  - type: System.Text.Json.Serialization.JsonPropertyNameAttribute
+    ctor: System.Text.Json.Serialization.JsonPropertyNameAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: topics
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Configuration
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration
+    name: Configuration
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Id*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Id
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_CachedCategory_Id
+  name: Id
+  nameWithType: CachedCategory.Id
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Id
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Name*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Name
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_CachedCategory_Name
+  name: Name
+  nameWithType: CachedCategory.Name
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Topics*
+  commentId: Overload:Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Topics
+  href: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.html#Jellyfin_Plugin_DoesTheDogDie_Configuration_CachedCategory_Topics
+  name: Topics
+  nameWithType: CachedCategory.Topics
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedCategory.Topics
+- uid: System.Collections.Generic.List{Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic}
+  commentId: T:System.Collections.Generic.List{Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<CachedTopic>
+  nameWithType: List<CachedTopic>
+  fullName: System.Collections.Generic.List<Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic>
+  nameWithType.vb: List(Of CachedTopic)
+  fullName.vb: System.Collections.Generic.List(Of Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic)
+  name.vb: List(Of CachedTopic)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic
+    name: CachedTopic
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic
+    name: CachedTopic
+    href: Jellyfin.Plugin.DoesTheDogDie.Configuration.CachedTopic.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

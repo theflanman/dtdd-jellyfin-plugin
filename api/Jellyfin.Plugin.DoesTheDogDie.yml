@@ -1,0 +1,82 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie
+  id: Jellyfin.Plugin.DoesTheDogDie
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Constants
+  - Jellyfin.Plugin.DoesTheDogDie.Plugin
+  - Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator
+  - Jellyfin.Plugin.DoesTheDogDie.TriggerFilter
+  - Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter
+  langs:
+  - csharp
+  - vb
+  name: Jellyfin.Plugin.DoesTheDogDie
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie
+  fullName: Jellyfin.Plugin.DoesTheDogDie
+  type: Namespace
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Constants
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Constants
+  href: Jellyfin.Plugin.DoesTheDogDie.Constants.html
+  name: Constants
+  nameWithType: Constants
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Constants
+- uid: Jellyfin.Plugin.DoesTheDogDie.Plugin
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Plugin
+  parent: Jellyfin.Plugin.DoesTheDogDie
+  href: Jellyfin.Plugin.DoesTheDogDie.Plugin.html
+  name: Plugin
+  nameWithType: Plugin
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Plugin
+- uid: Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator
+  href: Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator.html
+  name: PluginServiceRegistrator
+  nameWithType: PluginServiceRegistrator
+  fullName: Jellyfin.Plugin.DoesTheDogDie.PluginServiceRegistrator
+- uid: Jellyfin.Plugin.DoesTheDogDie.TriggerFilter
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.TriggerFilter
+  href: Jellyfin.Plugin.DoesTheDogDie.TriggerFilter.html
+  name: TriggerFilter
+  nameWithType: TriggerFilter
+  fullName: Jellyfin.Plugin.DoesTheDogDie.TriggerFilter
+- uid: Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter
+  href: Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter.html
+  name: TriggerTagFormatter
+  nameWithType: TriggerTagFormatter
+  fullName: Jellyfin.Plugin.DoesTheDogDie.TriggerTagFormatter
+- uid: Jellyfin.Plugin.DoesTheDogDie
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie
+  fullName: Jellyfin.Plugin.DoesTheDogDie
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html

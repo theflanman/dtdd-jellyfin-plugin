@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>DoesTheDogDie Jellyfin Plugin - Implementation Plan </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="DoesTheDogDie Jellyfin Plugin - Implementation Plan ">
+    
+    
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="doesthedogdie-jellyfin-plugin---implementation-plan">DoesTheDogDie Jellyfin Plugin - Implementation Plan</h1>
+
+<h2 id="executive-summary">Executive Summary</h2>
+<p>This document details the interfaces needed to create a Jellyfin metadata plugin that integrates DoesTheDogDie.com content warnings. Based on analysis of the TVDB plugin architecture and Jellyfin's metadata system.</p>
+<hr>
+<h2 id="part-1-tvdb-plugin-interface-analysis">Part 1: TVDB Plugin Interface Analysis</h2>
+<h3 id="interfaces-implemented-by-tvdb-plugin">Interfaces Implemented by TVDB Plugin</h3>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Purpose</th>
+<th>Need for DTDD?</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IRemoteMetadataProvider&lt;T, TInfo&gt;</code></td>
+<td>Fetches metadata from external sources</td>
+<td><strong>NO</strong></td>
+<td>DTDD doesn't provide core metadata (titles, descriptions, cast)</td>
+</tr>
+<tr>
+<td><code>IRemoteImageProvider</code></td>
+<td>Fetches images (posters, backdrops)</td>
+<td><strong>NO</strong></td>
+<td>DTDD doesn't provide media images</td>
+</tr>
+<tr>
+<td><code>IExternalId</code></td>
+<td>Maps external provider IDs</td>
+<td><strong>YES</strong></td>
+<td>Links Jellyfin items to DTDD entries via IMDB/TMDB IDs</td>
+</tr>
+<tr>
+<td><code>IExternalUrlProvider</code></td>
+<td>Generates deep links to external sites</td>
+<td><strong>YES</strong></td>
+<td>Link to DTDD page for the item</td>
+</tr>
+<tr>
+<td><code>IPluginServiceRegistrator</code></td>
+<td>Registers services with DI container</td>
+<td><strong>YES</strong></td>
+<td>Register our API client as singleton</td>
+</tr>
+<tr>
+<td><code>IHostedService</code></td>
+<td>Background services</td>
+<td><strong>MAYBE</strong></td>
+<td>Could pre-fetch/cache warnings on library scan</td>
+</tr>
+<tr>
+<td><code>IScheduledTask</code></td>
+<td>Scheduled background tasks</td>
+<td><strong>MAYBE</strong></td>
+<td>Periodic refresh of warning data</td>
+</tr>
+<tr>
+<td><code>BasePlugin&lt;TConfig&gt;</code></td>
+<td>Plugin entry point</td>
+<td><strong>YES</strong></td>
+<td>Required for all plugins</td>
+</tr>
+<tr>
+<td><code>IHasWebPages</code></td>
+<td>Embedded configuration UI</td>
+<td><strong>YES</strong></td>
+<td>Configure API key, display preferences</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tvdb-interface-details">TVDB Interface Details</h3>
+<h4 id="1-iremotemetadataprovidertitemtype-tlookupinfotype">1. <code>IRemoteMetadataProvider&lt;TItemType, TLookupInfoType&gt;</code></h4>
+<p><strong>What it does:</strong> Fetches complete metadata for Series, Episodes, Movies, Seasons, and People from TVDB.</p>
+<p><strong>Required methods:</strong></p>
+<ul>
+<li><code>Name</code> - Provider identifier</li>
+<li><code>GetSearchResults(TInfo, CancellationToken)</code> - Search by name/ID</li>
+<li><code>GetMetadata(TInfo, CancellationToken)</code> - Fetch full metadata</li>
+<li><code>GetImageResponse(string url, CancellationToken)</code> - Download images</li>
+</ul>
+<p><strong>DTDD Decision: NOT NEEDED</strong></p>
+<ul>
+<li>DTDD provides content warnings, not core metadata</li>
+<li>We don't want to replace existing metadata, just supplement it</li>
+</ul>
+<h4 id="2-iremoteimageprovider">2. <code>IRemoteImageProvider</code></h4>
+<p><strong>What it does:</strong> Fetches artwork (posters, backdrops, banners, logos) for media items.</p>
+<p><strong>Required methods:</strong></p>
+<ul>
+<li><code>Name</code> - Provider identifier</li>
+<li><code>Supports(BaseItem)</code> - Check item type support</li>
+<li><code>GetSupportedImages(BaseItem)</code> - Return supported image types</li>
+<li><code>GetImages(BaseItem, CancellationToken)</code> - Fetch available images</li>
+<li><code>GetImageResponse(string url, CancellationToken)</code> - Download image</li>
+</ul>
+<p><strong>DTDD Decision: NOT NEEDED</strong></p>
+<ul>
+<li>DTDD doesn't provide artwork for media</li>
+</ul>
+<h4 id="3-iexternalid">3. <code>IExternalId</code></h4>
+<p><strong>What it does:</strong> Maps external provider IDs for cross-referencing and UI display.</p>
+<p><strong>TVDB implements 8 variants:</strong></p>
+<ul>
+<li><code>TvdbSeriesExternalId</code>, <code>TvdbSeriesSlugExternalId</code></li>
+<li><code>TvdbEpisodeExternalId</code>, <code>TvdbSeasonExternalId</code></li>
+<li><code>TvdbMovieExternalId</code>, <code>TvdbMovieSlugExternalId</code></li>
+<li><code>TvdbPersonExternalId</code>, <code>TvdbCollectionsExternalId</code></li>
+</ul>
+<p><strong>Required members:</strong></p>
+<ul>
+<li><code>ProviderName</code> - Display name (e.g., &quot;DoesTheDogDie&quot;)</li>
+<li><code>Key</code> - Internal key (e.g., &quot;Dtdd&quot;)</li>
+<li><code>Type</code> - <code>ExternalIdMediaType?</code> (Movie, Series, etc.)</li>
+<li><code>Supports(IHasProviderIds)</code> - Check item type</li>
+</ul>
+<p><strong>DTDD Decision: YES - IMPLEMENT</strong></p>
+<ul>
+<li>Store DTDD item IDs on Jellyfin items</li>
+<li>Enables quick lookup without re-searching</li>
+<li>Implementations needed:
+<ul>
+<li><code>DtddMovieExternalId</code></li>
+<li><code>DtddSeriesExternalId</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="4-iexternalurlprovider">4. <code>IExternalUrlProvider</code></h4>
+<p><strong>What it does:</strong> Generates clickable links to external websites in the Jellyfin UI.</p>
+<p><strong>Required methods:</strong></p>
+<ul>
+<li><code>Name</code> - Provider identifier</li>
+<li><code>GetExternalUrls(BaseItem)</code> - Return URLs for the item</li>
+</ul>
+<p><strong>DTDD Decision: YES - IMPLEMENT</strong></p>
+<ul>
+<li>Link directly to DTDD page: <code>https://www.doesthedogdie.com/media/{id}</code></li>
+<li>Allows users to see full details and contribute</li>
+</ul>
+<h4 id="5-ipluginserviceregistrator">5. <code>IPluginServiceRegistrator</code></h4>
+<p><strong>What it does:</strong> Registers services with Jellyfin's dependency injection container.</p>
+<p><strong>Required methods:</strong></p>
+<ul>
+<li><code>RegisterServices(IServiceCollection, IServerApplicationHost)</code></li>
+</ul>
+<p><strong>DTDD Decision: YES - IMPLEMENT</strong></p>
+<ul>
+<li>Register <code>DtddApiClient</code> as singleton</li>
+<li>Register any background services</li>
+</ul>
+<h4 id="6-ihostedservice">6. <code>IHostedService</code></h4>
+<p><strong>What it does:</strong> Background service that runs for the plugin's lifetime.</p>
+<p><strong>TVDB uses:</strong> <code>TvdbMissingEpisodeProvider</code> - Detects and creates missing episode placeholders.</p>
+<p><strong>DTDD Decision: MAYBE - CONSIDER</strong></p>
+<ul>
+<li>Could pre-fetch warnings when items are added to library</li>
+<li>Could cache warning data for offline access</li>
+<li>Lower priority for initial implementation</li>
+</ul>
+<h4 id="7-ischeduledtask">7. <code>IScheduledTask</code></h4>
+<p><strong>What it does:</strong> Scheduled tasks that run periodically.</p>
+<p><strong>TVDB uses:</strong> <code>UpdateTask</code> - Polls for metadata updates.</p>
+<p><strong>DTDD Decision: MAYBE - LATER</strong></p>
+<ul>
+<li>Could periodically refresh warning data</li>
+<li>Lower priority - warnings don't change frequently</li>
+</ul>
+<hr>
+<h2 id="part-2-jellyfin-interfaces-for-dtdd">Part 2: Jellyfin Interfaces for DTDD</h2>
+<h3 id="primary-interfaces-to-implement">Primary Interfaces to Implement</h3>
+<h4 id="icustommetadataprovidertitemtype"><code>ICustomMetadataProvider&lt;TItemType&gt;</code></h4>
+<p><strong>Location:</strong> <code>MediaBrowser.Controller/Providers/ICustomMetadataProvider.cs</code></p>
+<p><strong>What it does:</strong> Allows custom pre/post-processing of metadata. Called during metadata refresh pipeline.</p>
+<p><strong>Required methods:</strong></p>
+<pre><code class="lang-csharp">Task&lt;ItemUpdateType&gt; FetchAsync(TItemType item, MetadataRefreshOptions options, CancellationToken ct)
+</code></pre>
+<p><strong>DTDD Decision: YES - PRIMARY INTERFACE</strong></p>
+<ul>
+<li>Fetches DTDD warnings during normal metadata refresh</li>
+<li>Doesn't replace existing metadata, supplements it</li>
+<li>Implementations needed:
+<ul>
+<li><code>DtddMovieProvider : ICustomMetadataProvider&lt;Movie&gt;</code></li>
+<li><code>DtddSeriesProvider : ICustomMetadataProvider&lt;Series&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="ihasorder"><code>IHasOrder</code></h4>
+<p><strong>What it does:</strong> Establishes execution order for providers.</p>
+<p><strong>DTDD Decision: YES</strong></p>
+<ul>
+<li>Set high <code>Order</code> value (e.g., 100) to run after core metadata providers</li>
+<li>Ensures IMDB/TMDB IDs are available when we run</li>
+</ul>
+<h3 id="storage-approach">Storage Approach</h3>
+<p>Content warnings don't fit standard Jellyfin metadata fields. Options:</p>
+<ol>
+<li><strong>Tags</strong> - Store trigger names as tags (e.g., &quot;DTDD:Animal Death&quot;, &quot;DTDD:Jump Scares&quot;)</li>
+<li><strong>Custom Fields</strong> - Use <code>ProviderIds</code> dictionary for DTDD ID</li>
+<li><strong>External Files</strong> - Store JSON alongside media files</li>
+<li><strong>Plugin Data</strong> - Use Jellyfin's plugin data storage API</li>
+</ol>
+<p><strong>Recommended:</strong> Combination approach</p>
+<ul>
+<li>Store DTDD ID in <code>ProviderIds[&quot;Dtdd&quot;]</code></li>
+<li>Store summary warnings in Tags</li>
+<li>Cache full data in plugin storage for UI display</li>
+</ul>
+<hr>
+<h2 id="part-3-doesthedogdie-api-integration">Part 3: DoesTheDogDie API Integration</h2>
+<h3 id="api-specification">API Specification</h3>
+<p><strong>Base URL:</strong> <code>https://www.doesthedogdie.com</code></p>
+<p><strong>Authentication:</strong></p>
+<pre><code>Headers:
+  Accept: application/json
+  X-API-KEY: {user_api_key}
+</code></pre>
+<p><strong>Endpoints:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/dddsearch?q={term}</code></td>
+<td>GET</td>
+<td>Search by title</td>
+</tr>
+<tr>
+<td><code>/dddsearch?imdb={id}</code></td>
+<td>GET</td>
+<td>Search by IMDB ID</td>
+</tr>
+<tr>
+<td><code>/media/{id}</code></td>
+<td>GET</td>
+<td>Get full trigger data</td>
+</tr>
+</tbody>
+</table>
+<h3 id="supported-media-types">Supported Media Types</h3>
+<p>DoesTheDogDie tracks content warnings for the following media types:</p>
+<table>
+<thead>
+<tr>
+<th>DTDD Media Type</th>
+<th>Jellyfin Equivalent</th>
+<th>Support Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Movies</strong></td>
+<td><code>Movie</code></td>
+<td><strong>Primary</strong></td>
+</tr>
+<tr>
+<td><strong>TV Shows</strong></td>
+<td><code>Series</code></td>
+<td><strong>Primary</strong></td>
+</tr>
+<tr>
+<td><strong>TV Show Seasons</strong></td>
+<td><code>Season</code></td>
+<td><strong>Primary</strong></td>
+</tr>
+<tr>
+<td><strong>TV Show Episodes</strong></td>
+<td><code>Episode</code></td>
+<td><strong>Primary</strong></td>
+</tr>
+<tr>
+<td><strong>Anime</strong></td>
+<td><code>Series</code>/<code>Movie</code></td>
+<td><strong>Primary</strong> - Special case, may be TV or movie</td>
+</tr>
+<tr>
+<td><strong>Books</strong></td>
+<td><code>Book</code></td>
+<td><strong>Secondary</strong></td>
+</tr>
+<tr>
+<td><strong>Comics</strong></td>
+<td><code>Book</code> (ebook format)</td>
+<td><strong>Secondary</strong></td>
+</tr>
+<tr>
+<td><strong>Manga</strong></td>
+<td><code>Book</code> (ebook format)</td>
+<td><strong>Secondary</strong></td>
+</tr>
+<tr>
+<td><strong>Short Stories</strong></td>
+<td><code>Book</code> (ebook format)</td>
+<td><strong>Secondary</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Anime is a special case - DTDD may categorize anime as TV shows or movies</li>
+<li>Books, Comics, Manga, and Short Stories all map to Jellyfin's Book type (ebook libraries)</li>
+</ul>
+<h3 id="available-data">Available Data</h3>
+<p><strong>Per Media Item:</strong></p>
+<ul>
+<li><code>id</code> - DTDD internal ID</li>
+<li><code>imdbId</code> - IMDB identifier</li>
+<li><code>tmdbId</code> - TMDB identifier</li>
+<li><code>name</code> - Title</li>
+<li><code>releaseYear</code> - Year</li>
+<li><code>mediaType</code> - movie/tv/book/game/anime/comic/manga/shortstory</li>
+<li><code>topicItemStats</code> - Array of trigger ratings</li>
+</ul>
+<p><strong>Per Trigger:</strong></p>
+<ul>
+<li><code>topic.name</code> - Trigger name (e.g., &quot;Does a dog die?&quot;)</li>
+<li><code>topic.smmwDescription</code> - Short description</li>
+<li><code>yesSum</code> / <code>noSum</code> - Community votes</li>
+<li><code>comments</code> - User-submitted details with timestamps</li>
+</ul>
+<h3 id="trigger-categories-204-total">Trigger Categories (204 total)</h3>
+<p>Major categories include:</p>
+<ul>
+<li><strong>Animal</strong> - Pet deaths, animal abuse</li>
+<li><strong>Violence</strong> - Assault, torture, gore</li>
+<li><strong>Mental Health</strong> - Suicide, self-harm, eating disorders</li>
+<li><strong>Sexual Content</strong> - Assault, explicit content</li>
+<li><strong>Phobias</strong> - Spiders, clowns, needles, trypophobia</li>
+<li><strong>Jump Scares</strong> - Startling moments</li>
+<li><strong>LGBTQ+</strong> - Representation concerns</li>
+<li><strong>Family</strong> - Child harm, family death</li>
+<li><strong>Medical</strong> - Hospitals, needles, illness</li>
+</ul>
+<h3 id="matching-strategy">Matching Strategy</h3>
+<ol>
+<li><strong>Primary:</strong> Match via IMDB ID (most reliable)</li>
+<li><strong>Secondary:</strong> Match via TMDB ID</li>
+<li><strong>Fallback:</strong> Search by title + year</li>
+</ol>
+<hr>
+<h2 id="part-4-implementation-architecture">Part 4: Implementation Architecture</h2>
+<h3 id="project-structure">Project Structure</h3>
+<pre><code>Jellyfin.Plugin.Dtdd/
+├── DtddPlugin.cs                    # BasePlugin&lt;PluginConfiguration&gt;
+├── DtddPluginServiceRegistrator.cs  # IPluginServiceRegistrator
+├── Configuration/
+│   ├── PluginConfiguration.cs       # API key, display settings
+│   └── config.html                  # Configuration UI
+├── Api/
+│   ├── DtddApiClient.cs             # HTTP client wrapper
+│   ├── Models/
+│   │   ├── DtddSearchResult.cs
+│   │   ├── DtddMediaItem.cs
+│   │   └── DtddTrigger.cs
+├── Providers/
+│   ├── DtddMovieProvider.cs         # ICustomMetadataProvider&lt;Movie&gt;
+│   ├── DtddSeriesProvider.cs        # ICustomMetadataProvider&lt;Series&gt;
+│   ├── DtddExternalUrlProvider.cs   # IExternalUrlProvider
+│   └── ExternalIds/
+│       ├── DtddMovieExternalId.cs   # IExternalId
+│       └── DtddSeriesExternalId.cs  # IExternalId
+└── Storage/
+    └── DtddDataStore.cs             # Cache trigger data
+</code></pre>
+<h3 id="class-responsibilities">Class Responsibilities</h3>
+<h4 id="dtddplugin"><code>DtddPlugin</code></h4>
+<ul>
+<li>Extends <code>BasePlugin&lt;PluginConfiguration&gt;</code></li>
+<li>Implements <code>IHasWebPages</code> for config UI</li>
+<li>Defines <code>ProviderName = &quot;DoesTheDogDie&quot;</code></li>
+<li>Defines <code>ProviderId = &quot;Dtdd&quot;</code></li>
+</ul>
+<h4 id="dtddapiclient"><code>DtddApiClient</code></h4>
+<ul>
+<li>Singleton service (registered via DI)</li>
+<li>Handles authentication headers</li>
+<li>Implements search and fetch methods</li>
+<li>Caches responses (configurable TTL)</li>
+</ul>
+<h4 id="dtddmovieprovider--dtddseriesprovider"><code>DtddMovieProvider</code> / <code>DtddSeriesProvider</code></h4>
+<ul>
+<li>Implements <code>ICustomMetadataProvider&lt;T&gt;</code></li>
+<li>High <code>Order</code> value to run after core providers</li>
+<li>Fetches DTDD data using existing provider IDs</li>
+<li>Stores DTDD ID and tags on item</li>
+</ul>
+<h4 id="dtddexternalurlprovider"><code>DtddExternalUrlProvider</code></h4>
+<ul>
+<li>Returns <code>https://www.doesthedogdie.com/media/{id}</code></li>
+<li>Shows in Jellyfin UI external links section</li>
+</ul>
+<h3 id="data-flow">Data Flow</h3>
+<pre><code>1. User triggers metadata refresh
+2. Core providers run (TMDB, TVDB, etc.)
+3. Item now has IMDB/TMDB IDs populated
+4. DtddMovieProvider.FetchAsync() called
+5. DtddApiClient searches by IMDB ID
+6. If found: Store DTDD ID, add warning tags
+7. Full trigger data cached in plugin storage
+8. UI can display cached warnings
+</code></pre>
+<hr>
+<h2 id="part-5-configuration-options">Part 5: Configuration Options</h2>
+<h3 id="plugin-settings">Plugin Settings</h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ApiKey</code></td>
+<td>string</td>
+<td>&quot;&quot;</td>
+<td>User's DTDD API key</td>
+</tr>
+<tr>
+<td><code>EnableMovies</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Fetch warnings for movies</td>
+</tr>
+<tr>
+<td><code>EnableSeries</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Fetch warnings for TV series</td>
+</tr>
+<tr>
+<td><code>CacheDurationHours</code></td>
+<td>int</td>
+<td>168 (7 days)</td>
+<td>Cache TTL</td>
+</tr>
+<tr>
+<td><code>MinVotesThreshold</code></td>
+<td>int</td>
+<td>3</td>
+<td>Minimum votes to display trigger</td>
+</tr>
+<tr>
+<td><code>AddWarningTags</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Add triggers as item tags</td>
+</tr>
+<tr>
+<td><code>TagPrefix</code></td>
+<td>string</td>
+<td>&quot;CW:&quot;</td>
+<td>Prefix for warning tags</td>
+</tr>
+<tr>
+<td><code>EnabledCategories</code></td>
+<td>string[]</td>
+<td>all</td>
+<td>Which trigger categories to track</td>
+</tr>
+</tbody>
+</table>
+<h3 id="user-experience">User Experience</h3>
+<ol>
+<li>User installs plugin</li>
+<li>User obtains API key from doesthedogdie.com/profile</li>
+<li>User enters API key in plugin settings</li>
+<li>Plugin automatically fetches warnings during library scans</li>
+<li>Warnings appear as tags on items</li>
+<li>External link allows viewing full details on DTDD</li>
+</ol>
+<hr>
+<h2 id="part-6-interface-summary-table">Part 6: Interface Summary Table</h2>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>TVDB Uses</th>
+<th>DTDD Needs</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BasePlugin&lt;TConfig&gt;</code></td>
+<td>Yes</td>
+<td><strong>YES</strong></td>
+<td><code>DtddPlugin</code></td>
+</tr>
+<tr>
+<td><code>IHasWebPages</code></td>
+<td>Yes</td>
+<td><strong>YES</strong></td>
+<td>Config UI</td>
+</tr>
+<tr>
+<td><code>IPluginServiceRegistrator</code></td>
+<td>Yes</td>
+<td><strong>YES</strong></td>
+<td>Register API client</td>
+</tr>
+<tr>
+<td><code>IRemoteMetadataProvider</code></td>
+<td>Yes</td>
+<td><strong>NO</strong></td>
+<td>Not a primary metadata source</td>
+</tr>
+<tr>
+<td><code>IRemoteImageProvider</code></td>
+<td>Yes</td>
+<td><strong>NO</strong></td>
+<td>No images to provide</td>
+</tr>
+<tr>
+<td><code>ICustomMetadataProvider</code></td>
+<td>No</td>
+<td><strong>YES</strong></td>
+<td>Supplement existing metadata</td>
+</tr>
+<tr>
+<td><code>IExternalId</code></td>
+<td>Yes (8)</td>
+<td><strong>YES</strong> (2)</td>
+<td>Movie, Series</td>
+</tr>
+<tr>
+<td><code>IExternalUrlProvider</code></td>
+<td>Yes</td>
+<td><strong>YES</strong></td>
+<td>Link to DTDD page</td>
+</tr>
+<tr>
+<td><code>IHostedService</code></td>
+<td>Yes</td>
+<td>Maybe</td>
+<td>Pre-fetch on library scan</td>
+</tr>
+<tr>
+<td><code>IScheduledTask</code></td>
+<td>Yes</td>
+<td>Maybe</td>
+<td>Periodic refresh</td>
+</tr>
+<tr>
+<td><code>IHasOrder</code></td>
+<td>Implicit</td>
+<td><strong>YES</strong></td>
+<td>Run after core providers</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="part-7-implementation-phases">Part 7: Implementation Phases</h2>
+<h3 id="phase-1-core-infrastructure">Phase 1: Core Infrastructure</h3>
+<ul>
+<li>[ ] Create plugin class structure</li>
+<li>[ ] Implement configuration with API key</li>
+<li>[ ] Build <code>DtddApiClient</code> with authentication</li>
+<li>[ ] Create API response models</li>
+</ul>
+<h3 id="phase-2-metadata-integration">Phase 2: Metadata Integration</h3>
+<ul>
+<li>[ ] Implement <code>ICustomMetadataProvider&lt;Movie&gt;</code></li>
+<li>[ ] Implement <code>ICustomMetadataProvider&lt;Series&gt;</code></li>
+<li>[ ] Store DTDD ID in ProviderIds</li>
+<li>[ ] Add warning tags to items</li>
+</ul>
+<h3 id="phase-3-ui-integration">Phase 3: UI Integration</h3>
+<ul>
+<li>[ ] Implement <code>IExternalId</code> providers</li>
+<li>[ ] Implement <code>IExternalUrlProvider</code></li>
+<li>[ ] Create configuration HTML page</li>
+</ul>
+<h3 id="phase-4-enhancement-optional">Phase 4: Enhancement (Optional)</h3>
+<ul>
+<li>[ ] Add caching layer for trigger data</li>
+<li>[ ] Implement <code>IHostedService</code> for pre-fetching</li>
+<li>[ ] Add filtering by trigger categories</li>
+<li>[ ] Create custom UI component for warnings display</li>
+</ul>
+<hr>
+<h2 id="verification-plan">Verification Plan</h2>
+<ol>
+<li><strong>Build:</strong> <code>dotnet build</code> succeeds without errors</li>
+<li><strong>Install:</strong> Plugin loads in Jellyfin without crashes</li>
+<li><strong>Configure:</strong> API key can be entered and saved</li>
+<li><strong>Fetch:</strong> Refreshing a movie fetches DTDD data</li>
+<li><strong>Display:</strong> DTDD ID appears in item external IDs</li>
+<li><strong>Tags:</strong> Warning tags appear on item</li>
+<li><strong>Link:</strong> External URL links to correct DTDD page</li>
+</ol>
+<hr>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://github.com/jellyfin/jellyfin-plugin-tvdb">TVDB Plugin Source</a></li>
+<li><a href="https://github.com/jellyfin/jellyfin">Jellyfin Source</a></li>
+<li><a href="https://github.com/jellyfin/jellyfin-plugin-template">Jellyfin Plugin Template</a></li>
+<li><a href="https://www.doesthedogdie.com/api">DoesTheDogDie API</a></li>
+</ul>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/theflanman/dtdd-jellyfin-plugin/blob/feature/docfx-setup/docs/IMPLEMENTATION_PLAN.md/#L1" class="contribution-link">Edit this page</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

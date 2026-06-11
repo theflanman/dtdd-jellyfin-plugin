@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  id: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  langs:
+  - csharp
+  - vb
+  name: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks
+  type: Namespace
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask
+  href: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask.html
+  name: DtddRefreshTask
+  nameWithType: DtddRefreshTask
+  fullName: Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks.DtddRefreshTask

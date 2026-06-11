@@ -1,0 +1,124 @@
+### YamlMime:ManagedReference
+items:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  id: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  children:
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory
+  - Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat
+  langs:
+  - csharp
+  - vb
+  name: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  type: Namespace
+  assemblies:
+  - Jellyfin.Plugin.DoesTheDogDie
+references:
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter.html
+  name: BooleanOrIntConverter
+  nameWithType: BooleanOrIntConverter
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.BooleanOrIntConverter
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType.html
+  name: DtddItemType
+  nameWithType: DtddItemType
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddItemType
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails.html
+  name: DtddMediaDetails
+  nameWithType: DtddMediaDetails
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaDetails
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem.html
+  name: DtddMediaItem
+  nameWithType: DtddMediaItem
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddMediaItem
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse.html
+  name: DtddSearchResponse
+  nameWithType: DtddSearchResponse
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddSearchResponse
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic.html
+  name: DtddTopic
+  nameWithType: DtddTopic
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopic
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory.html
+  name: DtddTopicCategory
+  nameWithType: DtddTopicCategory
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicCategory
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat
+  commentId: T:Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat
+  parent: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat.html
+  name: DtddTopicItemStat
+  nameWithType: DtddTopicItemStat
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models.DtddTopicItemStat
+- uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  commentId: N:Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  href: Jellyfin.html
+  name: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  nameWithType: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  fullName: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+  spec.csharp:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+    name: Models
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.html
+  spec.vb:
+  - uid: Jellyfin
+    name: Jellyfin
+    href: Jellyfin.html
+  - name: .
+  - uid: Jellyfin.Plugin
+    name: Plugin
+    href: Jellyfin.Plugin.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie
+    name: DoesTheDogDie
+    href: Jellyfin.Plugin.DoesTheDogDie.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api
+    name: Api
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.html
+  - name: .
+  - uid: Jellyfin.Plugin.DoesTheDogDie.Api.Models
+    name: Models
+    href: Jellyfin.Plugin.DoesTheDogDie.Api.Models.html

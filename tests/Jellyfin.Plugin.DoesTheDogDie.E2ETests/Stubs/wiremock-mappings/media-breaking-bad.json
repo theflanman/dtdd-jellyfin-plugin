@@ -32,7 +32,16 @@
             "name": "someone dies",
             "notName": "no one dies",
             "isSpoiler": false,
-            "isVisible": true
+            "isVisible": true,
+            "TopicCategoryId": 3,
+            "TopicCategory": {
+              "id": 3,
+              "name": "Violence"
+            }
+          },
+          "TopicCategory": {
+            "id": 3,
+            "name": "Violence"
           }
         }
       ]
