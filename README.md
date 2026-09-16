@@ -3,7 +3,7 @@
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-77%25-yellow)
 ![License](https://img.shields.io/badge/license-GPLv3-blue)
-![Jellyfin](https://img.shields.io/badge/Jellyfin-10.11+-purple)
+![Jellyfin](https://img.shields.io/badge/Jellyfin-12.0+-purple)
 
 An unofficial Jellyfin plugin that integrates content warnings from [DoesTheDogDie.com](https://www.doesthedogdie.com) into your media library.
 
@@ -56,7 +56,7 @@ cd dtdd-jellyfin-plugin
 dotnet publish Jellyfin.Plugin.DoesTheDogDie.sln -c Release
 ```
 
-Copy the contents of `Jellyfin.Plugin.DoesTheDogDie/bin/Release/net9.0/publish/` to your plugins directory.
+Copy the contents of `Jellyfin.Plugin.DoesTheDogDie/bin/Release/net10.0/publish/` to your plugins directory.
 
 ## Configuration
 
@@ -73,8 +73,8 @@ Copy the contents of `Jellyfin.Plugin.DoesTheDogDie/bin/Release/net9.0/publish/`
 
 ## Requirements
 
-- Jellyfin Server 10.11.0 or later
-- .NET 9.0 (for building from source)
+- Jellyfin Server 12.0.0 or later
+- .NET 10.0 SDK (for building from source)
 
 ## Development
 

@@ -24,7 +24,7 @@ dotnet publish Jellyfin.Plugin.DoesTheDogDie.sln
 The plugin must be tested within a running Jellyfin instance:
 
 1. Build the plugin: `dotnet publish`
-2. Copy output from `Jellyfin.Plugin.DoesTheDogDie/bin/Debug/net9.0/publish/` to Jellyfin's plugin directory
+2. Copy output from `Jellyfin.Plugin.DoesTheDogDie/bin/Debug/net10.0/publish/` to Jellyfin's plugin directory
 3. Restart Jellyfin server
 4. Plugin appears in Dashboard > Plugins
 
@@ -86,7 +86,7 @@ Key endpoints:
 
 ## Code Style
 
-- Target: .NET 9.0
+- Target: .NET 10.0
 - Nullable reference types enabled
 - StyleCop and Roslyn analyzers enforced (see `jellyfin.ruleset`)
 - Warnings treated as errors
