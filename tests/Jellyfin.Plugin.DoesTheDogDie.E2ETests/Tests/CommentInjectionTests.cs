@@ -40,7 +40,7 @@ public sealed class CommentInjectionTests
             var refreshed = await WaitForInjectedAsync();
 
             refreshed.Overview.Should().Contain(
-                $"• a dog dies: {DogComment}",
+                $"* a dog dies (42/43, 88–99%)\n  * {DogComment}",
                 "the top-voted rating's description is attached to its trigger");
             refreshed.Overview.Should().NotContain(
                 LoserComment,
@@ -62,7 +62,7 @@ public sealed class CommentInjectionTests
             await SetConfigAndRefreshAsync(johnWick.Id, ("AddDescriptionWarnings", true), ("IncludeTopComment", false));
             var refreshed = await WaitForInjectedAsync();
 
-            refreshed.Overview.Should().NotContain("•", "comments must not appear when IncludeTopComment is off");
+            refreshed.Overview.Should().NotContain("\n  * ", "comments must not appear when IncludeTopComment is off");
             refreshed.Overview.Should().NotContain(DogComment);
         }
         finally
@@ -87,7 +87,7 @@ public sealed class CommentInjectionTests
 
             refreshed.Overview.Should().NotContain(DogComment, "comments beyond 30 chars must be cut");
             refreshed.Overview.Should().Contain(
-                $"• a dog dies: {DogComment.Substring(0, 30).TrimEnd()}...",
+                $"* a dog dies (42/43, 88–99%)\n  * {DogComment.Substring(0, 30).TrimEnd()}...",
                 "truncated comments end with an ellipsis");
         }
         finally

@@ -119,7 +119,7 @@ public class DtddMetadataServiceApplyTests
 
         CreateService().Apply(item, Data(Trigger("a dog dies", 40, 1)), config);
 
-        Assert.Contains("Content warnings: a dog dies", item.Overview, StringComparison.Ordinal);
+        Assert.Contains("#### Content warnings\n* a dog dies", item.Overview, StringComparison.Ordinal);
         Assert.Contains("Base plot.", item.Overview, StringComparison.Ordinal);
     }
 

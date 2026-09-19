@@ -26,7 +26,7 @@ public class OverviewFormatterVerdictTests
     {
         var summary = _formatter.FormatTriggerSummary(new List<TriggerInfo> { Trigger("a dog dies", 40, 1) }, Config());
 
-        Assert.Contains("Content warnings: a dog dies", summary, StringComparison.Ordinal);
+        Assert.Contains("#### Content warnings\n* a dog dies", summary, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -34,7 +34,7 @@ public class OverviewFormatterVerdictTests
     {
         var summary = _formatter.FormatTriggerSummary(new List<TriggerInfo> { Trigger("a dog dies", 4, 3) }, Config());
 
-        Assert.Contains("Possible: a dog dies", summary, StringComparison.Ordinal);
+        Assert.Contains("#### Possible\n* a dog dies", summary, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -42,7 +42,7 @@ public class OverviewFormatterVerdictTests
     {
         var summary = _formatter.FormatTriggerSummary(new List<TriggerInfo> { Trigger("a dog dies", 1, 40) }, Config());
 
-        Assert.Contains("Reported safe: a dog dies", summary, StringComparison.Ordinal);
+        Assert.Contains("#### Reported Safe\n* a dog dies", summary, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -60,8 +60,37 @@ public class OverviewFormatterVerdictTests
     {
         var summary = _formatter.FormatTriggerSummary(new List<TriggerInfo> { Trigger("a dog dies", 40, 1) }, Config());
 
-        Assert.DoesNotContain("Possible:", summary, StringComparison.Ordinal);
-        Assert.DoesNotContain("Reported safe:", summary, StringComparison.Ordinal);
+        Assert.DoesNotContain("#### Possible", summary, StringComparison.Ordinal);
+        Assert.DoesNotContain("#### Reported Safe", summary, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FormatTriggerSummary_NestsCommentAsSubBulletUnderItsTrigger()
+    {
+        var trigger = Trigger("a dog dies", 40, 1);
+        var comments = new Dictionary<int, string> { [trigger.Topic.Id] = "the dog dies early" };
+
+        var summary = _formatter.FormatTriggerSummary(new List<TriggerInfo> { trigger }, Config(), comments);
+
+        Assert.Contains("* a dog dies (40/41, ", summary, StringComparison.Ordinal);
+        Assert.Contains("\n  * the dog dies early", summary, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FormatTriggerSummary_FlattensEmbeddedNewlinesInComments()
+    {
+        var trigger = Trigger("a dog dies", 40, 1);
+        var comments = new Dictionary<int, string>
+        {
+            [trigger.Topic.Id] = "Sick at 07:20.\n\nActual vomit at 08:00, ending 08:10.",
+        };
+
+        var summary = _formatter.FormatTriggerSummary(new List<TriggerInfo> { trigger }, Config(), comments);
+
+        Assert.Contains(
+            "\n  * Sick at 07:20. Actual vomit at 08:00, ending 08:10.",
+            summary,
+            StringComparison.Ordinal);
     }
 
     [Fact]

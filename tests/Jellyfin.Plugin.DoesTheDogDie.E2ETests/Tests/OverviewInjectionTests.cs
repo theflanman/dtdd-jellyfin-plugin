@@ -48,7 +48,7 @@ public sealed class OverviewInjectionTests
 
             var result = (await _fixture.Client.GetItemsAsync("Movie")).Single(m => m.Name == "John Wick");
             result.Overview.Should().Contain(
-                "Content warnings: a dog dies (42/43, 88\u201399%)",
+                "#### Content warnings\n* a dog dies (42/43, 88\u201399%)",
                 "the LikelyPresent trigger should appear in the injected overview text with its vote counts and interval");
         }
         finally

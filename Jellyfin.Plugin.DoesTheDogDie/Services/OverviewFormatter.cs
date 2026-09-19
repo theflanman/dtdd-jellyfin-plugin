@@ -43,19 +43,22 @@ public class OverviewFormatter
             return string.Empty;
         }
 
-        var sb = new StringBuilder();
+        var groups = new StringBuilder();
+        AppendGroup(groups, "Content warnings", included, TriggerVerdict.LikelyPresent, comments);
+        AppendGroup(groups, "Possible", included, TriggerVerdict.Uncertain, comments);
+        AppendGroup(groups, "Reported Safe", included, TriggerVerdict.LikelyAbsent, comments);
 
-        AppendGroup(sb, "Content warnings", included, TriggerVerdict.LikelyPresent, comments);
-        AppendGroup(sb, "Possible", included, TriggerVerdict.Uncertain, comments);
-        AppendGroup(sb, "Reported safe", included, TriggerVerdict.LikelyAbsent, comments);
-
-        if (sb.Length == 0)
+        if (groups.Length == 0)
         {
             return string.Empty;
         }
 
-        sb.Append('\n');
-        sb.Append(CultureInfo.InvariantCulture, $"{DtddAttribution.Phrase} — {DtddAttribution.Url}");
+        // Kept at H3-or-lower so the injected section never outranks the item's own tagline,
+        // which Jellyfin renders as H3.
+        var sb = new StringBuilder();
+        sb.Append("### Content warnings\n\n");
+        sb.Append(CultureInfo.InvariantCulture, $"{DtddAttribution.Phrase} — {DtddAttribution.Url}\n");
+        sb.Append(groups);
 
         return sb.ToString().TrimEnd();
     }
@@ -73,8 +76,11 @@ public class OverviewFormatter
             return existingOverview ?? string.Empty;
         }
 
-        // Wrap content with markers
-        var wrappedContent = $"{DtddStartMarker}{dtddContent}\n{DtddEndMarker}";
+        // Wrap content with markers. The blank line after DtddStartMarker matters: without it, the
+        // leading "#### Content warnings" heading sits glued to the "<!-- DTDD_START -->" HTML
+        // comment on the same line, so the Markdown parser never sees it at the start of a block
+        // and renders it as literal text instead of a heading.
+        var wrappedContent = $"{DtddStartMarker}\n\n{dtddContent}\n{DtddEndMarker}";
 
         if (string.IsNullOrWhiteSpace(existingOverview))
         {
@@ -143,21 +149,26 @@ public class OverviewFormatter
             return;
         }
 
-        sb.Append(heading).Append(": ");
-        sb.AppendJoin(", ", matching.Select(FormatTrigger));
-        sb.Append('\n');
+        sb.Append('\n').Append("#### ").Append(heading).Append('\n');
 
-        if (comments is not null)
+        foreach (var trigger in matching)
         {
-            foreach (var trigger in matching)
+            sb.Append("* ").Append(FormatTrigger(trigger)).Append('\n');
+
+            if (comments is not null && comments.TryGetValue(trigger.Topic.Id, out var comment))
             {
-                if (comments.TryGetValue(trigger.Topic.Id, out var comment))
-                {
-                    sb.Append("  • ").Append(trigger.Topic.Name).Append(": ").Append(comment).Append('\n');
-                }
+                sb.Append("  * ").Append(FlattenComment(comment)).Append('\n');
             }
         }
     }
+
+    /// <summary>
+    /// Collapses embedded line breaks in a comment to spaces. A raw DTDD comment can contain
+    /// newlines, which would otherwise split it across multiple lines mid-list-item and break
+    /// the surrounding Markdown list (and, with it, every heading level that follows).
+    /// </summary>
+    private static string FlattenComment(string comment) =>
+        string.Join(' ', comment.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
 
     private static string FormatTrigger(TriggerInfo trigger)
     {

@@ -234,6 +234,20 @@
         </div>
 
         <script type="text/javascript">
+          (function () {
+            // Jellyfin's dashboard re-evaluates this <script> block on every navigation to this
+            // page within the same session, while reusing the same #DoesTheDogDieConfigPage DOM
+            // node. Without this guard, every re-entry stacks a fresh 'pageshow' listener (which
+            // re-runs loadConfiguration() and silently resets any in-progress, unsaved checkbox
+            // edits back to the last-saved server state) and a fresh 'submit' listener (which
+            // double-POSTs the config on every Save click).
+            var dtddPage = document.querySelector('#DoesTheDogDieConfigPage');
+            if (dtddPage.dataset.dtddInitialized === 'true') {
+                return;
+            }
+
+            dtddPage.dataset.dtddInitialized = 'true';
+
             var DoesTheDogDieConfig = {
                 pluginUniqueId: 'eb5d7894-8eef-4b36-aa6f-5d124e828ce1',
                 categories: [],
@@ -466,13 +480,10 @@
                             return;
                         }
 
-                        var checkbox = this.querySelector('.category-checkbox');
-                        if (checkbox.checked) {
-                            var topics = this.closest('.dtdd-category').querySelector('.dtdd-topics');
-                            var toggle = this.querySelector('.dtdd-category-toggle');
-                            topics.classList.toggle('expanded');
-                            toggle.textContent = topics.classList.contains('expanded') ? '▼' : '▶';
-                        }
+                        var topics = this.closest('.dtdd-category').querySelector('.dtdd-topics');
+                        var toggle = this.querySelector('.dtdd-category-toggle');
+                        topics.classList.toggle('expanded');
+                        toggle.textContent = topics.classList.contains('expanded') ? '▼' : '▶';
                     });
                 });
 
@@ -481,24 +492,50 @@
                     checkbox.addEventListener('change', function() {
                         var topicId = parseInt(this.dataset.topicId);
                         var categoryId = parseInt(this.dataset.categoryId);
-
-                        // Ensure category is enabled
-                        if (DoesTheDogDieConfig.enabledCategoryIds.indexOf(categoryId) === -1) {
-                            return;
-                        }
+                        var category = this.closest('.dtdd-category');
 
                         if (this.checked) {
-                            // Add to enabledTopicIds
+                            // Selecting a topic whose category isn't enabled yet enables just the
+                            // category (so the topic actually survives filtering) without pulling in
+                            // its siblings — that "select everything" behavior is reserved for
+                            // checking the category checkbox itself.
+                            if (DoesTheDogDieConfig.enabledCategoryIds.indexOf(categoryId) === -1) {
+                                DoesTheDogDieConfig.enabledCategoryIds.push(categoryId);
+
+                                var categoryCheckbox = category.querySelector('.category-checkbox');
+                                categoryCheckbox.checked = true;
+                                category.querySelector('.dtdd-topics').classList.add('expanded');
+                                category.querySelector('.dtdd-category-toggle').textContent = '▼';
+                            }
+
                             if (DoesTheDogDieConfig.enabledTopicIds.indexOf(topicId) === -1) {
                                 DoesTheDogDieConfig.enabledTopicIds.push(topicId);
                             }
                         } else {
-                            // Remove from enabledTopicIds
                             var idx = DoesTheDogDieConfig.enabledTopicIds.indexOf(topicId);
                             if (idx !== -1) {
                                 DoesTheDogDieConfig.enabledTopicIds.splice(idx, 1);
                             }
+
+                            // If that was the last selected topic in the category, disable the
+                            // category too — otherwise it stays enabled with nothing to show,
+                            // which (since EnabledTopicIds is a global allowlist once non-empty)
+                            // would silently hide every topic in every other selected category.
+                            var anyChecked = Array.prototype.some.call(
+                                category.querySelectorAll('.topic-checkbox'),
+                                function(topicCb) { return topicCb.checked; });
+
+                            if (!anyChecked) {
+                                var catIdx = DoesTheDogDieConfig.enabledCategoryIds.indexOf(categoryId);
+                                if (catIdx !== -1) {
+                                    DoesTheDogDieConfig.enabledCategoryIds.splice(catIdx, 1);
+                                }
+
+                                category.querySelector('.category-checkbox').checked = false;
+                            }
                         }
+
+                        updateWarningVisibility();
                     });
                 });
             }
@@ -631,6 +668,7 @@
 
                     return false;
                 });
+          })();
         </script>
     </div>
 </body>

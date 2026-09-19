@@ -42,9 +42,9 @@ public sealed class DescriptionInjectionContentTests
             await EnableInjectionAndRefreshAsync(johnWick.Id);
             var refreshed = await WaitForInjectedAsync();
 
-            refreshed.Overview.Should().Contain("Content warnings: ", "LikelyPresent triggers head the section");
-            refreshed.Overview.Should().Contain("Possible: ", "Uncertain triggers are shown under their own heading");
-            refreshed.Overview.Should().Contain("Reported safe: ", "LikelyAbsent triggers are shown under their own heading");
+            refreshed.Overview.Should().Contain("#### Content warnings\n", "LikelyPresent triggers head the section");
+            refreshed.Overview.Should().Contain("#### Possible\n", "Uncertain triggers are shown under their own heading");
+            refreshed.Overview.Should().Contain("#### Reported Safe\n", "LikelyAbsent triggers are shown under their own heading");
         }
         finally
         {
@@ -62,9 +62,9 @@ public sealed class DescriptionInjectionContentTests
             await EnableInjectionAndRefreshAsync(johnWick.Id);
             var refreshed = await WaitForInjectedAsync();
 
-            refreshed.Overview.Should().Contain("Content warnings: " + DogLine);
-            refreshed.Overview.Should().Contain("Possible: " + SomeoneLine);
-            refreshed.Overview.Should().Contain("Reported safe: " + ChildLine);
+            refreshed.Overview.Should().Contain("* " + DogLine);
+            refreshed.Overview.Should().Contain("* " + SomeoneLine);
+            refreshed.Overview.Should().Contain("* " + ChildLine);
         }
         finally
         {
@@ -117,15 +117,15 @@ public sealed class DescriptionInjectionContentTests
                 {
                     var current = (await _fixture.Client.GetItemsAsync("Movie")).Single(m => m.Name == "John Wick");
                     return current.Overview is not null
-                        && current.Overview.Contains("Possible: " + DogLine, StringComparison.Ordinal);
+                        && current.Overview.Contains("#### Possible\n* " + DogLine, StringComparison.Ordinal);
                 },
                 TimeSpan.FromSeconds(30),
                 failureMessage: "Expected the demoted trigger to appear under the Possible heading at DecisionThreshold=0.99");
 
             var refreshed = (await _fixture.Client.GetItemsAsync("Movie")).Single(m => m.Name == "John Wick");
             refreshed.Overview.Should().Contain(DtddStartMarker, "the DTDD section stays present when triggers remain");
-            refreshed.Overview.Should().NotContain("Content warnings: ", "nothing is LikelyPresent at a 0.99 threshold");
-            refreshed.Overview.Should().Contain("Reported safe: ", "the two weaker stats drop below the threshold entirely");
+            refreshed.Overview.Should().NotContain("#### Content warnings\n", "nothing is LikelyPresent at a 0.99 threshold");
+            refreshed.Overview.Should().Contain("#### Reported Safe\n", "the two weaker stats drop below the threshold entirely");
         }
         finally
         {
@@ -194,7 +194,7 @@ public sealed class DescriptionInjectionContentTests
             end.Should().BeGreaterThan(start, "end marker must follow start marker so the section is well-formed");
 
             var section = overview.Substring(start, (end + DtddEndMarker.Length) - start);
-            section.Should().Contain("Content warnings: ", "the heading must live inside the marker-bounded section");
+            section.Should().Contain("#### Content warnings\n", "the heading must live inside the marker-bounded section");
             section.Should().Contain(DogLine, "trigger lines must live inside the marker-bounded section, not before/after");
         }
         finally

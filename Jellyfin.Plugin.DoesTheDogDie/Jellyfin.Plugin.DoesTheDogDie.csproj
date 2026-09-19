@@ -12,6 +12,7 @@
 
   <PropertyGroup>
     <DtddClientPath Condition="'$(DtddClientPath)' == ''">../../../dtdd-client</DtddClientPath>
+    <DtddClientVersion Condition="'$(DtddClientVersion)' == ''">0.1.0</DtddClientVersion>
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(DtddClientPath)/src/DoesTheDogDie/DoesTheDogDie.csproj')">
@@ -19,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="!Exists('$(DtddClientPath)/src/DoesTheDogDie/DoesTheDogDie.csproj')">
-    <PackageReference Include="DoesTheDogDie" Version="$(DtddClientVersion)" />
+    <PackageReference Include="DtDDNetClient" Version="$(DtddClientVersion)" />
   </ItemGroup>
 
   <ItemGroup>

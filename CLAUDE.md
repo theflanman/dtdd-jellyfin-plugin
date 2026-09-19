@@ -16,7 +16,7 @@ export PATH=$HOME/.dotnet:$PATH DOTNET_ROOT=$HOME/.dotnet DOTNET_ROLL_FORWARD=La
 
 `DOTNET_ROLL_FORWARD=LatestMajor` is needed because that SDK root's `shared/` has ASP.NET Core 10 but no 9.x runtime, and the `net9.0` unit-test testhost needs one to roll forward to. The plugin itself still targets and ships `net9.0` — only the build tooling needs .NET 10.
 
-The plugin's csproj resolves the library via a `DtddClientPath` MSBuild property (default `../../../dtdd-client`, i.e. checked out as a sibling of this repo's parent directory) and falls back to a `PackageReference` if that path doesn't exist. Pass `-p:DtddClientPath=<path>` to point at the library elsewhere — e.g. from a worktree, where the default relative path won't resolve.
+The plugin's csproj resolves the library via a `DtddClientPath` MSBuild property (default `../../../dtdd-client`, i.e. checked out as a sibling of this repo's parent directory) and falls back to a `PackageReference` on the [`DtDDNetClient`](https://www.nuget.org/packages/DtDDNetClient) NuGet package if that path doesn't exist. Pass `-p:DtddClientPath=<path>` to point at the library elsewhere — e.g. from a worktree, where the default relative path won't resolve. The fallback version defaults to `0.1.0` via `DtddClientVersion`; pass `-p:DtddClientVersion=<version>` to pin a different one.
 
 The generated DocFX output committed at `_site/` (69 tracked files) documents pre-migration types that no longer exist, and one page still displays the retired bundled API key. It is stale; regenerate it or add it to `.gitignore` rather than treating it as current.
 
