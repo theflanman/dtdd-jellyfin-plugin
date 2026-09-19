@@ -160,12 +160,57 @@ internal sealed class JellyfinClient : IDisposable
         resp.EnsureSuccessStatusCode();
     }
 
+    public async Task<JsonDocument> GetPluginsAsync(CancellationToken ct = default)
+    {
+        var resp = await _http.GetAsync("/Plugins", ct);
+        resp.EnsureSuccessStatusCode();
+        var stream = await resp.Content.ReadAsStreamAsync(ct);
+        return await JsonDocument.ParseAsync(stream, cancellationToken: ct);
+    }
+
     public async Task<JsonDocument> GetPluginConfigurationAsync(Guid pluginId, CancellationToken ct = default)
     {
         var resp = await _http.GetAsync($"/Plugins/{pluginId:D}/Configuration", ct);
         resp.EnsureSuccessStatusCode();
         var stream = await resp.Content.ReadAsStreamAsync(ct);
         return await JsonDocument.ParseAsync(stream, cancellationToken: ct);
+    }
+
+    /// <summary>
+    /// Calls the plugin's own <c>POST Plugins/DoesTheDogDie/TestKey</c> endpoint, which exercises the
+    /// configured key against the DtDD API (WireMock, here) and reports whether it was accepted.
+    /// </summary>
+    /// <param name="ct">The cancellation token.</param>
+    /// <returns>The deserialized key-test result.</returns>
+    public async Task<KeyTestResultDto> TestDtddKeyAsync(CancellationToken ct = default)
+    {
+        var resp = await _http.PostAsync("/Plugins/DoesTheDogDie/TestKey", content: null, ct);
+        resp.EnsureSuccessStatusCode();
+
+        // JsonOptions is case-insensitive, so either PascalCase or camelCase from the server binds.
+        var result = await resp.Content.ReadFromJsonAsync<KeyTestResultDto>(JsonOptions, ct);
+        return result ?? throw new InvalidOperationException("TestKey returned an empty body");
+    }
+
+    /// <summary>
+    /// Calls the plugin's <c>GET Plugins/DoesTheDogDie/Budget</c> endpoint. Returns null when the plugin
+    /// has not observed a rate-limit budget yet — the endpoint answers with a JSON <c>null</c> then, which
+    /// ReadFromJsonAsync would turn into a default-valued DTO, so the body is checked explicitly.
+    /// </summary>
+    /// <param name="ct">The cancellation token.</param>
+    /// <returns>The observed budget, or null if none has been observed.</returns>
+    public async Task<RateLimitBudgetDto?> GetDtddBudgetAsync(CancellationToken ct = default)
+    {
+        var resp = await _http.GetAsync("/Plugins/DoesTheDogDie/Budget", ct);
+        resp.EnsureSuccessStatusCode();
+
+        var body = await resp.Content.ReadAsStringAsync(ct);
+        if (string.IsNullOrWhiteSpace(body) || string.Equals(body.Trim(), "null", StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        return JsonSerializer.Deserialize<RateLimitBudgetDto>(body, JsonOptions);
     }
 
     public async Task TriggerLibraryScanAsync(CancellationToken ct = default)
@@ -338,6 +383,30 @@ internal sealed class JellyfinClient : IDisposable
         public string? State { get; set; }
 
         public double? CurrentProgressPercentage { get; set; }
+    }
+
+    /// <summary>Mirrors the plugin's KeyTestResponse record.</summary>
+    internal sealed class KeyTestResultDto
+    {
+        public bool Success { get; set; }
+
+        public string? Message { get; set; }
+
+        public RateLimitBudgetDto? Budget { get; set; }
+    }
+
+    /// <summary>Mirrors the client library's RateLimitStatus record.</summary>
+    internal sealed class RateLimitBudgetDto
+    {
+        public int? MinuteLimit { get; set; }
+
+        public int? MinuteRemaining { get; set; }
+
+        public int? MonthLimit { get; set; }
+
+        public int? MonthRemaining { get; set; }
+
+        public DateTimeOffset? ObservedAt { get; set; }
     }
 
     internal sealed class ItemsResultDto

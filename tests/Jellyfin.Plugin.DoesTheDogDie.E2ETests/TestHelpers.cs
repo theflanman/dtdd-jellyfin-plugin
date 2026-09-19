@@ -35,27 +35,34 @@ internal static class TestHelpers
     }
 
     /// <summary>
+    /// The API key the fixture configures. WireMock does not check it, but it keeps the "ddd_" shape a
+    /// real key has so the plugin's log sanitizer has something to redact.
+    /// </summary>
+    public const string ApiKey = "ddd_e2e_test_key";
+
+    /// <summary>
     /// Default plugin configuration used to reset between mutation tests.
-    /// Mirrors PluginConfiguration's constructor defaults.
+    /// Mirrors PluginConfiguration's properties — a key that is not a real property is silently dropped
+    /// by the configuration POST, so a stale entry here would be a test that quietly asserts nothing.
     /// </summary>
     public static IDictionary<string, object> DefaultPluginConfig() => new Dictionary<string, object>
     {
         ["EnableMovies"] = true,
         ["EnableSeries"] = true,
-        ["EnableBooks"] = true,
-        ["CacheDurationHours"] = 168,
-        ["MinVotesThreshold"] = 3,
         ["AddWarningTags"] = true,
         ["TagPrefix"] = "CW:",
         ["SafeTagPrefix"] = "Safe:",
-        ["RefreshIntervalHours"] = 24,
         ["ShowAllTriggers"] = true,
         ["EnabledCategoryIds"] = Array.Empty<int>(),
         ["EnabledTopicIds"] = Array.Empty<int>(),
         ["AddDescriptionWarnings"] = false,
         ["IncludeTopComment"] = false,
         ["MaxCommentLength"] = 200,
-        ["HideSpoilerComments"] = true,
+        ["ApiKey"] = ApiKey,
+        ["DecisionThreshold"] = 0.5,
+        ["IntervalMass"] = 0.95,
+        ["ItemCacheDays"] = 30,
+        ["TaxonomyCacheDays"] = 7,
     };
 
     public static IDictionary<string, object> ConfigWith(params (string Key, object Value)[] overrides)

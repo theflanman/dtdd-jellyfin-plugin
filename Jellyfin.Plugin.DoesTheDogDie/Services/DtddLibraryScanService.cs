@@ -1,9 +1,7 @@
 using System;
-using System.Linq;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Jellyfin.Plugin.DoesTheDogDie.Api;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
@@ -22,7 +20,7 @@ namespace Jellyfin.Plugin.DoesTheDogDie.Services;
 public class DtddLibraryScanService : IHostedService
 {
     private readonly ILibraryManager _libraryManager;
-    private readonly DtddApiClient _apiClient;
+    private readonly DtddMetadataService _metadata;
     private readonly IPluginConfigurationAccessor _configAccessor;
     private readonly ILogger<DtddLibraryScanService> _logger;
 
@@ -30,17 +28,17 @@ public class DtddLibraryScanService : IHostedService
     /// Initializes a new instance of the <see cref="DtddLibraryScanService"/> class.
     /// </summary>
     /// <param name="libraryManager">The library manager.</param>
-    /// <param name="apiClient">The DTDD API client.</param>
+    /// <param name="metadata">The DtDD metadata service.</param>
     /// <param name="configAccessor">The configuration accessor.</param>
     /// <param name="logger">The logger.</param>
     public DtddLibraryScanService(
         ILibraryManager libraryManager,
-        DtddApiClient apiClient,
+        DtddMetadataService metadata,
         IPluginConfigurationAccessor configAccessor,
         ILogger<DtddLibraryScanService> logger)
     {
         _libraryManager = libraryManager;
-        _apiClient = apiClient;
+        _metadata = metadata;
         _configAccessor = configAccessor;
         _logger = logger;
     }
@@ -107,95 +105,74 @@ public class DtddLibraryScanService : IHostedService
         _logger.LogDebug("Queueing DTDD lookup for {ItemName} (IMDB: {ImdbId})", item.Name, imdbId);
 
         // Fire and forget - don't block the library scan
-        _ = ProcessItemAsync(item, imdbId, config);
+        _ = ProcessItemAsync(item, CancellationToken.None);
     }
 
-    private async Task ProcessItemAsync(BaseItem item, string imdbId, PluginConfiguration config)
+    /// <summary>
+    /// Resolves and applies DtDD data for a single item. <see cref="DtddMetadataService.ResolveAsync"/>
+    /// returning null is the only signal this method gets, whether the cause is a missing match, a rate
+    /// limit, or an exhausted request budget, and the correct response is always to skip this item and let
+    /// the caller move on to the next one. Nothing here tracks budget state or short-circuits future calls:
+    /// the client stack's cache sits above its throttle, so items not yet reached may still resolve for
+    /// free even while the throttle is exhausted.
+    /// </summary>
+    /// <param name="item">The item to process.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    internal virtual async Task ProcessItemAsync(BaseItem item, CancellationToken cancellationToken)
     {
+        var config = _configAccessor.GetConfiguration();
+        if (config is null)
+        {
+            return;
+        }
+
         try
         {
-            var details = await _apiClient.GetMediaDetailsByImdbIdAsync(imdbId, CancellationToken.None)
-                .ConfigureAwait(false);
-
-            if (details == null)
+            var storedId = item.GetProviderId(Constants.ProviderId);
+            var kind = item switch
             {
-                _logger.LogDebug("No DTDD data found for {ItemName}", item.Name);
+                Movie => DtddItemKind.Movie,
+                Series => DtddItemKind.Series,
+                Season => DtddItemKind.Season,
+                Episode => DtddItemKind.Episode,
+                _ => DtddItemKind.Movie,
+            };
+
+            var data = await _metadata.ResolveAsync(
+                storedId,
+                item.GetProviderId(MetadataProvider.Imdb),
+                item.Name,
+                item.ProductionYear,
+                new FetchReason(kind, IsRefresh: !string.IsNullOrEmpty(storedId), IsUserInitiated: false),
+                cancellationToken).ConfigureAwait(false);
+
+            if (data is null)
+            {
                 return;
             }
 
-            // Store the DTDD ID
-            item.SetProviderId(
-                Constants.ProviderId,
-                details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            item.SetProviderId(Constants.ProviderId, data.ItemId.ToString(CultureInfo.InvariantCulture));
+            _metadata.Apply(item, data, config);
 
-            // Add warning tags if enabled
-            if (config.AddWarningTags)
-            {
-                AddWarningTags(item, details, config);
-            }
-
-            // Persist the provider ID and tags back to the library database.
-            // Without this, the in-memory changes are discarded when the method returns.
-            await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, CancellationToken.None)
-                .ConfigureAwait(false);
-
-            _logger.LogInformation(
-                "Added DTDD data for {ItemName} (DTDD ID: {DtddId})",
+            // This service is not part of Jellyfin's ICustomMetadataProvider pipeline, which persists
+            // automatically after a provider runs. It is a standalone hosted service reacting to library
+            // events, so the provider id/tags/overview computed above must be saved explicitly or they are
+            // silently discarded.
+            //
+            // MetadataDownload, not MetadataEdit: this is downloaded metadata, not a human edit. Metadata
+            // savers write NFO files unconditionally on MetadataEdit but only when the user has opted into
+            // saving metadata into media folders on MetadataDownload, and MetadataEdit additionally marks
+            // the item as user-edited, which can suppress later refreshes from other providers. The four
+            // providers and the scheduled refresh task all use MetadataDownload too.
+            await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataDownload, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _logger.LogWarning(
+                "Failed to process DTDD data for {ItemName}: {Message}",
                 item.Name,
-                details.Item.Id);
+                LogSanitizer.Sanitize(ex.ToString(), config.ApiKey));
         }
-        catch (Exception ex)
-        {
-            _logger.LogWarning(ex, "Failed to fetch DTDD data for {ItemName}", item.Name);
-        }
-    }
-
-    private static void AddWarningTags(BaseItem item, DtddMediaDetails details, PluginConfiguration config)
-    {
-        // First, remove all existing DTDD tags (those starting with our prefixes)
-        var existingTags = item.Tags
-            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
-                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-
-        // Add positive triggers (content warnings)
-        var positiveTriggers = TriggerFilter.FilterTriggers(
-            details.GetPositiveTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in positiveTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        // Add negative triggers (safe confirmations)
-        var negativeTriggers = TriggerFilter.FilterTriggers(
-            details.GetNegativeTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in negativeTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        item.Tags = existingTags.ToArray();
     }
 }

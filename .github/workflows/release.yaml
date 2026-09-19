@@ -18,15 +18,22 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: |
+            9.0.x
+            10.0.x
 
       - name: Build plugin
         run: dotnet publish Jellyfin.Plugin.DoesTheDogDie/Jellyfin.Plugin.DoesTheDogDie.csproj -c Release -o output
 
       - name: Create ZIP package
         run: |
+          # Package the entire publish tree, not just the plugin DLL. The plugin cannot load without
+          # DoesTheDogDie.dll, Microsoft.Data.Sqlite.dll and the SQLitePCLRaw.* assemblies sitting
+          # beside it, and the SQLite cache additionally needs the runtimes/<rid>/native payloads at
+          # their original relative paths. `-r` with no `-j` preserves that directory structure;
+          # `-j` would flatten runtimes/* into the archive root and break the native probing.
           cd output
-          zip -j ../doesthedogdie-${{ github.event.release.tag_name }}.zip Jellyfin.Plugin.DoesTheDogDie.dll
+          zip -r ../doesthedogdie-${{ github.event.release.tag_name }}.zip .
 
       - name: Calculate checksum
         id: checksum

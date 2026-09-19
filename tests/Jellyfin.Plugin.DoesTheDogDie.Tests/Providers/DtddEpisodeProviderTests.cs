@@ -1,136 +1,154 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Jellyfin.Plugin.DoesTheDogDie.Api;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
+using DoesTheDogDie;
+using DoesTheDogDie.Api;
+using DoesTheDogDie.Statistics;
+using Jellyfin.Plugin.DoesTheDogDie;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using Jellyfin.Plugin.DoesTheDogDie.Providers;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
+using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
 
 namespace Jellyfin.Plugin.DoesTheDogDie.Tests.Providers;
 
+[Collection("BaseItemStatics")]
 public class DtddEpisodeProviderTests
 {
-    private readonly Mock<DtddApiClient> _apiClientMock;
-    private readonly Mock<IPluginConfigurationAccessor> _configAccessorMock;
-    private readonly Mock<ILogger<DtddEpisodeProvider>> _loggerMock;
-    private readonly DtddEpisodeProvider _provider;
-    private readonly MetadataRefreshOptions _defaultOptions;
+    private readonly Mock<DtddMetadataService> _metadata;
+    private readonly Mock<IPluginConfigurationAccessor> _configAccessor = new();
 
     public DtddEpisodeProviderTests()
     {
-        _apiClientMock = new Mock<DtddApiClient>(
-            Mock.Of<System.Net.Http.IHttpClientFactory>(),
-            Mock.Of<ILogger<DtddApiClient>>());
-        _configAccessorMock = new Mock<IPluginConfigurationAccessor>();
-        _loggerMock = new Mock<ILogger<DtddEpisodeProvider>>();
-        _provider = new DtddEpisodeProvider(
-            _apiClientMock.Object,
-            _configAccessorMock.Object,
-            _loggerMock.Object);
-        _defaultOptions = new MetadataRefreshOptions(Mock.Of<IDirectoryService>());
+        _metadata = new Mock<DtddMetadataService>(
+            (Func<IDtddClient>)(() => new Support.FakeDtddClient()),
+            _configAccessor.Object,
+            NullLogger<DtddMetadataService>.Instance,
+            new OverviewFormatter());
+
+        _configAccessor.Setup(x => x.GetConfiguration())
+            .Returns(new PluginConfiguration { EnableSeries = true, ApiKey = "ddd_key" });
     }
 
-    [Fact]
-    public void Name_ReturnsProviderName()
-    {
-        Assert.Equal(Constants.ProviderName, _provider.Name);
-    }
+    private DtddEpisodeProvider CreateProvider() =>
+        new(_metadata.Object, _configAccessor.Object, NullLogger<DtddEpisodeProvider>.Instance);
 
-    [Fact]
-    public void Order_ReturnsHighValue()
-    {
-        Assert.Equal(100, _provider.Order);
-    }
-
-    [Fact]
-    public async Task FetchAsync_NoConfiguration_ReturnsNone()
-    {
-        // Arrange
-        _configAccessorMock.Setup(x => x.GetConfiguration()).Returns((PluginConfiguration?)null);
-        var episode = CreateEpisode();
-
-        // Act
-        var result = await _provider.FetchAsync(episode, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.None, result);
-    }
-
-    [Fact]
-    public async Task FetchAsync_SeriesDisabled_ReturnsNone()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableSeries = false });
-        var episode = CreateEpisode();
-
-        // Act
-        var result = await _provider.FetchAsync(episode, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.None, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
-            Times.Never);
-    }
-
-    [Fact]
-    public async Task FetchAsync_DtddIdAlreadyExists_ReturnsNone()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableSeries = true });
-        var episode = CreateEpisode();
-        episode.SetProviderId(Constants.ProviderId, "12345");
-
-        // Act
-        var result = await _provider.FetchAsync(episode, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.None, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
-            Times.Never);
-    }
-
-    [Fact]
-    public async Task FetchAsync_NoParentSeries_ReturnsNone()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableSeries = true });
-        var episode = new Episode
+    private static DtddItemData Data() => new(
+        1234,
+        new[]
         {
-            Name = "Episode 1",
-            Tags = System.Array.Empty<string>()
-        };
-        // Note: episode.Series will be null since we don't set it
+            new TriggerInfo(
+                new Topic { Id = 201, Name = "a dog dies", TopicCategoryId = 3 },
+                40,
+                1,
+                TriggerConfidence.Compute(40, 1)),
+        },
+        ResultSource.Live,
+        DateTimeOffset.UnixEpoch);
 
-        // Act
-        var result = await _provider.FetchAsync(episode, _defaultOptions, CancellationToken.None);
+    [Fact]
+    public void Order_Is100()
+    {
+        Assert.Equal(100, CreateProvider().Order);
+    }
 
-        // Assert
+    [Fact]
+    public void Name_IsProviderName()
+    {
+        Assert.Equal(Constants.ProviderName, CreateProvider().Name);
+    }
+
+    [Fact]
+    public async Task FetchAsync_ReturnsNone_WhenConfigurationMissing()
+    {
+        _configAccessor.Setup(x => x.GetConfiguration())
+            .Returns((PluginConfiguration?)null);
+
+        var result = await CreateProvider().FetchAsync(
+            new Episode { Name = "Pilot" },
+            new MetadataRefreshOptions(Mock.Of<IDirectoryService>()),
+            CancellationToken.None);
+
         Assert.Equal(ItemUpdateType.None, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
+    }
+
+    [Fact]
+    public async Task FetchAsync_ReturnsNone_WhenSeriesDisabled()
+    {
+        _configAccessor.Setup(x => x.GetConfiguration())
+            .Returns(new PluginConfiguration { EnableSeries = false });
+
+        var result = await CreateProvider().FetchAsync(
+            new Episode { Name = "Pilot" },
+            new MetadataRefreshOptions(Mock.Of<IDirectoryService>()),
+            CancellationToken.None);
+
+        Assert.Equal(ItemUpdateType.None, result);
+    }
+
+    [Fact]
+    public async Task FetchAsync_ReturnsNone_WhenNoParentSeries()
+    {
+        _configAccessor.Setup(x => x.GetConfiguration())
+            .Returns(new PluginConfiguration { EnableSeries = true });
+
+        var result = await CreateProvider().FetchAsync(
+            new Episode { Name = "Pilot" },
+            new MetadataRefreshOptions(Mock.Of<IDirectoryService>()),
+            CancellationToken.None);
+
+        Assert.Equal(ItemUpdateType.None, result);
+        _metadata.Verify(
+            x => x.ResolveAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<FetchReason>(), It.IsAny<CancellationToken>()),
             Times.Never);
     }
 
-    private void SetupConfiguration(PluginConfiguration config)
+    /// <remarks>
+    /// The parent-series lookup normally makes this path unreachable in a unit test (Season/Episode expose
+    /// <c>Series</c> as a non-virtual, setter-less property). It is reachable here by pointing the static
+    /// <see cref="BaseItem.LibraryManager"/> at a stub that resolves <c>SeriesId</c>, which is why this class
+    /// shares a non-parallel xUnit collection with the other provider test that does the same.
+    /// </remarks>
+    [Fact]
+    public async Task FetchAsync_ReturnsMetadataDownload_WhenApplyThrows()
     {
-        _configAccessorMock.Setup(x => x.GetConfiguration()).Returns(config);
-    }
-
-    private static Episode CreateEpisode()
-    {
-        var episode = new Episode
+        var previousLibraryManager = BaseItem.LibraryManager;
+        try
         {
-            Name = "Episode 1",
-            Tags = System.Array.Empty<string>()
-        };
-        return episode;
+            var series = new Series { Name = "Breaking Bad", Id = Guid.NewGuid() };
+            series.SetProviderId(Constants.ProviderId, "1234");
+
+            var libraryManager = new Mock<ILibraryManager>();
+            libraryManager.Setup(x => x.GetItemById(series.Id)).Returns(series);
+            BaseItem.LibraryManager = libraryManager.Object;
+
+            _metadata
+                .Setup(x => x.ResolveAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<FetchReason>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Data());
+            _metadata
+                .Setup(x => x.Apply(It.IsAny<BaseItem>(), It.IsAny<DtddItemData>(), It.IsAny<PluginConfiguration>()))
+                .Throws(new InvalidOperationException("apply blew up"));
+
+            var item = new Episode { Name = "Pilot", SeriesId = series.Id };
+
+            var result = await CreateProvider().FetchAsync(
+                item,
+                new MetadataRefreshOptions(Mock.Of<IDirectoryService>()),
+                CancellationToken.None);
+
+            Assert.Equal(ItemUpdateType.MetadataDownload, result);
+            Assert.Equal("1234", item.GetProviderId(Constants.ProviderId));
+        }
+        finally
+        {
+            BaseItem.LibraryManager = previousLibraryManager;
+        }
     }
 }

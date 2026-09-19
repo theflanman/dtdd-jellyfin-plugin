@@ -1,11 +1,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Jellyfin.Plugin.DoesTheDogDie.Api;
+using System.IO;
+using System.Net.Http;
+using DoesTheDogDie;
+using DoesTheDogDie.Api;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using Jellyfin.Plugin.DoesTheDogDie.Services;
 using MediaBrowser.Controller;
 using MediaBrowser.Controller.Plugins;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Jellyfin.Plugin.DoesTheDogDie;
 
@@ -20,16 +24,26 @@ public class PluginServiceRegistrator : IPluginServiceRegistrator
     {
         serviceCollection.AddHttpClient(Constants.HttpClientName, client =>
         {
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
-            client.DefaultRequestHeaders.Add("X-API-KEY", Constants.ApiKey);
             client.Timeout = TimeSpan.FromSeconds(30);
         });
 
-        serviceCollection.AddSingleton<DtddApiClient>();
         serviceCollection.AddSingleton<IPluginConfigurationAccessor, PluginConfigurationAccessor>();
-        serviceCollection.AddSingleton<TriggerCacheService>();
+        serviceCollection.AddSingleton<OverviewFormatter>();
 
-        // Background service for automatic DTDD lookup on library changes
+        serviceCollection.AddSingleton(sp => new DtddClientProvider(
+            sp.GetRequiredService<IHttpClientFactory>().CreateClient(Constants.HttpClientName),
+            sp.GetRequiredService<IPluginConfigurationAccessor>(),
+            Plugin.Instance?.DataFolderPath ?? Path.GetTempPath(),
+            sp.GetRequiredService<ILogger<DtddClientProvider>>()));
+
+        serviceCollection.AddSingleton<Func<IDtddClient>>(sp =>
+            () => sp.GetRequiredService<DtddClientProvider>().GetClient());
+
+        serviceCollection.AddSingleton<Func<RateLimitStatus?>>(sp =>
+            () => sp.GetRequiredService<DtddClientProvider>().CurrentBudget);
+
+        serviceCollection.AddSingleton<DtddMetadataService>();
+
         serviceCollection.AddHostedService<DtddLibraryScanService>();
 
         // Note: IScheduledTask (DtddRefreshTask) is auto-discovered by Jellyfin

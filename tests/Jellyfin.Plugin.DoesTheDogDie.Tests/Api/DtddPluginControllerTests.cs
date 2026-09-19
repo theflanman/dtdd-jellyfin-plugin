@@ -1,12 +1,14 @@
-using System;
-using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using DoesTheDogDie.Api;
 using Jellyfin.Plugin.DoesTheDogDie.Api;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using Jellyfin.Plugin.DoesTheDogDie.Services;
+using Jellyfin.Plugin.DoesTheDogDie.Tests.Support;
+using MediaBrowser.Common.Api;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
@@ -14,139 +16,108 @@ namespace Jellyfin.Plugin.DoesTheDogDie.Tests.Api;
 
 public class DtddPluginControllerTests
 {
-    private readonly Mock<TriggerCacheService> _cacheServiceMock;
-    private readonly DtddPluginController _controller;
+    private readonly FakeDtddClient _client = new();
+    private readonly Mock<IPluginConfigurationAccessor> _configAccessor = new();
+    private readonly PluginConfiguration _configuration = new() { ApiKey = "ddd_key" };
 
     public DtddPluginControllerTests()
     {
-        var apiClientMock = new Mock<DtddApiClient>(
-            Mock.Of<System.Net.Http.IHttpClientFactory>(),
-            Mock.Of<ILogger<DtddApiClient>>());
-        var loggerMock = new Mock<ILogger<TriggerCacheService>>();
+        _client.Topics.Add(new Topic { Id = 201, Name = "a dog dies", TopicCategoryId = 3 });
+        _client.Categories.Add(new TopicCategory { Id = 3, Name = "Animals", TopicSuperCategoryId = 1 });
+        _configAccessor.Setup(x => x.GetConfiguration()).Returns(() => _configuration);
+    }
 
-        _cacheServiceMock = new Mock<TriggerCacheService>(apiClientMock.Object, loggerMock.Object);
-        _controller = new DtddPluginController(_cacheServiceMock.Object);
+    private DtddPluginController CreateController() =>
+        new(() => _client, () => _client.CurrentBudget, _configAccessor.Object);
+
+    [Fact]
+    public async Task GetTopics_ReturnsCategoriesAndTopics()
+    {
+        var result = await CreateController().GetTopics(CancellationToken.None);
+
+        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var payload = Assert.IsType<TaxonomyResponse>(ok.Value);
+        Assert.Single(payload.Topics);
+        Assert.Single(payload.Categories);
+        Assert.Equal(3, payload.Topics[0].TopicCategoryId);
     }
 
     [Fact]
-    public async Task GetTopics_ReturnsOkWithCache()
+    public async Task TestKey_ReturnsSuccess_WhenTopicsFetchSucceeds()
     {
-        // Arrange
-        var cache = CreateSampleCache();
-        _cacheServiceMock
-            .Setup(x => x.GetOrRefreshCacheAsync(false, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(cache);
+        var result = await CreateController().TestKey(CancellationToken.None);
 
-        // Act
-        var result = await _controller.GetTopics(CancellationToken.None);
-
-        // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnedCache = Assert.IsType<TriggerCache>(okResult.Value);
-        Assert.Equal(2, returnedCache.Categories.Count);
+        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var payload = Assert.IsType<KeyTestResponse>(ok.Value);
+        Assert.True(payload.Success);
     }
 
     [Fact]
-    public async Task GetTopics_CallsServiceWithForceRefreshFalse()
+    public async Task TestKey_ReturnsFailureMessage_WhenKeyRejected()
     {
-        // Arrange
-        _cacheServiceMock
-            .Setup(x => x.GetOrRefreshCacheAsync(false, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new TriggerCache());
+        _client.ThrowOnGetTopics = new DtddAuthenticationException(HttpStatusCode.Unauthorized, "invalid_api_key", "rejected ddd_secret", rateLimit: null);
 
-        // Act
-        await _controller.GetTopics(CancellationToken.None);
+        var result = await CreateController().TestKey(CancellationToken.None);
 
-        // Assert
-        _cacheServiceMock.Verify(
-            x => x.GetOrRefreshCacheAsync(false, It.IsAny<CancellationToken>()),
-            Times.Once);
+        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var payload = Assert.IsType<KeyTestResponse>(ok.Value);
+        Assert.False(payload.Success);
+        Assert.DoesNotContain("ddd_secret", payload.Message, System.StringComparison.Ordinal);
     }
 
     [Fact]
-    public async Task RefreshTopics_ReturnsOkWithRefreshedCache()
+    public async Task TestKey_RedactsConfiguredKey_EvenWhenNotDddShaped()
     {
-        // Arrange
-        var cache = CreateSampleCache();
-        _cacheServiceMock
-            .Setup(x => x.RefreshCacheAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(cache);
+        _configuration.ApiKey = "not-a-ddd-shaped-key";
+        _client.ThrowOnGetTopics = new DtddAuthenticationException(
+            HttpStatusCode.Unauthorized,
+            "invalid_api_key",
+            "rejected key not-a-ddd-shaped-key",
+            rateLimit: null);
 
-        // Act
-        var result = await _controller.RefreshTopics(CancellationToken.None);
+        var result = await CreateController().TestKey(CancellationToken.None);
 
-        // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnedCache = Assert.IsType<TriggerCache>(okResult.Value);
-        Assert.Equal(2, returnedCache.Categories.Count);
+        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var payload = Assert.IsType<KeyTestResponse>(ok.Value);
+        Assert.False(payload.Success);
+        Assert.DoesNotContain("not-a-ddd-shaped-key", payload.Message, System.StringComparison.Ordinal);
+        Assert.Contains(LogSanitizer.Redacted, payload.Message, System.StringComparison.Ordinal);
     }
 
     [Fact]
-    public async Task RefreshTopics_CallsRefreshCacheAsync()
+    public async Task TestKey_DoesNotThrow_WhenConfigurationUnavailable()
     {
-        // Arrange
-        _cacheServiceMock
-            .Setup(x => x.RefreshCacheAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new TriggerCache());
+        _configAccessor.Setup(x => x.GetConfiguration()).Returns((PluginConfiguration?)null);
+        _client.ThrowOnGetTopics = new DtddAuthenticationException(
+            HttpStatusCode.Unauthorized,
+            "invalid_api_key",
+            "rejected ddd_secret",
+            rateLimit: null);
 
-        // Act
-        await _controller.RefreshTopics(CancellationToken.None);
+        var result = await CreateController().TestKey(CancellationToken.None);
 
-        // Assert
-        _cacheServiceMock.Verify(
-            x => x.RefreshCacheAsync(It.IsAny<CancellationToken>()),
-            Times.Once);
+        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        var payload = Assert.IsType<KeyTestResponse>(ok.Value);
+        Assert.DoesNotContain("ddd_secret", payload.Message, System.StringComparison.Ordinal);
     }
 
     [Fact]
-    public async Task GetTopics_ReturnsEmptyCache_WhenNoData()
+    public void GetBudget_ReturnsNull_WhenNothingObserved()
     {
-        // Arrange
-        var emptyCache = new TriggerCache
-        {
-            LastRefreshed = DateTime.UtcNow,
-            Categories = new List<CachedCategory>()
-        };
-        _cacheServiceMock
-            .Setup(x => x.GetOrRefreshCacheAsync(false, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(emptyCache);
+        var result = CreateController().GetBudget();
 
-        // Act
-        var result = await _controller.GetTopics(CancellationToken.None);
-
-        // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnedCache = Assert.IsType<TriggerCache>(okResult.Value);
-        Assert.Empty(returnedCache.Categories);
+        var ok = Assert.IsType<OkObjectResult>(result.Result);
+        Assert.Null(ok.Value);
     }
 
-    private static TriggerCache CreateSampleCache()
+    [Fact]
+    public void Controller_RequiresElevation()
     {
-        return new TriggerCache
-        {
-            LastRefreshed = DateTime.UtcNow,
-            Categories = new List<CachedCategory>
-            {
-                new CachedCategory
-                {
-                    Id = 2,
-                    Name = "Animal",
-                    Topics = new List<CachedTopic>
-                    {
-                        new CachedTopic { Id = 153, Name = "a dog dies" },
-                        new CachedTopic { Id = 154, Name = "a cat dies" }
-                    }
-                },
-                new CachedCategory
-                {
-                    Id = 3,
-                    Name = "Violence",
-                    Topics = new List<CachedTopic>
-                    {
-                        new CachedTopic { Id = 101, Name = "blood/gore" }
-                    }
-                }
-            }
-        };
+        var attribute = Assert.Single(
+            typeof(DtddPluginController).GetCustomAttributes(typeof(AuthorizeAttribute), inherit: true))
+            as AuthorizeAttribute;
+
+        Assert.NotNull(attribute);
+        Assert.Equal(Policies.RequiresElevation, attribute!.Policy);
     }
 }

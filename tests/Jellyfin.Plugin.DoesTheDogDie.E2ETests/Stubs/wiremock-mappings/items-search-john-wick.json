@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/items",
+    "queryParameters": {
+      "imdb": { "equalTo": "tt2911666" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "X-RateLimit-Limit-Minute": "30",
+      "X-RateLimit-Remaining-Minute": "29",
+      "X-RateLimit-Limit-Month": "5000",
+      "X-RateLimit-Remaining-Month": "4999"
+    },
+    "jsonBody": [
+      {
+        "id": 1234,
+        "name": "John Wick",
+        "releaseYear": 2014,
+        "itemTypeId": 15,
+        "itemTypeName": "Movie",
+        "imdbId": "tt2911666",
+        "tmdbId": 245891,
+        "genres": []
+      }
+    ]
+  }
+}

@@ -1,10 +1,9 @@
 using System;
-using System.Linq;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Jellyfin.Plugin.DoesTheDogDie.Api;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Providers;
@@ -18,22 +17,22 @@ namespace Jellyfin.Plugin.DoesTheDogDie.Providers;
 /// </summary>
 public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
 {
-    private readonly DtddApiClient _apiClient;
+    private readonly DtddMetadataService _metadata;
     private readonly IPluginConfigurationAccessor _configAccessor;
     private readonly ILogger<DtddMovieProvider> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DtddMovieProvider"/> class.
     /// </summary>
-    /// <param name="apiClient">The DTDD API client.</param>
+    /// <param name="metadata">The DtDD metadata service.</param>
     /// <param name="configAccessor">The configuration accessor.</param>
     /// <param name="logger">The logger.</param>
     public DtddMovieProvider(
-        DtddApiClient apiClient,
+        DtddMetadataService metadata,
         IPluginConfigurationAccessor configAccessor,
         ILogger<DtddMovieProvider> logger)
     {
-        _apiClient = apiClient;
+        _metadata = metadata;
         _configAccessor = configAccessor;
         _logger = logger;
     }
@@ -55,123 +54,49 @@ public class DtddMovieProvider : ICustomMetadataProvider<Movie>, IHasOrder
         CancellationToken cancellationToken)
     {
         var config = _configAccessor.GetConfiguration();
-        if (config == null || !config.EnableMovies)
+        if (config is null || !config.EnableMovies)
         {
             return ItemUpdateType.None;
         }
 
-        var existingDtddId = item.GetProviderId(Constants.ProviderId);
-        if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
-        {
-            if (config.AddWarningTags && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
-            {
-                var cachedDetails = await _apiClient.GetMediaDetailsAsync(parsedDtddId, cancellationToken)
-                    .ConfigureAwait(false);
-                if (cachedDetails != null)
-                {
-                    AddWarningTags(item, cachedDetails, config);
-                    return ItemUpdateType.MetadataDownload;
-                }
-            }
+        var storedId = item.GetProviderId(Constants.ProviderId);
+        var reason = new FetchReason(
+            DtddItemKind.Movie,
+            IsRefresh: !string.IsNullOrEmpty(storedId),
+            IsUserInitiated: options?.ReplaceAllMetadata == true);
 
-            _logger.LogDebug("DTDD ID already exists for movie {Name}", item.Name);
-            return ItemUpdateType.None;
-        }
+        var data = await _metadata.ResolveAsync(
+            storedId,
+            item.GetProviderId(MetadataProvider.Imdb),
+            item.Name,
+            item.ProductionYear,
+            reason,
+            cancellationToken).ConfigureAwait(false);
 
-        var details = await FetchDtddDetailsAsync(item, cancellationToken).ConfigureAwait(false);
-
-        if (details == null)
+        if (data is null)
         {
             _logger.LogDebug("No DTDD data found for movie {Name}", item.Name);
             return ItemUpdateType.None;
         }
 
-        item.SetProviderId(Constants.ProviderId, details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        item.SetProviderId(Constants.ProviderId, data.ItemId.ToString(CultureInfo.InvariantCulture));
 
-        if (config.AddWarningTags)
+        try
         {
-            AddWarningTags(item, details, config);
+            _metadata.Apply(item, data, config);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            // Applying tags/overview must not fail the whole refresh for this item. The provider id was
+            // already set above and is worth persisting on its own, so MetadataDownload is still returned.
+            // A cancellation still propagates: the refresh itself is being aborted.
+            _logger.LogWarning(
+                "Failed to apply DTDD data for movie {Name}: {Message}",
+                item.Name,
+                LogSanitizer.Sanitize(ex.ToString(), config.ApiKey));
         }
 
-        _logger.LogInformation("Added DTDD data for movie {Name} (ID: {DtddId})", item.Name, details.Item.Id);
+        _logger.LogInformation("Applied DTDD data for movie {Name} (ID: {DtddId})", item.Name, data.ItemId);
         return ItemUpdateType.MetadataDownload;
-    }
-
-    private async Task<DtddMediaDetails?> FetchDtddDetailsAsync(Movie item, CancellationToken cancellationToken)
-    {
-        // Try IMDB lookup first (most reliable)
-        var imdbId = item.GetProviderId(MetadataProvider.Imdb);
-        if (!string.IsNullOrEmpty(imdbId))
-        {
-            _logger.LogDebug("Fetching DTDD data for movie {Name} (IMDB: {ImdbId})", item.Name, imdbId);
-            var details = await _apiClient.GetMediaDetailsByImdbIdAsync(imdbId, cancellationToken).ConfigureAwait(false);
-            if (details != null)
-            {
-                return details;
-            }
-
-            _logger.LogDebug("IMDB lookup failed for movie {Name}, trying title search", item.Name);
-        }
-        else
-        {
-            _logger.LogDebug("No IMDB ID for movie {Name}, trying title search", item.Name);
-        }
-
-        // Fall back to title-based search
-        _logger.LogDebug("Searching DTDD by title for movie {Name} ({Year})", item.Name, item.ProductionYear);
-        return await _apiClient.GetMediaDetailsByTitleAsync(
-            item.Name,
-            item.ProductionYear,
-            Constants.DtddItemTypeMovie,
-            cancellationToken).ConfigureAwait(false);
-    }
-
-    private static void AddWarningTags(Movie item, DtddMediaDetails details, PluginConfiguration config)
-    {
-        // First, remove all existing DTDD tags (those starting with our prefixes)
-        var existingTags = item.Tags
-            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
-                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-
-        // Add positive triggers (content warnings)
-        var positiveTriggers = TriggerFilter.FilterTriggers(
-            details.GetPositiveTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in positiveTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        // Add negative triggers (safe confirmations)
-        var negativeTriggers = TriggerFilter.FilterTriggers(
-            details.GetNegativeTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in negativeTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        item.Tags = existingTags.ToArray();
     }
 }

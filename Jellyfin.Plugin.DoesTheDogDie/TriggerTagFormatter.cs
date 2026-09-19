@@ -1,7 +1,8 @@
 using System;
 using System.Globalization;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
+using DoesTheDogDie.Statistics;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 
 namespace Jellyfin.Plugin.DoesTheDogDie;
 
@@ -11,16 +12,21 @@ namespace Jellyfin.Plugin.DoesTheDogDie;
 public static class TriggerTagFormatter
 {
     /// <summary>
-    /// Builds the tag name for a trigger, optionally appending the confidence
-    /// percentage (rounded to the nearest 5%) when enabled in configuration.
+    /// Builds the tag name for a trigger, or null when the verdict is uncertain.
     /// </summary>
-    /// <param name="prefix">The tag prefix (e.g. "CW:" or "Safe:").</param>
     /// <param name="trigger">The trigger to format.</param>
     /// <param name="config">The plugin configuration.</param>
-    /// <returns>The formatted tag name, or null if the trigger has no topic.</returns>
-    public static string? FormatTagName(string prefix, DtddTopicItemStat trigger, PluginConfiguration config)
+    /// <returns>The tag name, or null when the trigger should not be tagged.</returns>
+    public static string? FormatTagName(TriggerInfo trigger, PluginConfiguration config)
     {
-        if (trigger.Topic == null)
+        var prefix = trigger.Verdict switch
+        {
+            TriggerVerdict.LikelyPresent => config.TagPrefix,
+            TriggerVerdict.LikelyAbsent => config.SafeTagPrefix,
+            _ => null,
+        };
+
+        if (prefix is null)
         {
             return null;
         }
@@ -29,8 +35,7 @@ public static class TriggerTagFormatter
 
         if (config.ShowConfidenceInTags)
         {
-            var confidence = TriggerFilter.GetConfidence(trigger);
-            var percent = (int)(Math.Round(confidence * 100 / 5.0) * 5);
+            var percent = (int)(Math.Round(trigger.Confidence.ProbabilityPresent * 100 / 5.0) * 5);
             tagName += string.Create(CultureInfo.InvariantCulture, $" ({percent}%)");
         }
 

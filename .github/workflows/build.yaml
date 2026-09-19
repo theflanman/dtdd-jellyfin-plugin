@@ -16,3 +16,10 @@ on:
 jobs:
   call:
     uses: jellyfin/jellyfin-meta-plugins/.github/workflows/build.yaml@master
+    with:
+      # The plugin targets and ships net9.0 (see CLAUDE.md); the reusable workflow defaults
+      # dotnet-target to net10.0, which force-retargets the csproj before building and trips
+      # analyzer rules (e.g. CA1873) that aren't active for net9.0. dotnet-version stays at the
+      # default 10.0.x SDK, which is required to restore the DoesTheDogDie library regardless of
+      # the build's target framework.
+      dotnet-target: "net9.0"

@@ -10,6 +10,19 @@
     <CodeAnalysisRuleSet>../jellyfin.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <DtddClientPath Condition="'$(DtddClientPath)' == ''">../../../dtdd-client</DtddClientPath>
+    <DtddClientVersion Condition="'$(DtddClientVersion)' == ''">0.1.0</DtddClientVersion>
+  </PropertyGroup>
+
+  <ItemGroup Condition="Exists('$(DtddClientPath)/src/DoesTheDogDie/DoesTheDogDie.csproj')">
+    <ProjectReference Include="$(DtddClientPath)/src/DoesTheDogDie/DoesTheDogDie.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="!Exists('$(DtddClientPath)/src/DoesTheDogDie/DoesTheDogDie.csproj')">
+    <PackageReference Include="DtDDNetClient" Version="$(DtddClientVersion)" />
+  </ItemGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="Jellyfin.Plugin.DoesTheDogDie.Tests" />
   </ItemGroup>
@@ -33,5 +46,17 @@
     <None Remove="Configuration\configPage.html" />
     <EmbeddedResource Include="Configuration\configPage.html" />
   </ItemGroup>
+
+  <!-- Jellyfin's PluginManager loads every *.dll it finds recursively under a plugin's directory as a
+       managed assembly, so SQLitePCLRaw's native Windows libraries (runtimes/win-*/native/e_sqlite3.dll)
+       throw BadImageFormatException and get the whole plugin disabled. Only *.dll under runtimes/*/native
+       is removed: the .so/.dylib payloads are never scanned and the Linux .so is what makes the SQLite
+       cache work on a real server. Without the natives, the cache falls back to in-memory. -->
+  <Target Name="RemoveNativeWindowsLibrariesFromPublish" AfterTargets="Publish">
+    <ItemGroup>
+      <NativeWindowsLibrariesToRemove Include="$(PublishDir)runtimes\*\native\*.dll" />
+    </ItemGroup>
+    <Delete Files="@(NativeWindowsLibrariesToRemove)" />
+  </Target>
 
 </Project>

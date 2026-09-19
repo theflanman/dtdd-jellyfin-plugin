@@ -1,0 +1,20 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/topiccategories"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "X-RateLimit-Limit-Minute": "30",
+      "X-RateLimit-Remaining-Minute": "26",
+      "X-RateLimit-Limit-Month": "5000",
+      "X-RateLimit-Remaining-Month": "4996"
+    },
+    "jsonBody": [
+      { "id": 3, "name": "Animals", "topicSuperCategoryId": 1 },
+      { "id": 4, "name": "Violence", "topicSuperCategoryId": 1 }
+    ]
+  }
+}

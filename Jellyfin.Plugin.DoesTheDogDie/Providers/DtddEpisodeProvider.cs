@@ -1,10 +1,8 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Jellyfin.Plugin.DoesTheDogDie.Api;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 using MediaBrowser.Controller.Entities.TV;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Providers;
@@ -14,27 +12,26 @@ using Microsoft.Extensions.Logging;
 namespace Jellyfin.Plugin.DoesTheDogDie.Providers;
 
 /// <summary>
-/// Custom metadata provider that fetches DoesTheDogDie content warnings for TV episodes.
-/// Inherits warnings from the parent series since DTDD typically has series-level data.
+/// Custom metadata provider that inherits DoesTheDogDie warnings from an episode's parent series.
 /// </summary>
 public class DtddEpisodeProvider : ICustomMetadataProvider<Episode>, IHasOrder
 {
-    private readonly DtddApiClient _apiClient;
+    private readonly DtddMetadataService _metadata;
     private readonly IPluginConfigurationAccessor _configAccessor;
     private readonly ILogger<DtddEpisodeProvider> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DtddEpisodeProvider"/> class.
     /// </summary>
-    /// <param name="apiClient">The DTDD API client.</param>
+    /// <param name="metadata">The DtDD metadata service.</param>
     /// <param name="configAccessor">The configuration accessor.</param>
     /// <param name="logger">The logger.</param>
     public DtddEpisodeProvider(
-        DtddApiClient apiClient,
+        DtddMetadataService metadata,
         IPluginConfigurationAccessor configAccessor,
         ILogger<DtddEpisodeProvider> logger)
     {
-        _apiClient = apiClient;
+        _metadata = metadata;
         _configAccessor = configAccessor;
         _logger = logger;
     }
@@ -52,114 +49,48 @@ public class DtddEpisodeProvider : ICustomMetadataProvider<Episode>, IHasOrder
         CancellationToken cancellationToken)
     {
         var config = _configAccessor.GetConfiguration();
-        if (config == null || !config.EnableSeries)
+        if (config is null || !config.EnableSeries)
         {
             return ItemUpdateType.None;
         }
 
-        var existingDtddId = item.GetProviderId(Constants.ProviderId);
-        if (!string.IsNullOrEmpty(existingDtddId) && !options.ReplaceAllMetadata)
+        var seriesDtddId = item.Series?.GetProviderId(Constants.ProviderId);
+        if (string.IsNullOrEmpty(seriesDtddId))
         {
-            if (config.AddWarningTags && int.TryParse(existingDtddId, System.Globalization.CultureInfo.InvariantCulture, out var parsedDtddId))
-            {
-                var cachedDetails = await _apiClient.GetMediaDetailsAsync(parsedDtddId, cancellationToken)
-                    .ConfigureAwait(false);
-                if (cachedDetails != null)
-                {
-                    AddWarningTags(item, cachedDetails, config);
-                    return ItemUpdateType.MetadataDownload;
-                }
-            }
-
-            _logger.LogDebug("DTDD ID already exists for episode {Name}", item.Name);
+            _logger.LogDebug("No parent series DTDD ID for episode {Name}", item.Name);
             return ItemUpdateType.None;
         }
 
-        // Get the parent series to look up DTDD data
-        var series = item.Series;
-        if (series == null)
+        var data = await _metadata.ResolveAsync(
+            seriesDtddId,
+            imdbId: null,
+            name: null,
+            year: null,
+            new FetchReason(DtddItemKind.Episode, IsRefresh: true, IsUserInitiated: options?.ReplaceAllMetadata == true),
+            cancellationToken).ConfigureAwait(false);
+
+        if (data is null)
         {
-            _logger.LogDebug("No parent series for episode {Name}, skipping DTDD lookup", item.Name);
             return ItemUpdateType.None;
         }
 
-        var imdbId = series.GetProviderId(MetadataProvider.Imdb);
-        if (string.IsNullOrEmpty(imdbId))
+        item.SetProviderId(Constants.ProviderId, seriesDtddId);
+
+        try
         {
-            _logger.LogDebug("No IMDB ID for parent series {SeriesName}, skipping DTDD lookup for episode", series.Name);
-            return ItemUpdateType.None;
+            _metadata.Apply(item, data, config);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            // Applying tags/overview must not fail the whole refresh for this item. The provider id was
+            // already set above and is worth persisting on its own, so MetadataDownload is still returned.
+            // A cancellation still propagates: the refresh itself is being aborted.
+            _logger.LogWarning(
+                "Failed to apply DTDD data for episode {Name}: {Message}",
+                item.Name,
+                LogSanitizer.Sanitize(ex.ToString(), config.ApiKey));
         }
 
-        _logger.LogDebug(
-            "Fetching DTDD data for episode {Name} via series {SeriesName} (IMDB: {ImdbId})",
-            item.Name,
-            series.Name,
-            imdbId);
-
-        var details = await _apiClient.GetMediaDetailsByImdbIdAsync(imdbId, cancellationToken)
-            .ConfigureAwait(false);
-
-        if (details == null)
-        {
-            _logger.LogDebug("No DTDD data found for episode {Name}", item.Name);
-            return ItemUpdateType.None;
-        }
-
-        // Store the series DTDD ID on the episode
-        item.SetProviderId(Constants.ProviderId, details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
-
-        if (config.AddWarningTags)
-        {
-            AddWarningTags(item, details, config);
-        }
-
-        _logger.LogInformation("Added DTDD data for episode {Name} (ID: {DtddId})", item.Name, details.Item.Id);
         return ItemUpdateType.MetadataDownload;
-    }
-
-    private static void AddWarningTags(Episode item, DtddMediaDetails details, PluginConfiguration config)
-    {
-        var existingTags = item.Tags
-            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
-                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-
-        var positiveTriggers = TriggerFilter.FilterTriggers(
-            details.GetPositiveTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in positiveTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        var negativeTriggers = TriggerFilter.FilterTriggers(
-            details.GetNegativeTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in negativeTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        item.Tags = existingTags.ToArray();
     }
 }

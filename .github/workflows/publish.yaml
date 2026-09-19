@@ -14,6 +14,9 @@ jobs:
     with:
       version: ${{ github.event.release.tag_name }}
       is-unstable: ${{ github.event.release.prerelease }}
+      # See .github/workflows/build.yaml: the plugin targets and ships net9.0, but this reusable
+      # workflow defaults to net10.0, which trips analyzer rules not active for net9.0.
+      dotnet-target: "net9.0"
     secrets:
       deploy-host: ${{ secrets.DEPLOY_HOST }}
       deploy-user: ${{ secrets.DEPLOY_USER }}

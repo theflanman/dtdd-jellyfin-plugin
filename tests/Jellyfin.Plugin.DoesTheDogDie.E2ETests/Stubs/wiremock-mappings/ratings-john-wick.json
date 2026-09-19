@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "note": "Topic 201 carries two competing ratings and the LOWER voteSum (3) is listed first on purpose. An implementation that took the first rating per topic instead of the highest-voted one would pass the top-comment assertions if the winner came first, so the order here is load-bearing."
+  },
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/items/1234/ratings"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "X-RateLimit-Limit-Minute": "30",
+      "X-RateLimit-Remaining-Minute": "24",
+      "X-RateLimit-Limit-Month": "5000",
+      "X-RateLimit-Remaining-Month": "4994"
+    },
+    "jsonBody": [
+      {
+        "id": 7002,
+        "yes": 1,
+        "no": 0,
+        "voteSum": 3,
+        "triggerDescription": "A lower-voted report that must never win the top-comment pick.",
+        "isRampant": false,
+        "index1": 1,
+        "index2": 0,
+        "itemId": 1234,
+        "topicId": 201,
+        "isSceneAlert": false
+      },
+      {
+        "id": 7001,
+        "yes": 1,
+        "no": 0,
+        "voteSum": 91,
+        "triggerDescription": "The dog dies in the first act, off screen but heartbreaking.",
+        "isRampant": false,
+        "index1": 1,
+        "index2": 0,
+        "itemId": 1234,
+        "topicId": 201,
+        "isSceneAlert": false
+      },
+      {
+        "id": 7003,
+        "yes": 1,
+        "no": 0,
+        "voteSum": 12,
+        "triggerDescription": "Several henchmen are killed throughout.",
+        "isRampant": true,
+        "index1": 1,
+        "index2": 0,
+        "itemId": 1234,
+        "topicId": 202,
+        "isSceneAlert": false
+      }
+    ]
+  }
+}

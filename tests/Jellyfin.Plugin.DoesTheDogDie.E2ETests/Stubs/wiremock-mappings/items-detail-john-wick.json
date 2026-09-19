@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/items/1234"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "X-RateLimit-Limit-Minute": "30",
+      "X-RateLimit-Remaining-Minute": "28",
+      "X-RateLimit-Limit-Month": "5000",
+      "X-RateLimit-Remaining-Month": "4998"
+    },
+    "jsonBody": {
+      "id": 1234,
+      "name": "John Wick",
+      "releaseYear": 2014,
+      "itemTypeId": 15,
+      "itemTypeName": "Movie",
+      "imdbId": "tt2911666",
+      "tmdbId": 245891,
+      "genres": [],
+      "topicItemStats": [
+        { "topicItemId": 9001, "yesSum": 42, "noSum": 1, "numComments": 12, "topicId": 201, "topicName": "a dog dies", "itemId": 1234 },
+        { "topicItemId": 9002, "yesSum": 3, "noSum": 4, "numComments": 2, "topicId": 202, "topicName": "someone dies", "itemId": 1234 },
+        { "topicItemId": 9003, "yesSum": 1, "noSum": 38, "numComments": 5, "topicId": 203, "topicName": "a child dies", "itemId": 1234 }
+      ]
+    }
+  }
+}
