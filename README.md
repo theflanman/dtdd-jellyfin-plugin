@@ -43,7 +43,13 @@ This plugin automatically fetches trigger warnings for movies and TV shows and a
 2. Extract to your Jellyfin plugins directory:
    - **Linux:** `~/.local/share/jellyfin/plugins/DoesTheDogDie/`
    - **Windows:** `%LOCALAPPDATA%\jellyfin\plugins\DoesTheDogDie\`
-   - **Docker:** `/config/plugins/DoesTheDogDie/`
+   - **Docker:** `<jellyfin data dir>/plugins/DoesTheDogDie_<version>/`, where `<jellyfin data dir>` is whichever directory the image passes to Jellyfin as `--datadir`/`JELLYFIN_DATA_DIR` — **this is genuinely different per image, not just a mount-point naming difference:**
+     - `jellyfin/jellyfin` (official image): `/config/plugins/DoesTheDogDie_<version>/`
+     - `lscr.io/linuxserver/jellyfin`: `/config/data/plugins/DoesTheDogDie_<version>/`
+     - `hotio/jellyfin`: `/config/data/plugins/DoesTheDogDie_<version>/`
+     - Other images: check what that image sets for `--datadir`/`JELLYFIN_DATA_DIR` (see [jellyfin/jellyfin#3717](https://github.com/jellyfin/jellyfin/issues/3717) for background on why official and linuxserver.io diverge here)
+
+     A plugin dropped in the wrong directory is silently never loaded, with no error in the log.
 3. Restart Jellyfin
 4. Configure in **Dashboard → Plugins → Does The Dog Die**
 
@@ -150,6 +156,12 @@ Removed in the v3 migration: `Min Votes Threshold`, `Enable Books`, `Cache Durat
 ### A platform caveat: the SQLite cache is Linux/macOS-only
 
 Jellyfin's `PluginManager` loads every `.dll` it finds recursively under a plugin's directory, including native ones, and throws `BadImageFormatException` on them — which disables the whole plugin. To avoid that, the plugin's publish step removes the bundled native Windows SQLite library (`runtimes/win-*/native/*.dll`). The practical effect: on **Windows**, the plugin has no native SQLite driver bundled and falls back to an **in-memory cache** — it still works, but cached DtDD data does not survive a Jellyfin restart, so every restart re-spends API budget re-fetching previously-seen items. On **Linux and macOS**, the bundled `.so`/`.dylib` natives load normally and the cache persists to a SQLite file across restarts.
+
+### Containerized deployments: make sure the cache directory is on a persistent volume
+
+The cache file lives at `<jellyfin data dir>/plugins/Jellyfin.Plugin.DoesTheDogDie/dtdd-cache.db` (plus its `-wal`/`-shm` journal files) — note this is keyed by the plugin's *name*, not its `Name_<version>` install directory, so it's a separate location from the plugin binaries. `<jellyfin data dir>` is the same per-image `--datadir`/`JELLYFIN_DATA_DIR` path from the Installation section above (`/config` on official `jellyfin/jellyfin`, `/config/data` on linuxserver.io and hotio). It has no dedicated volume of its own; it persists automatically as long as that directory — via whatever volume it happens to fall under, typically the same `/config` mount used for everything else — is a bind mount or named volume.
+
+If only the plugin's own install directory is bind-mounted (e.g. for iterating on a build) while the Jellyfin data directory itself is not — or if it isn't persisted at all — the cache database is created fresh inside the container's ephemeral layer. It survives a plain `docker restart` (the writable layer isn't touched), but is silently lost on `docker rm` / container recreation / `docker-compose down` / an image update that replaces the container, and every previously-cached item re-spends DtDD API budget being re-fetched on the next scan. There is no warning when this happens — check that your Jellyfin data directory maps to a bind mount or named volume in your compose file or `docker run` command.
 
 ## Development
 
