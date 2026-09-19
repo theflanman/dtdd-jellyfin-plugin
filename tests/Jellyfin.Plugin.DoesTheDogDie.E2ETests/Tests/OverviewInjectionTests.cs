@@ -47,7 +47,9 @@ public sealed class OverviewInjectionTests
                 failureMessage: "Expected DTDD overview markers after enabling AddDescriptionWarnings");
 
             var result = (await _fixture.Client.GetItemsAsync("Movie")).Single(m => m.Name == "John Wick");
-            result.Overview.Should().Contain("An animal dies", "trigger names (capitalized) should appear in injected overview text");
+            result.Overview.Should().Contain(
+                "Content warnings: a dog dies (42/43, 88\u201399%)",
+                "the LikelyPresent trigger should appear in the injected overview text with its vote counts and interval");
         }
         finally
         {
@@ -115,7 +117,7 @@ public sealed class OverviewInjectionTests
                     var refreshed = (await _fixture.Client.GetItemsAsync("Movie")).Single(m => m.Name == "John Wick");
                     return (refreshed.Overview is null
                         || !refreshed.Overview.Contains(DtddStartMarker, StringComparison.Ordinal))
-                        && refreshed.Tags.Contains("CW: an animal dies");
+                        && refreshed.Tags.Contains("CW: a dog dies");
                 },
                 TimeSpan.FromSeconds(30),
                 failureMessage: "Cleanup: DTDD markers should be removed and CW: tags restored after resetting config");

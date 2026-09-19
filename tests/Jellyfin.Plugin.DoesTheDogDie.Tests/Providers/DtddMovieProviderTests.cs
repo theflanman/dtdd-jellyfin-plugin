@@ -1,15 +1,19 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Jellyfin.Plugin.DoesTheDogDie.Api;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
+using DoesTheDogDie;
+using DoesTheDogDie.Api;
+using DoesTheDogDie.Statistics;
+using Jellyfin.Plugin.DoesTheDogDie;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 using Jellyfin.Plugin.DoesTheDogDie.Providers;
 using Jellyfin.Plugin.DoesTheDogDie.Services;
+using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
 
@@ -17,804 +21,152 @@ namespace Jellyfin.Plugin.DoesTheDogDie.Tests.Providers;
 
 public class DtddMovieProviderTests
 {
-    private readonly Mock<DtddApiClient> _apiClientMock;
-    private readonly Mock<IPluginConfigurationAccessor> _configAccessorMock;
-    private readonly Mock<OverviewFormatter> _overviewFormatterMock;
-    private readonly Mock<ILogger<DtddMovieProvider>> _loggerMock;
-    private readonly DtddMovieProvider _provider;
-    private readonly MetadataRefreshOptions _defaultOptions;
+    private readonly Mock<DtddMetadataService> _metadata;
+    private readonly Mock<IPluginConfigurationAccessor> _configAccessor = new();
 
     public DtddMovieProviderTests()
     {
-        _apiClientMock = new Mock<DtddApiClient>(
-            Mock.Of<System.Net.Http.IHttpClientFactory>(),
-            Mock.Of<ILogger<DtddApiClient>>());
-        _configAccessorMock = new Mock<IPluginConfigurationAccessor>();
-        _overviewFormatterMock = new Mock<OverviewFormatter>();
-        _loggerMock = new Mock<ILogger<DtddMovieProvider>>();
-        _provider = new DtddMovieProvider(
-            _apiClientMock.Object,
-            _configAccessorMock.Object,
-            _overviewFormatterMock.Object,
-            _loggerMock.Object);
-        _defaultOptions = new MetadataRefreshOptions(Mock.Of<IDirectoryService>());
+        _metadata = new Mock<DtddMetadataService>(
+            (Func<IDtddClient>)(() => new Support.FakeDtddClient()),
+            _configAccessor.Object,
+            NullLogger<DtddMetadataService>.Instance,
+            new OverviewFormatter());
+
+        _configAccessor.Setup(x => x.GetConfiguration())
+            .Returns(new PluginConfiguration { EnableMovies = true, ApiKey = "ddd_key" });
+    }
+
+    private DtddMovieProvider CreateProvider() =>
+        new(_metadata.Object, _configAccessor.Object, NullLogger<DtddMovieProvider>.Instance);
+
+    private static DtddItemData Data() => new(
+        1234,
+        new[]
+        {
+            new TriggerInfo(
+                new Topic { Id = 201, Name = "a dog dies", TopicCategoryId = 3 },
+                40,
+                1,
+                TriggerConfidence.Compute(40, 1)),
+        },
+        ResultSource.Live,
+        DateTimeOffset.UnixEpoch);
+
+    [Fact]
+    public void Order_Is100()
+    {
+        Assert.Equal(100, CreateProvider().Order);
     }
 
     [Fact]
-    public void Name_ReturnsProviderName()
+    public void Name_IsProviderName()
     {
-        Assert.Equal(Constants.ProviderName, _provider.Name);
+        Assert.Equal(Constants.ProviderName, CreateProvider().Name);
     }
 
     [Fact]
-    public void Order_ReturnsHighValue()
+    public async Task FetchAsync_ReturnsNone_WhenConfigurationMissing()
     {
-        Assert.Equal(100, _provider.Order);
-    }
+        _configAccessor.Setup(x => x.GetConfiguration())
+            .Returns((PluginConfiguration?)null);
+        var item = new Movie { Name = "John Wick" };
 
-    [Fact]
-    public async Task FetchAsync_NoConfiguration_ReturnsNone()
-    {
-        // Arrange
-        _configAccessorMock.Setup(x => x.GetConfiguration()).Returns((PluginConfiguration?)null);
-        var movie = CreateMovie("tt2911666");
+        var result = await CreateProvider().FetchAsync(item, new MetadataRefreshOptions(Mock.Of<IDirectoryService>()), CancellationToken.None);
 
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
         Assert.Equal(ItemUpdateType.None, result);
     }
 
     [Fact]
-    public async Task FetchAsync_NoImdbId_TriesTitleSearch()
+    public async Task FetchAsync_ReturnsNone_WhenMoviesDisabled()
     {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableMovies = true, AddWarningTags = false });
-        var movie = CreateMovie(null);
-        movie.Name = "John Wick";
-        movie.ProductionYear = 2014;
+        _configAccessor.Setup(x => x.GetConfiguration())
+            .Returns(new PluginConfiguration { EnableMovies = false });
+        var item = new Movie { Name = "John Wick" };
 
-        var details = CreateMediaDetails(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByTitleAsync("John Wick", 2014, Constants.DtddItemTypeMovie, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
+        var result = await CreateProvider().FetchAsync(item, new MetadataRefreshOptions(Mock.Of<IDirectoryService>()), CancellationToken.None);
 
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
-            Times.Never);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByTitleAsync("John Wick", 2014, Constants.DtddItemTypeMovie, It.IsAny<CancellationToken>()),
-            Times.Once);
-    }
-
-    [Fact]
-    public async Task FetchAsync_NoImdbId_TitleSearchFails_ReturnsNone()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableMovies = true });
-        var movie = CreateMovie(null);
-        movie.Name = "Unknown Movie";
-        movie.ProductionYear = 2024;
-
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByTitleAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((DtddMediaDetails?)null);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
         Assert.Equal(ItemUpdateType.None, result);
     }
 
     [Fact]
-    public async Task FetchAsync_DtddIdAlreadyExists_ReturnsNone()
+    public async Task FetchAsync_ReturnsNone_WhenNothingResolves()
     {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableMovies = true });
-        var movie = CreateMovie("tt2911666");
-        movie.SetProviderId(Constants.ProviderId, "15713");
+        _metadata
+            .Setup(x => x.ResolveAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<FetchReason>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((DtddItemData?)null);
+        var item = new Movie { Name = "John Wick" };
 
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
+        var result = await CreateProvider().FetchAsync(item, new MetadataRefreshOptions(Mock.Of<IDirectoryService>()), CancellationToken.None);
 
-        // Assert
-        Assert.Equal(ItemUpdateType.None, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
-            Times.Never);
-    }
-
-    [Fact]
-    public async Task FetchAsync_DtddIdExists_ReplaceAllMetadata_FetchesData()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableMovies = true, AddWarningTags = false });
-        var movie = CreateMovie("tt2911666");
-        movie.SetProviderId(Constants.ProviderId, "15713");
-        var options = new MetadataRefreshOptions(Mock.Of<IDirectoryService>())
-        {
-            ReplaceAllMetadata = true
-        };
-
-        var details = CreateMediaDetails(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, options, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()),
-            Times.Once);
-    }
-
-    [Fact]
-    public async Task FetchAsync_ImdbLookupFails_FallsBackToTitleSearch()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableMovies = true, AddWarningTags = false });
-        var movie = CreateMovie("tt9999999");
-        movie.Name = "John Wick";
-        movie.ProductionYear = 2014;
-
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt9999999", It.IsAny<CancellationToken>()))
-            .ReturnsAsync((DtddMediaDetails?)null);
-
-        var details = CreateMediaDetails(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByTitleAsync("John Wick", 2014, Constants.DtddItemTypeMovie, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByImdbIdAsync("tt9999999", It.IsAny<CancellationToken>()),
-            Times.Once);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByTitleAsync("John Wick", 2014, Constants.DtddItemTypeMovie, It.IsAny<CancellationToken>()),
-            Times.Once);
-    }
-
-    [Fact]
-    public async Task FetchAsync_BothLookupsReturnNull_ReturnsNone()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableMovies = true });
-        var movie = CreateMovie("tt9999999");
-        movie.Name = "Unknown Movie";
-        movie.ProductionYear = 2024;
-
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt9999999", It.IsAny<CancellationToken>()))
-            .ReturnsAsync((DtddMediaDetails?)null);
-
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByTitleAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((DtddMediaDetails?)null);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
         Assert.Equal(ItemUpdateType.None, result);
     }
 
     [Fact]
-    public async Task FetchAsync_ImdbLookupSucceeds_DoesNotTryTitleSearch()
+    public async Task FetchAsync_SetsProviderIdAndApplies_WhenResolved()
     {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableMovies = true, AddWarningTags = false });
-        var movie = CreateMovie("tt2911666");
-        movie.Name = "John Wick";
-        movie.ProductionYear = 2014;
+        _metadata
+            .Setup(x => x.ResolveAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<FetchReason>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Data());
+        var item = new Movie { Name = "John Wick" };
 
-        var details = CreateMediaDetails(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
+        var result = await CreateProvider().FetchAsync(item, new MetadataRefreshOptions(Mock.Of<IDirectoryService>()), CancellationToken.None);
 
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
         Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByTitleAsync(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
-            Times.Never);
+        Assert.Equal("1234", item.GetProviderId(Constants.ProviderId));
+        _metadata.Verify(x => x.Apply(item, It.IsAny<DtddItemData>(), It.IsAny<PluginConfiguration>()), Times.Once);
     }
 
     [Fact]
-    public async Task FetchAsync_ApiReturnsData_StoresDtddId()
+    public async Task FetchAsync_AlwaysResolves_EvenWhenProviderIdAlreadySet()
     {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableMovies = true, AddWarningTags = false });
-        var movie = CreateMovie("tt2911666");
+        _metadata
+            .Setup(x => x.ResolveAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<FetchReason>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Data());
+        var item = new Movie { Name = "John Wick" };
+        item.SetProviderId(Constants.ProviderId, "1234");
 
-        var details = CreateMediaDetails(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
+        await CreateProvider().FetchAsync(item, new MetadataRefreshOptions(Mock.Of<IDirectoryService>()), CancellationToken.None);
 
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Equal("15713", movie.GetProviderId(Constants.ProviderId));
-    }
-
-    [Fact]
-    public async Task FetchAsync_AddWarningTagsEnabled_AddsTags()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Contains("CW: a dog dies", movie.Tags);
-    }
-
-    [Fact]
-    public async Task FetchAsync_ShowConfidenceInTags_AppendsConfidencePercentage()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0,
-            ShowConfidenceInTags = true
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-
-        // "a dog dies" has 1336 yes / 118 no => Wilson confidence 0.904 => 90%
-        Assert.Contains("CW: a dog dies (90%)", movie.Tags);
-    }
-
-    [Fact]
-    public async Task FetchAsync_MinVotesThreshold_FiltersTriggers()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 1000
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        // "a dog dies" has 1454 votes (1336+118), should be included
-        Assert.Contains("CW: a dog dies", movie.Tags);
-        // "low vote trigger" has only 10 votes, should be excluded
-        Assert.DoesNotContain("CW: low vote trigger", movie.Tags);
-    }
-
-    [Fact]
-    public async Task FetchAsync_MoviesDisabled_ReturnsNone()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration { EnableMovies = false });
-        var movie = CreateMovie("tt2911666");
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.None, result);
-        _apiClientMock.Verify(
-            x => x.GetMediaDetailsByImdbIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
-            Times.Never);
-    }
-
-    [Fact]
-    public async Task FetchAsync_NoDuplicateTags()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0
-        });
-        var movie = CreateMovie("tt2911666");
-        movie.Tags = new[] { "CW: a dog dies" }; // Pre-existing tag
-
-        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Single(movie.Tags, t => t == "CW: a dog dies");
-    }
-
-    private void SetupConfiguration(PluginConfiguration config)
-    {
-        _configAccessorMock.Setup(x => x.GetConfiguration()).Returns(config);
-    }
-
-    private static Movie CreateMovie(string? imdbId)
-    {
-        var movie = new Movie
-        {
-            Name = "Test Movie",
-            Tags = System.Array.Empty<string>()
-        };
-
-        if (!string.IsNullOrEmpty(imdbId))
-        {
-            movie.SetProviderId(MetadataProvider.Imdb, imdbId);
-        }
-
-        return movie;
-    }
-
-    private static DtddMediaDetails CreateMediaDetails(int id, string name)
-    {
-        return new DtddMediaDetails
-        {
-            Item = new DtddMediaItem
-            {
-                Id = id,
-                Name = name
-            },
-            TopicItemStats = new System.Collections.Generic.List<DtddTopicItemStat>()
-        };
-    }
-
-    private static DtddMediaDetails CreateMediaDetailsWithTriggers(int id, string name)
-    {
-        return new DtddMediaDetails
-        {
-            Item = new DtddMediaItem
-            {
-                Id = id,
-                Name = name
-            },
-            TopicItemStats = new System.Collections.Generic.List<DtddTopicItemStat>
-            {
-                new DtddTopicItemStat
-                {
-                    TopicItemId = 1,
-                    YesSum = 1336,
-                    NoSum = 118,
-                    TopicId = 153,
-                    Topic = new DtddTopic
-                    {
-                        Id = 153,
-                        Name = "a dog dies",
-                        TopicCategoryId = 2
-                    },
-                    TopicCategory = new DtddTopicCategory { Id = 2, Name = "Animal" }
-                },
-                new DtddTopicItemStat
-                {
-                    TopicItemId = 2,
-                    YesSum = 8,
-                    NoSum = 2,
-                    TopicId = 999,
-                    Topic = new DtddTopic
-                    {
-                        Id = 999,
-                        Name = "low vote trigger",
-                        TopicCategoryId = 3
-                    },
-                    TopicCategory = new DtddTopicCategory { Id = 3, Name = "Violence" }
-                }
-            }
-        };
-    }
-
-    private static DtddMediaDetails CreateMediaDetailsWithMultipleTriggers(int id, string name)
-    {
-        return new DtddMediaDetails
-        {
-            Item = new DtddMediaItem
-            {
-                Id = id,
-                Name = name
-            },
-            TopicItemStats = new System.Collections.Generic.List<DtddTopicItemStat>
-            {
-                new DtddTopicItemStat
-                {
-                    TopicItemId = 1,
-                    YesSum = 100,
-                    NoSum = 10,
-                    TopicId = 153,
-                    Topic = new DtddTopic
-                    {
-                        Id = 153,
-                        Name = "a dog dies",
-                        TopicCategoryId = 2
-                    },
-                    TopicCategory = new DtddTopicCategory { Id = 2, Name = "Animal" }
-                },
-                new DtddTopicItemStat
-                {
-                    TopicItemId = 2,
-                    YesSum = 100,
-                    NoSum = 10,
-                    TopicId = 154,
-                    Topic = new DtddTopic
-                    {
-                        Id = 154,
-                        Name = "a cat dies",
-                        TopicCategoryId = 2
-                    },
-                    TopicCategory = new DtddTopicCategory { Id = 2, Name = "Animal" }
-                },
-                new DtddTopicItemStat
-                {
-                    TopicItemId = 3,
-                    YesSum = 100,
-                    NoSum = 10,
-                    TopicId = 101,
-                    Topic = new DtddTopic
-                    {
-                        Id = 101,
-                        Name = "blood/gore",
-                        TopicCategoryId = 3
-                    },
-                    TopicCategory = new DtddTopicCategory { Id = 3, Name = "Violence" }
-                }
-            }
-        };
-    }
-
-    [Fact]
-    public async Task FetchAsync_CategoryFilterEnabled_OnlyIncludesEnabledCategories()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0,
-            ShowAllTriggers = false,
-            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 } // Only Animal
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Contains("CW: a dog dies", movie.Tags);
-        Assert.Contains("CW: a cat dies", movie.Tags);
-        Assert.DoesNotContain("CW: blood/gore", movie.Tags); // Violence category not enabled
-    }
-
-    [Fact]
-    public async Task FetchAsync_TopicFilterEnabled_OnlyIncludesEnabledTopics()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0,
-            ShowAllTriggers = false,
-            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 },
-            EnabledTopicIds = new System.Collections.Generic.List<int> { 153 } // Only dog dies
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Contains("CW: a dog dies", movie.Tags);
-        Assert.DoesNotContain("CW: a cat dies", movie.Tags); // Topic not enabled
-        Assert.DoesNotContain("CW: blood/gore", movie.Tags); // Category not enabled
-    }
-
-    [Fact]
-    public async Task FetchAsync_ShowAllTriggers_IncludesAllTriggers()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0,
-            ShowAllTriggers = true,
-            EnabledCategoryIds = new System.Collections.Generic.List<int> { 2 } // This should be ignored
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Contains("CW: a dog dies", movie.Tags);
-        Assert.Contains("CW: a cat dies", movie.Tags);
-        Assert.Contains("CW: blood/gore", movie.Tags); // All triggers included
-    }
-
-    [Fact]
-    public async Task FetchAsync_NoCategoriesSelected_IncludesAllTriggers()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = true,
-            TagPrefix = "CW:",
-            MinVotesThreshold = 0,
-            ShowAllTriggers = false,
-            EnabledCategoryIds = new System.Collections.Generic.List<int>() // Empty - no categories selected
-        });
-        var movie = CreateMovie("tt2911666");
-
-        var details = CreateMediaDetailsWithMultipleTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        // All triggers included (with warning in UI)
-        Assert.Contains("CW: a dog dies", movie.Tags);
-        Assert.Contains("CW: a cat dies", movie.Tags);
-        Assert.Contains("CW: blood/gore", movie.Tags);
-    }
-
-    [Fact]
-    public async Task FetchAsync_AddDescriptionWarningsEnabled_UpdatesOverview()
-    {
-        // Arrange
-        var config = new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = false,
-            AddDescriptionWarnings = true,
-            MinVotesThreshold = 0
-        };
-        SetupConfiguration(config);
-        var movie = CreateMovie("tt2911666");
-        movie.Overview = "Original description.";
-
-        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        _overviewFormatterMock
-            .Setup(x => x.FormatTriggerSummary(details, config))
-            .Returns("\n**Content Warnings** (via DoesTheDogDie)\nTest trigger");
-
-        _overviewFormatterMock
-            .Setup(x => x.AppendToOverview("Original description.", It.IsAny<string>()))
-            .Returns("Original description.\n\n<!-- DTDD_START -->\nTest trigger\n<!-- DTDD_END -->");
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        _overviewFormatterMock.Verify(
-            x => x.FormatTriggerSummary(details, config),
-            Times.Once);
-        _overviewFormatterMock.Verify(
-            x => x.AppendToOverview("Original description.", It.IsAny<string>()),
+        _metadata.Verify(
+            x => x.ResolveAsync("1234", It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<FetchReason>(), It.IsAny<CancellationToken>()),
             Times.Once);
     }
 
     [Fact]
-    public async Task FetchAsync_OverviewLocked_SkipsDescriptionInjection()
+    public async Task FetchAsync_PassesMovieFetchReason()
     {
-        // Arrange
-        var config = new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = false,
-            AddDescriptionWarnings = true,
-            MinVotesThreshold = 0
-        };
-        SetupConfiguration(config);
-        var movie = CreateMovie("tt2911666");
-        movie.Overview = "Original description.";
-        movie.LockedFields = new[] { MetadataField.Overview };
+        _metadata
+            .Setup(x => x.ResolveAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<FetchReason>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Data());
+        var item = new Movie { Name = "John Wick" };
 
-        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
+        await CreateProvider().FetchAsync(item, new MetadataRefreshOptions(Mock.Of<IDirectoryService>()), CancellationToken.None);
 
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Equal("Original description.", movie.Overview);
-        _overviewFormatterMock.Verify(
-            x => x.FormatTriggerSummary(It.IsAny<DtddMediaDetails>(), It.IsAny<PluginConfiguration>()),
-            Times.Never);
-    }
-
-    [Fact]
-    public async Task FetchAsync_CachedDtddId_AddDescriptionWarningsEnabled_UpdatesOverview()
-    {
-        // Arrange
-        var config = new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = false,
-            AddDescriptionWarnings = true,
-            MinVotesThreshold = 0
-        };
-        SetupConfiguration(config);
-        var movie = CreateMovie("tt2911666");
-        movie.SetProviderId(Constants.ProviderId, "15713");
-        movie.Overview = "Original description.";
-
-        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsAsync(15713, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        _overviewFormatterMock
-            .Setup(x => x.FormatTriggerSummary(details, config))
-            .Returns("\nTest trigger");
-        _overviewFormatterMock
-            .Setup(x => x.AppendToOverview("Original description.", It.IsAny<string>()))
-            .Returns("Original description.\n\n<!-- DTDD_START -->\nTest trigger\n<!-- DTDD_END -->");
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        _overviewFormatterMock.Verify(
-            x => x.AppendToOverview("Original description.", It.IsAny<string>()),
+        _metadata.Verify(
+            x => x.ResolveAsync(
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<int?>(),
+                It.Is<FetchReason>(r => r.Kind == DtddItemKind.Movie),
+                It.IsAny<CancellationToken>()),
             Times.Once);
     }
 
     [Fact]
-    public async Task FetchAsync_AddDescriptionWarningsDisabled_RemovesStaleSection()
+    public async Task FetchAsync_ReturnsMetadataDownload_WhenApplyThrows()
     {
-        // Arrange
-        var config = new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = false,
-            AddDescriptionWarnings = false,
-            MinVotesThreshold = 0
-        };
-        SetupConfiguration(config);
-        var movie = CreateMovie("tt2911666");
-        var staleOverview = "Original description.\n\n<!-- DTDD_START -->\nOld trigger\n<!-- DTDD_END -->";
-        movie.Overview = staleOverview;
+        _metadata
+            .Setup(x => x.ResolveAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<FetchReason>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Data());
+        _metadata
+            .Setup(x => x.Apply(It.IsAny<BaseItem>(), It.IsAny<DtddItemData>(), It.IsAny<PluginConfiguration>()))
+            .Throws(new InvalidOperationException("apply blew up"));
+        var item = new Movie { Name = "John Wick" };
 
-        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
+        var result = await CreateProvider().FetchAsync(item, new MetadataRefreshOptions(Mock.Of<IDirectoryService>()), CancellationToken.None);
 
-        _overviewFormatterMock
-            .Setup(x => x.HasDtddSection(staleOverview))
-            .Returns(true);
-        _overviewFormatterMock
-            .Setup(x => x.RemoveDtddSection(staleOverview))
-            .Returns("Original description.");
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
         Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Equal("Original description.", movie.Overview);
-    }
-
-    [Fact]
-    public async Task FetchAsync_AddDescriptionWarningsDisabled_DoesNotUpdateOverview()
-    {
-        // Arrange
-        SetupConfiguration(new PluginConfiguration
-        {
-            EnableMovies = true,
-            AddWarningTags = false,
-            AddDescriptionWarnings = false,
-            MinVotesThreshold = 0
-        });
-        var movie = CreateMovie("tt2911666");
-        movie.Overview = "Original description.";
-
-        var details = CreateMediaDetailsWithTriggers(15713, "John Wick");
-        _apiClientMock
-            .Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(details);
-
-        // Act
-        var result = await _provider.FetchAsync(movie, _defaultOptions, CancellationToken.None);
-
-        // Assert
-        Assert.Equal(ItemUpdateType.MetadataDownload, result);
-        Assert.Equal("Original description.", movie.Overview);
-        _overviewFormatterMock.Verify(
-            x => x.FormatTriggerSummary(It.IsAny<DtddMediaDetails>(), It.IsAny<PluginConfiguration>()),
-            Times.Never);
+        Assert.Equal("1234", item.GetProviderId(Constants.ProviderId));
     }
 }

@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/items/5678/ratings"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "X-RateLimit-Limit-Minute": "30",
+      "X-RateLimit-Remaining-Minute": "24",
+      "X-RateLimit-Limit-Month": "5000",
+      "X-RateLimit-Remaining-Month": "4994"
+    },
+    "jsonBody": []
+  }
+}

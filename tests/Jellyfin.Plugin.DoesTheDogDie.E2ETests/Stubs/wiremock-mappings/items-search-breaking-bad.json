@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/items",
+    "queryParameters": {
+      "imdb": { "equalTo": "tt0903747" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "X-RateLimit-Limit-Minute": "30",
+      "X-RateLimit-Remaining-Minute": "29",
+      "X-RateLimit-Limit-Month": "5000",
+      "X-RateLimit-Remaining-Month": "4999"
+    },
+    "jsonBody": [
+      {
+        "id": 5678,
+        "name": "Breaking Bad",
+        "releaseYear": 2008,
+        "itemTypeId": 16,
+        "itemTypeName": "TV Show",
+        "imdbId": "tt0903747",
+        "tmdbId": 1396,
+        "genres": []
+      }
+    ]
+  }
+}

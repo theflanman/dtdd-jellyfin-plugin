@@ -25,6 +25,7 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
         : base(applicationPaths, xmlSerializer)
     {
         Instance = this;
+        ConfigurationChanged += (_, _) => ConfigurationVersion++;
     }
 
     /// <inheritdoc />
@@ -37,6 +38,11 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
     /// Gets the current plugin instance.
     /// </summary>
     public static Plugin? Instance { get; private set; }
+
+    /// <summary>
+    /// Gets a counter incremented whenever the configuration changes, used to reset one-shot warnings.
+    /// </summary>
+    public static int ConfigurationVersion { get; private set; }
 
     /// <inheritdoc />
     public IEnumerable<PluginPageInfo> GetPages()

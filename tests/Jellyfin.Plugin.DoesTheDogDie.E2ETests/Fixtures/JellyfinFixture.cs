@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using DotNet.Testcontainers.Builders;
@@ -66,8 +67,18 @@ public sealed class JellyfinFixture : IAsyncLifetime
             .WithEnvironment("PGID", "1000")
             .WithEnvironment("TZ", "Etc/UTC")
             .WithEnvironment("JELLYFIN_PublishedServerUrl", "http://localhost")
-            .WithEnvironment("DTDD_API_BASE_URL", "http://wiremock:8080")
-            .WithBindMount(paths.PluginPublishDir, "/config/data/plugins/DoesTheDogDie_0.1.0.0", AccessMode.ReadOnly)
+            // DtddApiOptions.BaseAddress is normalized to end with '/' and every request is built
+            // relative to it ("items?imdb=...", "items/{id}", "topics", ...), so this must carry the
+            // full /api/v3/ path INCLUDING the trailing slash. Without it the relative URIs resolve
+            // against the wrong path segment and miss every WireMock mapping.
+            .WithEnvironment("DTDD_API_BASE_URL", "http://wiremock:8080/api/v3/")
+            // The genuine publish output is mounted as-is: the suite must exercise the artifact users
+            // actually install, not a sanitised copy of it. Mounted read-WRITE on purpose, because a
+            // real plugin directory is writable and Jellyfin's PluginManager writes meta.json whenever
+            // it changes a plugin's state. On a read-only mount that write throws IOException from
+            // inside ApplicationHost.DiscoverTypes, which is fatal to the whole server — it never
+            // finishes starting, and the suite hangs instead of failing.
+            .WithBindMount(paths.PluginPublishDir, "/config/data/plugins/DoesTheDogDie_0.1.0.0", AccessMode.ReadWrite)
             .WithBindMount(paths.MoviesDir, "/data/movies", AccessMode.ReadOnly)
             .WithBindMount(paths.TvDir, "/data/tvshows", AccessMode.ReadOnly)
             .WithPortBinding(8096, true)
@@ -85,6 +96,15 @@ public sealed class JellyfinFixture : IAsyncLifetime
         await Client.WaitForServerReadyAsync(TimeSpan.FromSeconds(180));
         await Client.CompleteStartupWizardAsync(adminUser: "test", password: "test");
         await Client.LoginAsync("test", "test");
+
+        // Configure the plugin BEFORE the first scan: every provider no-ops without an API key, so a
+        // fixture that skipped this would produce a green-but-empty run in which every assertion about
+        // tags, provider ids and overviews passes vacuously. Read it back and fail loudly if it did not
+        // stick.
+        await AssertPluginLoadedAsync();
+        await Client.SetPluginConfigurationAsync(PluginId, TestHelpers.DefaultPluginConfig());
+        await AssertApiKeyConfiguredAsync();
+
         await Client.AddLibraryAsync("Movies", "movies", "/data/movies");
         await Client.AddLibraryAsync("Shows", "tvshows", "/data/tvshows");
 
@@ -108,6 +128,118 @@ public sealed class JellyfinFixture : IAsyncLifetime
         if (_network is not null)
         {
             await _network.DeleteAsync();
+        }
+    }
+
+    /// <summary>
+    /// Fails fast, with the plugin list in the message, unless Jellyfin actually loaded the plugin AND
+    /// left it Active. Everything downstream (configuration, providers, the plugin's own API) 404s
+    /// otherwise, and the resulting failures say nothing about the real cause.
+    /// </summary>
+    /// <remarks>
+    /// Presence in /Plugins is NOT enough. A plugin Jellyfin loaded and then disabled — the packaging
+    /// failure this guard exists to catch — is still listed, just with a non-Active Status, so a
+    /// presence-only check would wave it through and the suite would fail later with unrelated-looking
+    /// 404s and vacuously-empty metadata.
+    /// </remarks>
+    private async Task AssertPluginLoadedAsync()
+    {
+        using var plugins = await Client.GetPluginsAsync();
+
+        foreach (var plugin in plugins.RootElement.EnumerateArray())
+        {
+            if (!IsDtddPlugin(plugin))
+            {
+                continue;
+            }
+
+            // Jellyfin's naming policy for this payload is not contractual, so match case-insensitively.
+            // The Status may serialize as the enum's name or as its numeric value depending on the
+            // server's converter set, so read whichever form arrives and report it verbatim on failure.
+            string? status = null;
+            foreach (var property in plugin.EnumerateObject())
+            {
+                if (string.Equals(property.Name, "Status", StringComparison.OrdinalIgnoreCase))
+                {
+                    status = property.Value.ValueKind == JsonValueKind.String
+                        ? property.Value.GetString()
+                        : property.Value.GetRawText();
+                    break;
+                }
+            }
+
+            if (!string.Equals(status, "Active", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException(
+                    $"Jellyfin listed the DoesTheDogDie plugin but its Status is '{status ?? "<missing>"}', not 'Active'. "
+                    + "A disabled plugin is still listed by /Plugins while none of its providers, services or endpoints run. "
+                    + "Plugin entry: " + plugin.GetRawText());
+            }
+
+            return;
+        }
+
+        throw new InvalidOperationException(
+            "Jellyfin did not load the DoesTheDogDie plugin. Installed plugins: "
+            + plugins.RootElement.GetRawText());
+    }
+
+    private static bool IsDtddPlugin(JsonElement plugin)
+    {
+        foreach (var property in plugin.EnumerateObject())
+        {
+            if (string.Equals(property.Name, "Id", StringComparison.OrdinalIgnoreCase)
+                && Guid.TryParse(property.Value.GetString(), out var id)
+                && id == PluginId)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Returns the Jellyfin container's captured stdout and stderr, so a test can assert on what the
+    /// plugin logged inside the real host (for example, that the SQLite cache opened normally rather
+    /// than falling back to the in-memory one).
+    /// </summary>
+    /// <param name="ct">The cancellation token.</param>
+    /// <returns>The container's combined log output.</returns>
+    internal async Task<string> GetJellyfinLogsAsync(CancellationToken ct = default)
+    {
+        if (_jellyfin is null)
+        {
+            throw new InvalidOperationException("Jellyfin container has not been started");
+        }
+
+        var (stdout, stderr) = await _jellyfin.GetLogsAsync(timestampsEnabled: false, ct: ct);
+        return stdout + Environment.NewLine + stderr;
+    }
+
+    /// <summary>
+    /// Reads the plugin configuration back and throws unless a non-empty API key survived the POST.
+    /// </summary>
+    private async Task AssertApiKeyConfiguredAsync()
+    {
+        using var config = await Client.GetPluginConfigurationAsync(PluginId);
+
+        // Jellyfin's naming policy for plugin configuration payloads is not contractual, so match the
+        // property case-insensitively rather than assuming PascalCase.
+        string? key = null;
+        foreach (var property in config.RootElement.EnumerateObject())
+        {
+            if (string.Equals(property.Name, "ApiKey", StringComparison.OrdinalIgnoreCase))
+            {
+                key = property.Value.GetString();
+                break;
+            }
+        }
+
+        if (string.IsNullOrEmpty(key))
+        {
+            throw new InvalidOperationException(
+                "E2E fixture failed to set the DtDD API key. Every provider would silently no-op and the suite would pass while asserting nothing.");
         }
     }
 

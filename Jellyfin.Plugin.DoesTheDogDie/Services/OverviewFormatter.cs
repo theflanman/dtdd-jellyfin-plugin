@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
+using DoesTheDogDie.Api;
+using DoesTheDogDie.Statistics;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
 
 namespace Jellyfin.Plugin.DoesTheDogDie.Services;
@@ -23,81 +25,37 @@ public class OverviewFormatter
     public const string DtddEndMarker = "<!-- DTDD_END -->";
 
     /// <summary>
-    /// Formats trigger data from DTDD into a summary suitable for appending to an Overview.
+    /// Renders a trigger summary grouped by verdict, with vote counts, credible intervals and
+    /// optionally the top user comment per trigger.
     /// </summary>
-    /// <param name="details">The media details containing trigger information.</param>
+    /// <param name="triggers">The triggers for the item.</param>
     /// <param name="config">The plugin configuration.</param>
-    /// <returns>Formatted trigger summary text, or empty string if no triggers to display.</returns>
-    public virtual string FormatTriggerSummary(DtddMediaDetails details, PluginConfiguration config)
+    /// <param name="comments">Top comment per topic id; empty when comment injection is off.</param>
+    /// <returns>The formatted summary, or an empty string when nothing survives filtering.</returns>
+    public virtual string FormatTriggerSummary(
+        IReadOnlyList<TriggerInfo> triggers,
+        PluginConfiguration config,
+        IReadOnlyDictionary<int, string>? comments = null)
     {
-        ArgumentNullException.ThrowIfNull(details);
-        ArgumentNullException.ThrowIfNull(config);
-
-        var sb = new StringBuilder();
-
-        var positiveTriggers = TriggerFilter.FilterTriggers(
-            details.GetPositiveTriggers(config.MinVotesThreshold),
-            config).ToList();
-
-        var negativeTriggers = TriggerFilter.FilterTriggers(
-            details.GetNegativeTriggers(config.MinVotesThreshold),
-            config).ToList();
-
-        if (positiveTriggers.Count == 0 && negativeTriggers.Count == 0)
+        var included = TriggerFilter.Filter(triggers, config).ToList();
+        if (included.Count == 0)
         {
             return string.Empty;
         }
 
-        sb.AppendLine();
-        sb.AppendLine("**Content Warnings** (via DoesTheDogDie)");
-        sb.AppendLine();
+        var sb = new StringBuilder();
 
-        // Add positive triggers (warnings)
-        foreach (var trigger in positiveTriggers)
+        AppendGroup(sb, "Content warnings", included, TriggerVerdict.LikelyPresent, comments);
+        AppendGroup(sb, "Possible", included, TriggerVerdict.Uncertain, comments);
+        AppendGroup(sb, "Reported safe", included, TriggerVerdict.LikelyAbsent, comments);
+
+        if (sb.Length == 0)
         {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var line = string.Format(
-                CultureInfo.InvariantCulture,
-                "⚠️ {0} ({1} yes / {2} no)",
-                CapitalizeFirst(trigger.Topic.Name),
-                trigger.YesSum,
-                trigger.NoSum);
-            sb.AppendLine(line);
-
-            // Add comment if configured
-            if (config.IncludeTopComment && !string.IsNullOrWhiteSpace(trigger.Comment))
-            {
-                var comment = FormatComment(trigger, config);
-                if (!string.IsNullOrEmpty(comment))
-                {
-                    sb.AppendLine(comment);
-                }
-            }
-
-            sb.AppendLine();
+            return string.Empty;
         }
 
-        // Add negative triggers (safe confirmations)
-        foreach (var trigger in negativeTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var line = string.Format(
-                CultureInfo.InvariantCulture,
-                "✓ Safe: {0} ({1} yes / {2} no)",
-                CapitalizeFirst(trigger.Topic.Name),
-                trigger.YesSum,
-                trigger.NoSum);
-            sb.AppendLine(line);
-            sb.AppendLine();
-        }
+        sb.Append('\n');
+        sb.Append(CultureInfo.InvariantCulture, $"{DtddAttribution.Phrase} — {DtddAttribution.Url}");
 
         return sb.ToString().TrimEnd();
     }
@@ -172,43 +130,42 @@ public class OverviewFormatter
             && overview.Contains(DtddEndMarker, StringComparison.Ordinal);
     }
 
-    private static string FormatComment(DtddTopicItemStat trigger, PluginConfiguration config)
+    private static void AppendGroup(
+        StringBuilder sb,
+        string heading,
+        IReadOnlyList<TriggerInfo> triggers,
+        TriggerVerdict verdict,
+        IReadOnlyDictionary<int, string>? comments)
     {
-        if (string.IsNullOrWhiteSpace(trigger.Comment))
+        var matching = triggers.Where(t => t.Verdict == verdict).ToList();
+        if (matching.Count == 0)
         {
-            return string.Empty;
+            return;
         }
 
-        // Check if comment is a spoiler and should be hidden
-        if (config.HideSpoilerComments && trigger.Topic?.IsSpoiler == true)
+        sb.Append(heading).Append(": ");
+        sb.AppendJoin(", ", matching.Select(FormatTrigger));
+        sb.Append('\n');
+
+        if (comments is not null)
         {
-            return string.Empty;
+            foreach (var trigger in matching)
+            {
+                if (comments.TryGetValue(trigger.Topic.Id, out var comment))
+                {
+                    sb.Append("  • ").Append(trigger.Topic.Name).Append(": ").Append(comment).Append('\n');
+                }
+            }
         }
-
-        var comment = trigger.Comment.Trim();
-
-        // Truncate if necessary
-        if (comment.Length > config.MaxCommentLength)
-        {
-            comment = comment.Substring(0, config.MaxCommentLength).TrimEnd() + "...";
-        }
-
-        // Format with author if available
-        if (!string.IsNullOrWhiteSpace(trigger.Username))
-        {
-            return $"  💬 \"{comment}\" - {trigger.Username}";
-        }
-
-        return $"  💬 \"{comment}\"";
     }
 
-    private static string CapitalizeFirst(string text)
+    private static string FormatTrigger(TriggerInfo trigger)
     {
-        if (string.IsNullOrEmpty(text))
-        {
-            return text;
-        }
+        var low = (int)Math.Round(trigger.Confidence.Lower * 100);
+        var high = (int)Math.Round(trigger.Confidence.Upper * 100);
 
-        return char.ToUpper(text[0], CultureInfo.InvariantCulture) + text.Substring(1);
+        return string.Create(
+            CultureInfo.InvariantCulture,
+            $"{trigger.Topic.Name} ({trigger.YesSum}/{trigger.TotalVotes}, {low}–{high}%)");
     }
 }

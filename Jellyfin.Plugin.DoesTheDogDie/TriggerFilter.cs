@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
-using Jellyfin.Plugin.DoesTheDogDie.Scoring;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 
 namespace Jellyfin.Plugin.DoesTheDogDie;
 
@@ -12,85 +10,47 @@ namespace Jellyfin.Plugin.DoesTheDogDie;
 public static class TriggerFilter
 {
     /// <summary>
-    /// Determines if a trigger should be included based on configuration settings.
+    /// Determines whether a trigger passes the configured category and topic filters.
     /// </summary>
     /// <param name="trigger">The trigger to check.</param>
     /// <param name="config">The plugin configuration.</param>
-    /// <returns>True if the trigger should be included, false otherwise.</returns>
-    public static bool ShouldIncludeTrigger(DtddTopicItemStat trigger, PluginConfiguration config)
+    /// <returns>True when the trigger should be included.</returns>
+    public static bool ShouldInclude(TriggerInfo trigger, PluginConfiguration config)
     {
-        // Statistical confidence filter applies regardless of category selection
-        if (config.UseConfidenceScoring && GetConfidence(trigger) < config.MinConfidenceThreshold)
-        {
-            return false;
-        }
-
-        // Master switch - include everything
         if (config.ShowAllTriggers)
         {
             return true;
         }
 
-        // No categories selected = include everything (with UI warning)
-        if (config.EnabledCategoryIds == null || config.EnabledCategoryIds.Count == 0)
+        if (config.EnabledCategoryIds is null || config.EnabledCategoryIds.Count == 0)
         {
             return true;
         }
 
-        var topic = trigger.Topic;
-        if (topic == null)
+        if (!config.EnabledCategoryIds.Contains(trigger.CategoryId))
         {
             return false;
         }
 
-        // Get the category ID from topic or directly from the stat
-        var categoryId = topic.TopicCategoryId ?? trigger.TopicCategory?.Id;
-        if (categoryId == null)
-        {
-            return false;
-        }
-
-        // Category must be enabled
-        if (!config.EnabledCategoryIds.Contains(categoryId.Value))
-        {
-            return false;
-        }
-
-        // If no specific topics are selected, include all topics in enabled categories
-        if (config.EnabledTopicIds == null || config.EnabledTopicIds.Count == 0)
+        if (config.EnabledTopicIds is null || config.EnabledTopicIds.Count == 0)
         {
             return true;
         }
 
-        // Otherwise, topic must be explicitly enabled
-        return config.EnabledTopicIds.Contains(topic.Id);
+        return config.EnabledTopicIds.Contains(trigger.Topic.Id);
     }
 
     /// <summary>
-    /// Calculates the statistical confidence that a trigger's majority vote
-    /// direction is correct, using the Wilson score interval lower bound.
-    /// </summary>
-    /// <param name="trigger">The trigger to evaluate.</param>
-    /// <returns>Confidence score between 0.0 and 1.0.</returns>
-    public static double GetConfidence(DtddTopicItemStat trigger)
-    {
-        var majorityVotes = Math.Max(trigger.YesSum, trigger.NoSum);
-        return BetaConfidenceCalculator.CalculateConfidence(majorityVotes, trigger.TotalVotes);
-    }
-
-    /// <summary>
-    /// Filters a collection of triggers based on configuration settings.
+    /// Filters a sequence of triggers by the configured category and topic selections.
     /// </summary>
     /// <param name="triggers">The triggers to filter.</param>
     /// <param name="config">The plugin configuration.</param>
-    /// <returns>Filtered list of triggers.</returns>
-    public static IEnumerable<DtddTopicItemStat> FilterTriggers(
-        IEnumerable<DtddTopicItemStat> triggers,
-        PluginConfiguration config)
+    /// <returns>The triggers that pass the filter.</returns>
+    public static IEnumerable<TriggerInfo> Filter(IEnumerable<TriggerInfo> triggers, PluginConfiguration config)
     {
         foreach (var trigger in triggers)
         {
-            if (ShouldIncludeTrigger(trigger, config))
+            if (ShouldInclude(trigger, config))
             {
                 yield return trigger;
             }

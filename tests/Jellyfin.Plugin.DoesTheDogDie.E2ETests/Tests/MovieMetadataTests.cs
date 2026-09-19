@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -29,13 +30,19 @@ public sealed class MovieMetadataTests
     }
 
     [Fact]
-    public async Task JohnWick_GetsCwTagsForPositiveTriggers()
+    public async Task JohnWick_GetsTagsPerVerdict()
     {
         var movies = await _fixture.Client.GetItemsAsync("Movie");
         var johnWick = movies.Single(m => m.Name == "John Wick");
 
-        johnWick.Tags.Should().Contain(t => t.StartsWith("CW:"), "stub triggers exceed default vote threshold");
-        johnWick.Tags.Should().Contain("CW: an animal dies");
-        johnWick.Tags.Should().Contain("CW: someone is shot");
+        // Stub stats at the default DecisionThreshold=0.5 / IntervalMass=0.95:
+        //   "a dog dies"   42/1  -> 95% CI [0.880, 0.994] -> LikelyPresent -> CW: tag
+        //   "someone dies"  3/4  -> 95% CI [0.157, 0.755] -> Uncertain     -> no tag at all
+        //   "a child dies"  1/38 -> 95% CI [0.006, 0.132] -> LikelyAbsent  -> Safe: tag
+        johnWick.Tags.Should().Contain("CW: a dog dies");
+        johnWick.Tags.Should().Contain("Safe: a child dies");
+        johnWick.Tags.Should().NotContain(
+            t => t.EndsWith("someone dies", StringComparison.Ordinal),
+            "an Uncertain verdict must not produce a tag of either kind");
     }
 }

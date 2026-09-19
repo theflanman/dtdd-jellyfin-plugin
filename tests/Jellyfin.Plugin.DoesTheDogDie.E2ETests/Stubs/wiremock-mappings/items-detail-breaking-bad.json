@@ -1,0 +1,29 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/items/5678"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "X-RateLimit-Limit-Minute": "30",
+      "X-RateLimit-Remaining-Minute": "28",
+      "X-RateLimit-Limit-Month": "5000",
+      "X-RateLimit-Remaining-Month": "4998"
+    },
+    "jsonBody": {
+      "id": 5678,
+      "name": "Breaking Bad",
+      "releaseYear": 2008,
+      "itemTypeId": 16,
+      "itemTypeName": "TV Show",
+      "imdbId": "tt0903747",
+      "tmdbId": 1396,
+      "genres": [],
+      "topicItemStats": [
+        { "topicItemId": 9101, "yesSum": 412, "noSum": 6, "numComments": 88, "topicId": 202, "topicName": "someone dies", "itemId": 5678 }
+      ]
+    }
+  }
+}

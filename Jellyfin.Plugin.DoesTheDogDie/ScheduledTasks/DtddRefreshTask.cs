@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Data.Enums;
-using Jellyfin.Plugin.DoesTheDogDie.Api;
-using Jellyfin.Plugin.DoesTheDogDie.Api.Models;
 using Jellyfin.Plugin.DoesTheDogDie.Configuration;
+using Jellyfin.Plugin.DoesTheDogDie.Services;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Entities.TV;
@@ -24,7 +23,7 @@ namespace Jellyfin.Plugin.DoesTheDogDie.ScheduledTasks;
 public class DtddRefreshTask : IScheduledTask
 {
     private readonly ILibraryManager _libraryManager;
-    private readonly DtddApiClient _apiClient;
+    private readonly DtddMetadataService _metadata;
     private readonly IPluginConfigurationAccessor _configAccessor;
     private readonly ILogger<DtddRefreshTask> _logger;
 
@@ -32,17 +31,17 @@ public class DtddRefreshTask : IScheduledTask
     /// Initializes a new instance of the <see cref="DtddRefreshTask"/> class.
     /// </summary>
     /// <param name="libraryManager">The library manager.</param>
-    /// <param name="apiClient">The DTDD API client.</param>
+    /// <param name="metadata">The DtDD metadata service.</param>
     /// <param name="configAccessor">The configuration accessor.</param>
     /// <param name="logger">The logger.</param>
     public DtddRefreshTask(
         ILibraryManager libraryManager,
-        DtddApiClient apiClient,
+        DtddMetadataService metadata,
         IPluginConfigurationAccessor configAccessor,
         ILogger<DtddRefreshTask> logger)
     {
         _libraryManager = libraryManager;
-        _apiClient = apiClient;
+        _metadata = metadata;
         _configAccessor = configAccessor;
         _logger = logger;
     }
@@ -95,9 +94,7 @@ public class DtddRefreshTask : IScheduledTask
 
         _logger.LogInformation("Starting DTDD refresh for {Count} items", total);
 
-        var refreshed = 0;
         var failed = 0;
-        var unchanged = 0;
 
         for (int i = 0; i < total; i++)
         {
@@ -110,19 +107,19 @@ public class DtddRefreshTask : IScheduledTask
 
             try
             {
-                var wasUpdated = await RefreshItemAsync(item, config, cancellationToken).ConfigureAwait(false);
-                if (wasUpdated)
-                {
-                    refreshed++;
-                }
-                else
-                {
-                    unchanged++;
-                }
+                await RefreshItemAsync(item, config, cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is not OperationCanceledException)
             {
-                _logger.LogWarning(ex, "Failed to refresh DTDD data for {ItemName}", item.Name);
+                // One bad item must not abort the whole scheduled run; log and move on to the next one.
+                // A cancellation, however, must propagate: the scheduled task itself is being aborted.
+                // The exception is logged as a sanitized string rather than as an exception object: the
+                // API key can appear in a DtDD error message or URL, and only the string form goes
+                // through LogSanitizer.
+                _logger.LogWarning(
+                    "Failed to refresh DTDD data for {ItemName}: {Message}",
+                    item.Name,
+                    LogSanitizer.Sanitize(ex.ToString(), config.ApiKey));
                 failed++;
             }
 
@@ -133,9 +130,7 @@ public class DtddRefreshTask : IScheduledTask
         progress?.Report(100);
 
         _logger.LogInformation(
-            "DTDD refresh complete: {Refreshed} updated, {Unchanged} unchanged, {Failed} failed out of {Total} items",
-            refreshed,
-            unchanged,
+            "DTDD refresh complete: {Failed} failed out of {Total} items",
             failed,
             total);
     }
@@ -178,102 +173,35 @@ public class DtddRefreshTask : IScheduledTask
         return items;
     }
 
-    private async Task<bool> RefreshItemAsync(
-        BaseItem item,
-        PluginConfiguration config,
-        CancellationToken cancellationToken)
+    private async Task RefreshItemAsync(BaseItem item, PluginConfiguration config, CancellationToken cancellationToken)
     {
-        var imdbId = item.GetProviderId(MetadataProvider.Imdb);
-        if (string.IsNullOrEmpty(imdbId))
+        var storedId = item.GetProviderId(Constants.ProviderId);
+        var kind = item switch
         {
-            _logger.LogDebug("Item {ItemName} has DTDD ID but no IMDB ID, skipping", item.Name);
-            return false;
+            Movie => DtddItemKind.Movie,
+            Series => DtddItemKind.Series,
+            Season => DtddItemKind.Season,
+            Episode => DtddItemKind.Episode,
+            _ => DtddItemKind.Movie,
+        };
+
+        var data = await _metadata.ResolveAsync(
+            storedId,
+            item.GetProviderId(MetadataProvider.Imdb),
+            item.Name,
+            item.ProductionYear,
+            new FetchReason(kind, IsRefresh: true, IsUserInitiated: false),
+            cancellationToken).ConfigureAwait(false);
+
+        if (data is null)
+        {
+            // Budget exhaustion, a queue overflow or a miss. Move on: the next item may still
+            // be answerable from cache, and suppression is log-only inside DtddMetadataService.
+            return;
         }
 
-        var details = await _apiClient.GetMediaDetailsByImdbIdAsync(imdbId, cancellationToken)
-            .ConfigureAwait(false);
-
-        if (details == null)
-        {
-            _logger.LogDebug("No DTDD data found for {ItemName}", item.Name);
-            return false;
-        }
-
-        // Update the DTDD ID (in case it changed)
-        item.SetProviderId(
-            Constants.ProviderId,
-            details.Item.Id.ToString(System.Globalization.CultureInfo.InvariantCulture));
-
-        // Update warning tags if enabled
-        if (config.AddWarningTags)
-        {
-            var tagsChanged = UpdateWarningTags(item, details, config);
-            await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, cancellationToken)
-                .ConfigureAwait(false);
-            return tagsChanged;
-        }
-
-        // Even if tags are disabled, persist the (possibly updated) DTDD provider ID.
-        await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataEdit, cancellationToken)
-            .ConfigureAwait(false);
-        return false;
-    }
-
-    private static bool UpdateWarningTags(BaseItem item, DtddMediaDetails details, PluginConfiguration config)
-    {
-        // First, remove all existing DTDD tags (those starting with our prefixes)
-        var existingTags = item.Tags
-            .Where(t => !t.StartsWith(config.TagPrefix, StringComparison.OrdinalIgnoreCase) &&
-                        !t.StartsWith(config.SafeTagPrefix, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-
-        var originalTagCount = item.Tags.Length;
-        var nonDtddTagCount = existingTags.Count;
-
-        // Add positive triggers (content warnings)
-        var positiveTriggers = TriggerFilter.FilterTriggers(
-            details.GetPositiveTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in positiveTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = TriggerTagFormatter.FormatTagName(config.TagPrefix, trigger, config)!;
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        // Add negative triggers (safe confirmations)
-        var negativeTriggers = TriggerFilter.FilterTriggers(
-            details.GetNegativeTriggers(config.MinVotesThreshold),
-            config);
-
-        foreach (var trigger in negativeTriggers)
-        {
-            if (trigger.Topic == null)
-            {
-                continue;
-            }
-
-            var tagName = TriggerTagFormatter.FormatTagName(config.SafeTagPrefix, trigger, config)!;
-            if (!existingTags.Contains(tagName, StringComparer.OrdinalIgnoreCase))
-            {
-                existingTags.Add(tagName);
-            }
-        }
-
-        // Check if tags actually changed (either count changed or we removed/added DTDD tags)
-        var tagsChanged = existingTags.Count != originalTagCount ||
-                          (originalTagCount - nonDtddTagCount) != (existingTags.Count - nonDtddTagCount);
-
-        item.Tags = existingTags.ToArray();
-
-        return tagsChanged;
+        item.SetProviderId(Constants.ProviderId, data.ItemId.ToString(CultureInfo.InvariantCulture));
+        _metadata.Apply(item, data, config);
+        await item.UpdateToRepositoryAsync(ItemUpdateType.MetadataDownload, cancellationToken).ConfigureAwait(false);
     }
 }

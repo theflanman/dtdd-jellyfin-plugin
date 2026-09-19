@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/topics"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "X-RateLimit-Limit-Minute": "30",
+      "X-RateLimit-Remaining-Minute": "27",
+      "X-RateLimit-Limit-Month": "5000",
+      "X-RateLimit-Remaining-Month": "4997"
+    },
+    "jsonBody": [
+      { "id": 201, "name": "a dog dies", "notName": "no dogs die", "topicCategoryId": 3 },
+      { "id": 202, "name": "someone dies", "notName": "no one dies", "topicCategoryId": 4 },
+      { "id": 203, "name": "a child dies", "notName": "no children die", "topicCategoryId": 4 }
+    ]
+  }
+}

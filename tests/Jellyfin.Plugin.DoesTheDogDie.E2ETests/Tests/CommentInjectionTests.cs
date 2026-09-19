@@ -8,19 +8,19 @@ using Xunit;
 namespace Jellyfin.Plugin.DoesTheDogDie.E2ETests.Tests;
 
 /// <summary>
-/// Covers issue #6 (top DTDD comments in Overview): comment lines appear under
-/// trigger lines when <c>IncludeTopComment</c> is enabled, spoiler-topic comments
-/// are hidden per <c>HideSpoilerComments</c>, and <c>MaxCommentLength</c> truncates.
-/// Stub data: "an animal dies" has a non-spoiler comment by dogwatcher,
-/// "a major character dies" is a spoiler topic with a comment by spoilerguy.
+/// Covers issue #6 (top DTDD comments in Overview): a comment line appears under the trigger group
+/// when <c>IncludeTopComment</c> is enabled, and <c>MaxCommentLength</c> truncates it.
+/// Comments now come from <c>/items/{id}/ratings</c>: the highest <c>VoteSum</c> rating per topic that
+/// carries a <c>triggerDescription</c> wins. The stub gives topic 201 ("a dog dies") two competing
+/// ratings so the top-pick is actually exercised.
 /// </summary>
 [Trait("Category", "E2E")]
 [Collection("Jellyfin")]
 public sealed class CommentInjectionTests
 {
     private const string DtddStartMarker = "<!-- DTDD_START -->";
-    private const string AnimalComment = "The dog dies in the first act, off screen but heartbreaking.";
-    private const string SpoilerComment = "His wife dies of illness before the film begins.";
+    private const string DogComment = "The dog dies in the first act, off screen but heartbreaking.";
+    private const string LoserComment = "A lower-voted report that must never win the top-comment pick.";
 
     private readonly JellyfinFixture _fixture;
 
@@ -30,7 +30,7 @@ public sealed class CommentInjectionTests
     }
 
     [Fact]
-    public async Task IncludeTopComment_AddsCommentLineWithAuthor()
+    public async Task IncludeTopComment_AddsHighestVotedCommentForTopic()
     {
         var johnWick = await GetJohnWickAsync();
 
@@ -40,8 +40,11 @@ public sealed class CommentInjectionTests
             var refreshed = await WaitForInjectedAsync();
 
             refreshed.Overview.Should().Contain(
-                $"💬 \"{AnimalComment}\" - dogwatcher",
-                "non-spoiler trigger comments must be quoted with attribution");
+                $"• a dog dies: {DogComment}",
+                "the top-voted rating's description is attached to its trigger");
+            refreshed.Overview.Should().NotContain(
+                LoserComment,
+                "only the highest VoteSum rating per topic is used");
         }
         finally
         {
@@ -59,53 +62,8 @@ public sealed class CommentInjectionTests
             await SetConfigAndRefreshAsync(johnWick.Id, ("AddDescriptionWarnings", true), ("IncludeTopComment", false));
             var refreshed = await WaitForInjectedAsync();
 
-            refreshed.Overview.Should().NotContain("💬", "comments must not appear when IncludeTopComment is off");
-        }
-        finally
-        {
-            await ResetConfigAndRefreshAsync(johnWick.Id);
-        }
-    }
-
-    [Fact]
-    public async Task HideSpoilerComments_HidesSpoilerTopicComment_KeepsOthers()
-    {
-        var johnWick = await GetJohnWickAsync();
-
-        try
-        {
-            await SetConfigAndRefreshAsync(
-                johnWick.Id,
-                ("AddDescriptionWarnings", true),
-                ("IncludeTopComment", true),
-                ("HideSpoilerComments", true));
-            var refreshed = await WaitForInjectedAsync();
-
-            refreshed.Overview.Should().Contain("A major character dies", "the spoiler trigger line itself is not a comment and stays visible");
-            refreshed.Overview.Should().NotContain(SpoilerComment, "comments on spoiler topics must be hidden");
-            refreshed.Overview.Should().Contain(AnimalComment, "non-spoiler comments are unaffected by HideSpoilerComments");
-        }
-        finally
-        {
-            await ResetConfigAndRefreshAsync(johnWick.Id);
-        }
-    }
-
-    [Fact]
-    public async Task HideSpoilerComments_Disabled_ShowsSpoilerTopicComment()
-    {
-        var johnWick = await GetJohnWickAsync();
-
-        try
-        {
-            await SetConfigAndRefreshAsync(
-                johnWick.Id,
-                ("AddDescriptionWarnings", true),
-                ("IncludeTopComment", true),
-                ("HideSpoilerComments", false));
-            var refreshed = await WaitForInjectedAsync();
-
-            refreshed.Overview.Should().Contain($"💬 \"{SpoilerComment}\" - spoilerguy");
+            refreshed.Overview.Should().NotContain("•", "comments must not appear when IncludeTopComment is off");
+            refreshed.Overview.Should().NotContain(DogComment);
         }
         finally
         {
@@ -127,9 +85,9 @@ public sealed class CommentInjectionTests
                 ("MaxCommentLength", 30));
             var refreshed = await WaitForInjectedAsync();
 
-            refreshed.Overview.Should().NotContain(AnimalComment, "comments beyond 30 chars must be cut");
+            refreshed.Overview.Should().NotContain(DogComment, "comments beyond 30 chars must be cut");
             refreshed.Overview.Should().Contain(
-                $"💬 \"{AnimalComment.Substring(0, 30).TrimEnd()}...\"",
+                $"• a dog dies: {DogComment.Substring(0, 30).TrimEnd()}...",
                 "truncated comments end with an ellipsis");
         }
         finally
@@ -160,7 +118,7 @@ public sealed class CommentInjectionTests
                 var refreshed = (await _fixture.Client.GetItemsAsync("Movie")).Single(m => m.Name == "John Wick");
                 return (refreshed.Overview is null
                     || !refreshed.Overview.Contains(DtddStartMarker, StringComparison.Ordinal))
-                    && refreshed.Tags.Contains("CW: an animal dies");
+                    && refreshed.Tags.Contains("CW: a dog dies");
             },
             TimeSpan.FromSeconds(30),
             failureMessage: "Cleanup: DTDD markers should be removed and CW: tags restored after resetting config");

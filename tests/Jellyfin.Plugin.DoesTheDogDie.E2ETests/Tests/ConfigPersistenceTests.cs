@@ -43,16 +43,16 @@ public sealed class ConfigPersistenceTests
     }
 
     [Fact]
-    public async Task IntValue_MinVotesThreshold_RoundTripsAfterPost()
+    public async Task IntValue_ItemCacheDays_RoundTripsAfterPost()
     {
         try
         {
             await _fixture.Client.SetPluginConfigurationAsync(
                 JellyfinFixture.PluginId,
-                TestHelpers.ConfigWith(("MinVotesThreshold", 42)));
+                TestHelpers.ConfigWith(("ItemCacheDays", 42)));
 
             var fetched = await GetConfigAsync();
-            fetched.MinVotesThreshold.Should().Be(42);
+            fetched.ItemCacheDays.Should().Be(42);
         }
         finally
         {
@@ -110,14 +110,12 @@ public sealed class ConfigPersistenceTests
                 TestHelpers.ConfigWith(
                     ("AddDescriptionWarnings", true),
                     ("IncludeTopComment", true),
-                    ("MaxCommentLength", 77),
-                    ("HideSpoilerComments", false)));
+                    ("MaxCommentLength", 77)));
 
             var fetched = await GetConfigAsync();
             fetched.AddDescriptionWarnings.Should().BeTrue();
             fetched.IncludeTopComment.Should().BeTrue();
             fetched.MaxCommentLength.Should().Be(77);
-            fetched.HideSpoilerComments.Should().BeFalse();
         }
         finally
         {
@@ -135,13 +133,13 @@ public sealed class ConfigPersistenceTests
         {
             await _fixture.Client.SetPluginConfigurationAsync(
                 JellyfinFixture.PluginId,
-                TestHelpers.ConfigWith(("MinVotesThreshold", 123), ("TagPrefix", "WARN:")));
+                TestHelpers.ConfigWith(("ItemCacheDays", 123), ("TagPrefix", "WARN:")));
 
             // Refresh exercises the provider pipeline; config must not be reset by it.
             await _fixture.Client.RefreshItemMetadataAsync(johnWick.Id, replaceAllMetadata: true);
 
             var fetched = await GetConfigAsync();
-            fetched.MinVotesThreshold.Should().Be(123, "item refresh must not clobber plugin config");
+            fetched.ItemCacheDays.Should().Be(123, "item refresh must not clobber plugin config");
             fetched.TagPrefix.Should().Be("WARN:");
         }
         finally
@@ -152,7 +150,7 @@ public sealed class ConfigPersistenceTests
                 async () =>
                 {
                     var refreshed = (await _fixture.Client.GetItemsAsync("Movie")).Single(m => m.Name == "John Wick");
-                    return refreshed.Tags.Contains("CW: an animal dies");
+                    return refreshed.Tags.Contains("CW: a dog dies");
                 },
                 System.TimeSpan.FromSeconds(30),
                 failureMessage: "Cleanup: tags did not return after restoring default config");
@@ -180,9 +178,15 @@ public sealed class ConfigPersistenceTests
 
         public bool EnableSeries { get; set; }
 
-        public bool EnableBooks { get; set; }
+        public string ApiKey { get; set; } = string.Empty;
 
-        public int MinVotesThreshold { get; set; }
+        public double DecisionThreshold { get; set; }
+
+        public double IntervalMass { get; set; }
+
+        public int ItemCacheDays { get; set; }
+
+        public int TaxonomyCacheDays { get; set; }
 
         public string TagPrefix { get; set; } = string.Empty;
 
@@ -199,7 +203,5 @@ public sealed class ConfigPersistenceTests
         public bool IncludeTopComment { get; set; }
 
         public int MaxCommentLength { get; set; }
-
-        public bool HideSpoilerComments { get; set; }
     }
 }

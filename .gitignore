@@ -4,8 +4,12 @@ obj/
 .idea/
 .claude/
 artifacts
+.env
 
 .directory
+
+# claude generated docs during work
+docs/superpowers
 
 #################
 ## Eclipse
@@ -288,3 +292,9 @@ mono_crash.*.json
 
 Claude.md
 claude.mdy
+
+# DocFX generated site output (built by CI; not tracked)
+_site/
+
+# Superpowers SDD scratch (ledger, briefs, review packages)
+.superpowers/

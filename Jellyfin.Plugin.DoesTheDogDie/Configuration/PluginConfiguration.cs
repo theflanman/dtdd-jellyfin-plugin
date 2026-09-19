@@ -15,15 +15,9 @@ public class PluginConfiguration : BasePluginConfiguration
     {
         EnableMovies = true;
         EnableSeries = true;
-        EnableBooks = true;
-        CacheDurationHours = 168; // 7 days
-        MinVotesThreshold = 3;
         AddWarningTags = true;
         TagPrefix = "CW:";
         SafeTagPrefix = "Safe:";
-        RefreshIntervalHours = 24;
-        UseConfidenceScoring = false;
-        MinConfidenceThreshold = 0.7;
         ShowConfidenceInTags = false;
         ShowAllTriggers = false;
         EnabledCategoryIds = new List<int>();
@@ -31,7 +25,11 @@ public class PluginConfiguration : BasePluginConfiguration
         AddDescriptionWarnings = false;
         IncludeTopComment = false;
         MaxCommentLength = 200;
-        HideSpoilerComments = true;
+        ApiKey = string.Empty;
+        DecisionThreshold = 0.5;
+        IntervalMass = 0.95;
+        ItemCacheDays = 30;
+        TaxonomyCacheDays = 7;
     }
 
     /// <summary>
@@ -43,21 +41,6 @@ public class PluginConfiguration : BasePluginConfiguration
     /// Gets or sets a value indicating whether to fetch warnings for TV series.
     /// </summary>
     public bool EnableSeries { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether to fetch warnings for books.
-    /// </summary>
-    public bool EnableBooks { get; set; }
-
-    /// <summary>
-    /// Gets or sets the cache duration in hours.
-    /// </summary>
-    public int CacheDurationHours { get; set; }
-
-    /// <summary>
-    /// Gets or sets the minimum number of votes required to display a trigger.
-    /// </summary>
-    public int MinVotesThreshold { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether to add warning tags to items.
@@ -73,24 +56,6 @@ public class PluginConfiguration : BasePluginConfiguration
     /// Gets or sets the prefix for safe tags (content confirmed safe from this trigger).
     /// </summary>
     public string SafeTagPrefix { get; set; }
-
-    /// <summary>
-    /// Gets or sets the refresh interval in hours for the scheduled task.
-    /// </summary>
-    public int RefreshIntervalHours { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether to filter triggers using
-    /// statistical confidence (Wilson score) instead of raw vote counts alone.
-    /// When false, only <see cref="MinVotesThreshold"/> applies.
-    /// </summary>
-    public bool UseConfidenceScoring { get; set; }
-
-    /// <summary>
-    /// Gets or sets the minimum confidence (0.0-1.0) required to include a
-    /// trigger when <see cref="UseConfidenceScoring"/> is enabled.
-    /// </summary>
-    public double MinConfidenceThreshold { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether to append the confidence
@@ -132,7 +97,31 @@ public class PluginConfiguration : BasePluginConfiguration
     public int MaxCommentLength { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether to hide spoiler comments.
+    /// Gets or sets the user's DoesTheDogDie API key, sent as the X-API-KEY header.
     /// </summary>
-    public bool HideSpoilerComments { get; set; }
+    public string ApiKey { get; set; }
+
+    /// <summary>
+    /// Gets or sets the probability threshold used to decide a trigger's verdict.
+    /// Maps to ConfidenceOptions.DecisionThreshold.
+    /// </summary>
+    public double DecisionThreshold { get; set; }
+
+    /// <summary>
+    /// Gets or sets the probability mass covered by the credible interval.
+    /// Maps to ConfidenceOptions.IntervalMass.
+    /// </summary>
+    public double IntervalMass { get; set; }
+
+    /// <summary>
+    /// Gets or sets how many days a cached item detail stays fresh.
+    /// Maps to CachePolicy.ItemMaxAge.
+    /// </summary>
+    public int ItemCacheDays { get; set; }
+
+    /// <summary>
+    /// Gets or sets how many days cached taxonomy data stays fresh.
+    /// Maps to CachePolicy.TaxonomyMaxAge.
+    /// </summary>
+    public int TaxonomyCacheDays { get; set; }
 }

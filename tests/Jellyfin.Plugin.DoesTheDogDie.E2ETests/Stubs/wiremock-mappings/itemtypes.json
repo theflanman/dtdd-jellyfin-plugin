@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v3/itemtypes"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": [
+      { "id": 14, "name": "Book", "slug": "book", "verb": "read", "pastTenseVerb": "read" },
+      { "id": 15, "name": "Movie", "slug": "movie", "verb": "watch", "pastTenseVerb": "watched" },
+      { "id": 16, "name": "TV Show", "slug": "tv", "verb": "watch", "pastTenseVerb": "watched" }
+    ]
+  }
+}

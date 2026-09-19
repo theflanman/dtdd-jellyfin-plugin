@@ -8,6 +8,18 @@ Jellyfin plugin that integrates DoesTheDogDie.com content warnings into media li
 
 ## Build Commands
 
+**Requires the .NET 10 SDK**, installed user-locally at `~/.dotnet` (the system `dotnet` may only have 8/9). NuGet restore walks every target framework of the referenced `DoesTheDogDie` library before framework negotiation happens — it multi-targets `net9.0;net10.0` — so a net9-only SDK fails restore with `NETSDK1045`. Prefix every dotnet command with:
+
+```bash
+export PATH=$HOME/.dotnet:$PATH DOTNET_ROOT=$HOME/.dotnet DOTNET_ROLL_FORWARD=LatestMajor
+```
+
+`DOTNET_ROLL_FORWARD=LatestMajor` is needed because that SDK root's `shared/` has ASP.NET Core 10 but no 9.x runtime, and the `net9.0` unit-test testhost needs one to roll forward to. The plugin itself still targets and ships `net9.0` — only the build tooling needs .NET 10.
+
+The plugin's csproj resolves the library via a `DtddClientPath` MSBuild property (default `../../../dtdd-client`, i.e. checked out as a sibling of this repo's parent directory) and falls back to a `PackageReference` if that path doesn't exist. Pass `-p:DtddClientPath=<path>` to point at the library elsewhere — e.g. from a worktree, where the default relative path won't resolve.
+
+The generated DocFX output committed at `_site/` (69 tracked files) documents pre-migration types that no longer exist, and one page still displays the retired bundled API key. It is stale; regenerate it or add it to `.gitignore` rather than treating it as current.
+
 ```bash
 # Build
 dotnet build Jellyfin.Plugin.DoesTheDogDie.sln
@@ -51,56 +63,66 @@ Plugin DLLs are auto-published before the run via a `BeforeTargets="Build"` step
 
 1. `dotnet publish`
 2. Copy `Jellyfin.Plugin.DoesTheDogDie/bin/Debug/net9.0/publish/` into `<jellyfin-data>/plugins/DoesTheDogDie_<version>/`
-3. Add a `meta.json` (the E2E fixture's copy in `tests/.../Fixtures/JellyfinFixture.cs::WriteMetaJson` is a working reference; `status` must be `"Active"`)
+3. Add a `meta.json` (the E2E fixture's copy in `tests/.../Fixtures/JellyfinFixture.cs::WriteMetaJson` is a working reference; `status` must be `"Active"`). The plugin directory is mounted read-write in the E2E container because Jellyfin itself writes `meta.json` into it, not just reads it.
 4. Restart Jellyfin server
 
 ### Redirecting DTDD calls
 
-`Constants.ApiBaseUrl` honors the `DTDD_API_BASE_URL` env var and falls back to `https://www.doesthedogdie.com`. Used by the E2E harness to point at WireMock; safe to leave unset in production.
+`DtddClientProvider.ResolveBaseAddress()` honors the `DTDD_API_BASE_URL` env var and falls back to `https://www.doesthedogdie.com/api/v3/`. The override is used verbatim as the client's base address, so it must include the full `/api/v3/` path (e.g. `http://wiremock:8080/api/v3/`) and a trailing slash. A value that is not an absolute URI is logged and ignored. Used by the E2E harness to point at WireMock; safe to leave unset in production.
 
 ## Architecture
 
 ### Data Flow
 
 1. **Metadata providers** (`ICustomMetadataProvider<T>`) run after TMDB/TVDB providers (Order=100)
-2. Provider gets IMDB ID from item, calls `DtddApiClient.GetMediaDetailsByImdbIdAsync()`
-3. API client searches DTDD by IMDB ID, then fetches full media details with triggers
-4. `TriggerFilter` applies user configuration (categories, topics, vote threshold)
-5. Warnings added as tags (e.g., "CW: Animal Death", "Safe: No Dogs Die")
+2. Provider calls `DtddMetadataService.ResolveAsync()`, which resolves the item against the `DoesTheDogDie` library's `IDtddClient` in priority order: a DtDD id already stored on the item, then IMDb id, then exact name+year. It never issues a free-text search.
+3. The resolved item detail's `TopicItemStats` are joined against the library's topic taxonomy (`IDtddClient.GetTopicsAsync()`) and run through the library's Beta-distribution confidence model to produce a verdict (likely present / likely absent / uncertain) and credible interval per trigger
+4. `TriggerFilter` applies user configuration (category/topic allow-lists; `ShowAllTriggers`)
+5. `DtddMetadataService.Apply()` writes warnings as tags (e.g., "CW: a dog dies", "Safe: no dogs die") and, if enabled, an `OverviewFormatter`-rendered summary into the item description
 
 ### Key Components
 
 | Component | Purpose |
 |-----------|---------|
 | `Plugin.cs` | Entry point, extends `BasePlugin<PluginConfiguration>`, GUID: `eb5d7894-8eef-4b36-aa6f-5d124e828ce1` |
-| `DtddApiClient` | HTTP client for DTDD API (search + media details) |
+| `DtddMetadataService` | The plugin's single entry point to DtDD data: resolves an item to triggers and applies them back onto it. Facade over the library's `IDtddClient` |
+| `DtddClientProvider` | Owns the `DoesTheDogDie` client stack (HTTP → throttle → cache) and its lifecycle; rebuilds the stack when API key or cache settings change |
 | `DtddMovieProvider`, `DtddSeriesProvider` | `ICustomMetadataProvider` implementations that fetch and apply warnings |
 | `DtddSeasonProvider`, `DtddEpisodeProvider` | Inherit DTDD ID and warnings from parent Series |
-| `TriggerFilter` | Filters triggers by category/topic/vote threshold |
+| `TriggerFilter` | Filters triggers by category/topic |
 | `DtddLibraryScanService` | `IHostedService` - auto-fetches DTDD data when items with IMDB IDs are added |
 | `DtddRefreshTask` | `IScheduledTask` - daily refresh at 2 AM |
-| `TriggerCacheService` | Caches trigger categories/topics from API |
 
 ### Configuration Options (`PluginConfiguration`)
 
-- `EnableMovies/EnableSeries/EnableBooks` - Enable per media type (all true by default)
-- `MinVotesThreshold` - Minimum votes to include a trigger (default: 3)
+- `EnableMovies`/`EnableSeries` - Enable per media type (both true by default)
+- `AddWarningTags` - Add `CW:`/`Safe:` tags to items (default: true)
 - `TagPrefix`/`SafeTagPrefix` - Tag prefixes (default: "CW:", "Safe:")
+- `ShowConfidenceInTags` - Append confidence percent to tag names (default: false)
 - `ShowAllTriggers` - Master switch; when false, uses category/topic filtering
 - `EnabledCategoryIds`/`EnabledTopicIds` - Filter to specific triggers
+- `AddDescriptionWarnings` - Inject a grouped trigger summary into the overview (default: false)
+- `IncludeTopComment` - Include each trigger's top comment; costs one extra API request per title (default: false)
+- `MaxCommentLength` - Truncate included comments (default: 200)
+- `ApiKey` - The user's DoesTheDogDie API key, sent as `X-API-KEY` (required; no default)
+- `DecisionThreshold` - Probability threshold for a trigger's verdict (default: 0.5)
+- `IntervalMass` - Probability mass covered by the reported credible interval (default: 0.95)
+- `ItemCacheDays` - How long cached item/rating data stays fresh (default: 30)
+- `TaxonomyCacheDays` - How long cached topic/category data stays fresh (default: 7)
+
+Removed in the v3 migration: `MinVotesThreshold`, `EnableBooks`, `CacheDurationHours`, `RefreshIntervalHours`, `UseConfidenceScoring`, `MinConfidenceThreshold`, `HideSpoilerComments`.
 
 ### DoesTheDogDie API
 
-Base URL: `https://www.doesthedogdie.com`
+The plugin no longer talks HTTP to DtDD directly — all of this is inside the `DoesTheDogDie` client library (`../../dtdd-client`, referenced via `DtddClientPath`). Base URL: `https://www.doesthedogdie.com/api/v3`.
 
-Key endpoints:
-- `/dddsearch?imdb={id}` - Search by IMDB ID (preferred)
-- `/dddsearch?q={term}` - Search by title
-- `/media/{id}` - Get trigger data with vote counts
+Endpoints the library exposes via `IDtddClient` (all GET, `X-API-KEY` header):
+- `/items?imdb={id}` / `?name={n}&releaseYear={y}` / `?q={term}` - Search (the plugin only ever uses the first two forms; see Data Flow)
+- `/items/{itemId}` - Item detail including `topicItemStats[]`
+- `/items/{itemId}/ratings` - Per-item comments/ratings (used for `IncludeTopComment`)
+- `/topics`, `/itemtypes`, `/topiccategories`, `/topicsupercategories` - Taxonomy
 
-Headers: `Accept: application/json`, `X-API-KEY: {key}`
-
-**Important:** Invalid media IDs return HTML (not JSON), so `DtddApiClient.GetMediaDetailsAsync()` checks Content-Type header.
+See `../../dtdd-client/CLAUDE.md` for the authoritative v3 reference (models, error codes, rate-limit headers). The library's `DtddApiClient` handles the Content-Type/HTML-vs-JSON distinction internally; the plugin never sees it.
 
 ## Code Style
 
@@ -112,14 +134,11 @@ Headers: `Accept: application/json`, `X-API-KEY: {key}`
 
 ## Testing Patterns
 
-API client methods are `virtual` for mocking. Use `IPluginConfigurationAccessor` for config mocking:
+`IDtddClient` is a real interface from the library; the plugin's test double is `tests/Jellyfin.Plugin.DoesTheDogDie.Tests/Support/FakeDtddClient.cs`, not a mock. `DtddMetadataService`'s methods (`ResolveAsync`, `Apply`) remain `virtual` for Moq where a test wants to stub the service itself rather than drive it through a fake client. Use `IPluginConfigurationAccessor` for config mocking:
 
 ```csharp
-_apiClientMock.Setup(x => x.GetMediaDetailsByImdbIdAsync("tt2911666", It.IsAny<CancellationToken>()))
-    .ReturnsAsync(details);
-
 _configAccessorMock.Setup(x => x.GetConfiguration())
-    .Returns(new PluginConfiguration { EnableMovies = true });
+    .Returns(new PluginConfiguration { EnableMovies = true, ApiKey = "test-key" });
 ```
 
 ### Known Test Limitation
@@ -130,14 +149,13 @@ Season/Episode providers get IMDB ID from parent Series via `item.Series.GetProv
 
 - **Fixture:** `tests/Jellyfin.Plugin.DoesTheDogDie.E2ETests/Fixtures/JellyfinFixture.cs` — Testcontainers network + WireMock + Jellyfin LSIO containers, runs startup wizard, adds libraries, triggers initial scan.
 - **REST wrapper:** `JellyfinClient.cs` — wraps wizard, login, library mgmt, plugin config, refresh + poll. Retries 5xx during wizard window. Authenticates via `MediaBrowser` auth header.
-- **Stubs:** `Stubs/wiremock-mappings/*.json` — canned `DtddSearchResponse` / `DtddMediaDetails` for known IMDB IDs (`tt2911666`, `tt0903747`).
+- **Stubs:** `Stubs/wiremock-mappings/*.json` — canned DtDD **v3** responses under `/api/v3/*` (`items`, `items/{id}`, `items/{id}/ratings`, `topics`, `topiccategories`, `topicsupercategories`, `itemtypes`) for known IMDB IDs (`tt2911666`, `tt0903747`).
 - **Fixture media:** `Fixtures/media/{movies,tv}/` — minimal NFO-only tree (stub `.mkv` files); IMDB IDs match the WireMock stubs.
-- **Refresh gotcha:** when a `Dtdd` ProviderId is already set and `replaceAllMetadata=false`, `DtddMovieProvider` / `DtddSeriesProvider` only re-apply tags/overview if `AddWarningTags` or `AddDescriptionWarnings` is enabled (cached-id path); otherwise they skip entirely. Mutation tests usually pass `replaceAllMetadata=true` to force a full re-fetch.
 - **meta.json:** must include `"status": "Active"` and live at `/config/data/plugins/<Name>_<Version>/`. Without `Active`, `PluginManager` treats the plugin as Disabled and silently skips loading it.
 
 ## Implementation Status
 
-Phases 0-4 complete (core infrastructure, metadata providers, background services, UI integration: `IExternalId`, `IExternalUrlProvider`, real config page). Description injection (`OverviewFormatter`) added on `feature/description-injection`. Automated E2E harness in place.
+Phases 0-4 complete (core infrastructure, metadata providers, background services, UI integration: `IExternalId`, `IExternalUrlProvider`, real config page). Description injection (`OverviewFormatter`) added on `feature/description-injection`. Automated E2E harness in place. Migrated the homegrown DTDD API layer onto the external `DoesTheDogDie` client library (v3 API, `feature/dtdd-client-migration`): 173/173 unit tests, 47/47 E2E tests passing. The plugin is not yet releasable — see `docs/PROGRESS.md`.
 
 ## Documentation
 
