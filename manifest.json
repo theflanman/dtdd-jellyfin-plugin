@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "0.2.0.0",
+        "changelog": "## What's Changed\r\n* Release 0.2.0.0 by @theflanman in https://github.com/theflanman/dtdd-jellyfin-plugin/pull/35\r\n\r\n\r\n**Full Changelog**: https://github.com/theflanman/dtdd-jellyfin-plugin/commits/0.2.0.0",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/theflanman/dtdd-jellyfin-plugin/releases/download/0.2.0.0/doesthedogdie-0.2.0.0.zip",
+        "checksum": "9e0236479c1419645e128679c45cb83c",
+        "timestamp": "2026-09-19T17:41:13Z"
+      },
+      {
         "version": "0.1.1.1",
         "changelog": "**Full Changelog**: https://github.com/theflanman/dtdd-jellyfin-plugin/compare/0.1.1.0...0.1.1.1",
         "targetAbi": "10.11.0.0",
