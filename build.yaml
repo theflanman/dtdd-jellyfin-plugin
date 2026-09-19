@@ -1,7 +1,7 @@
 ---
 name: "Does The Dog Die"
 guid: "eb5d7894-8eef-4b36-aa6f-5d124e828ce1"
-version: "0.1.1.0"
+version: "0.2.0.0"
 targetAbi: "10.11.0.0"
 framework: "net9.0"
 overview: "Display content warnings from DoesTheDogDie.com"
@@ -74,3 +74,15 @@ changelog: |
   - Known caveat: on Windows, the bundled SQLite native library is not shipped (see artifacts note
     above), so the DtDD cache falls back to in-memory and does not persist across restarts; Linux
     and macOS get the persistent SQLite cache
+  - Fixed the DoesTheDogDie client library's NuGet fallback, which referenced a nonexistent package
+    id with no version and would fail restore for anyone without the library checked out as a
+    sibling repo
+  - Config page: category headers can now be expanded/collapsed regardless of whether the category
+    is enabled; selecting an individual topic now enables just that topic and its category instead
+    of being silently dropped or forcing every sibling topic on; fixed the page's script re-running
+    on repeat navigation, which could silently discard in-progress selections and double-save on
+    every click
+  - Injected descriptions are now formatted as a heading plus a bulleted list per verdict, with each
+    trigger's top comment nested underneath it, instead of one comma-joined line per verdict
+  - Fixed two description rendering bugs: the leading heading no longer renders as literal "#" text,
+    and a multi-line DtDD comment no longer corrupts the heading levels of every section after it
