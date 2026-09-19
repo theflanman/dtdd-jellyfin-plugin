@@ -293,8 +293,10 @@ mono_crash.*.json
 Claude.md
 claude.mdy
 
-# DocFX generated site output (built by CI; not tracked)
+# DocFX generated output (built by CI; not tracked). Root-anchored so this doesn't
+# accidentally match Jellyfin.Plugin.DoesTheDogDie/Api/, the C# source directory.
 _site/
+/api/
 
 # Superpowers SDD scratch (ledger, briefs, review packages)
 .superpowers/
