@@ -33,7 +33,7 @@ This plugin automatically fetches trigger warnings for movies and TV shows and a
 - **Confidence-based verdicts** - A Beta-distribution model turns raw vote counts into likely-present / likely-absent / uncertain, with a reported credible interval
 - **Safe confirmations** - Optionally show when content is confirmed *safe* for specific triggers
 - **External links** - Quick links to DoesTheDogDie.com pages from item details
-- **Local caching** - SQLite-backed cache (in-memory on Windows; see Requirements) keeps repeat lookups off the DtDD monthly request budget
+- **Local caching** - SQLite-backed cache keeps repeat lookups off the DtDD monthly request budget
 
 ## Installation
 
@@ -101,7 +101,7 @@ Powered by DoesTheDogDie.com — https://www.doesthedogdie.com
 
 ### 6. Comment injection costs an extra request per title
 
-Enabling **Include Top Comment** fetches each item's ratings (to pull the top user comment per trigger) as a *second* API request per title, against DtDD's free-tier budget of 5,000 requests/month. It is **off by default**. The plugin's cache (SQLite on Linux/macOS, in-memory on Windows — see Requirements below) avoids repeating this cost for items that don't need re-checking, but the first full library scan still pays it once per title if enabled.
+Enabling **Include Top Comment** fetches each item's ratings (to pull the top user comment per trigger) as a *second* API request per title, against DtDD's free-tier budget of 5,000 requests/month. It is **off by default**. The plugin's cache avoids repeating this cost for items that don't need re-checking, but the first full library scan still pays it once per title if enabled.
 
 ### 7. `HideSpoilerComments` has been removed
 
@@ -153,9 +153,20 @@ Removed in the v3 migration: `Min Votes Threshold`, `Enable Books`, `Cache Durat
 - **The .NET 10 SDK** to build from source (the plugin still targets and ships `net9.0`; the SDK is required because restore evaluates every target framework of the `DoesTheDogDie` library it depends on, which multi-targets `net9.0;net10.0`). See [CLAUDE.md](CLAUDE.md) for the exact build environment.
 - **A DoesTheDogDie.com API key** — see "How the plugin behaves" above. Nothing is tagged without one.
 
-### A platform caveat: the SQLite cache is Linux/macOS-only
+### A packaging note: native SQLite libraries are stripped at publish
 
-Jellyfin's `PluginManager` loads every `.dll` it finds recursively under a plugin's directory, including native ones, and throws `BadImageFormatException` on them — which disables the whole plugin. To avoid that, the plugin's publish step removes the bundled native Windows SQLite library (`runtimes/win-*/native/*.dll`). The practical effect: on **Windows**, the plugin has no native SQLite driver bundled and falls back to an **in-memory cache** — it still works, but cached DtDD data does not survive a Jellyfin restart, so every restart re-spends API budget re-fetching previously-seen items. On **Linux and macOS**, the bundled `.so`/`.dylib` natives load normally and the cache persists to a SQLite file across restarts.
+Jellyfin's `PluginManager` loads every `.dll` it finds recursively under a plugin's directory as a managed
+assembly, including native ones, and throws `BadImageFormatException` on them — which disables the whole
+plugin. To avoid that, the plugin's publish step removes bundled native libraries matching
+`runtimes/*/native/*.dll`. Only `.dll` files are removed; `.so` and `.dylib` payloads are never scanned by
+`PluginManager`, so they are left in place.
+
+This does not cost you the cache. The plugin opens its SQLite cache file on Windows, Linux and macOS alike,
+and cached DtDD data survives a Jellyfin restart on all three. If the cache file genuinely cannot be opened
+— a read-only or missing data directory, a permissions problem, no usable SQLite provider on the host — the
+plugin logs a warning and falls back to an in-memory cache. It keeps working, but cached data is lost on
+restart and every restart re-spends API budget re-fetching previously-seen items. Search your Jellyfin log
+for `falling back to an in-memory cache` if you suspect this.
 
 ### Containerized deployments: make sure the cache directory is on a persistent volume
 

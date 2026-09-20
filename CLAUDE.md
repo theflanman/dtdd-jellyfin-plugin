@@ -18,7 +18,7 @@ export PATH=$HOME/.dotnet:$PATH DOTNET_ROOT=$HOME/.dotnet DOTNET_ROLL_FORWARD=La
 
 The plugin's csproj resolves the library via a `DtddClientPath` MSBuild property (default `../../../dtdd-client`, i.e. checked out as a sibling of this repo's parent directory) and falls back to a `PackageReference` on the [`DtDDNetClient`](https://www.nuget.org/packages/DtDDNetClient) NuGet package if that path doesn't exist. Pass `-p:DtddClientPath=<path>` to point at the library elsewhere — e.g. from a worktree, where the default relative path won't resolve. The fallback version defaults to `0.1.0` via `DtddClientVersion`; pass `-p:DtddClientVersion=<version>` to pin a different one.
 
-The generated DocFX output committed at `_site/` (69 tracked files) documents pre-migration types that no longer exist, and one page still displays the retired bundled API key. It is stale; regenerate it or add it to `.gitignore` rather than treating it as current.
+DocFX output (`_site/`, and the generated `api/` tree) is untracked and gitignored as of 2d90bc8 — it documented pre-migration types and one page displayed the retired bundled API key. Neither directory exists in a fresh checkout. Regenerate locally if you want the site; do not re-commit it.
 
 ```bash
 # Build
@@ -143,7 +143,7 @@ _configAccessorMock.Setup(x => x.GetConfiguration())
 
 ### Known Test Limitation
 
-Season/Episode providers get IMDB ID from parent Series via `item.Series.GetProviderId()`. The `Series` property is null in unit tests (no public setter), so only the "no parent series" path is testable (~44% coverage on these providers). E2E tests cover the real inheritance path against a running Jellyfin.
+Season/Episode providers get IMDB ID from parent Series via `item.Series.GetProviderId()`. The `Series` property is null in unit tests (no public setter), so the real inheritance path cannot be driven from a unit test — E2E covers it against a running Jellyfin. This is a narrower gap than it used to be: both providers now sit at 100% line coverage (91% on `FetchAsync`), not the ~44% recorded before the v3 migration.
 
 ### E2E Internals
 
@@ -155,7 +155,13 @@ Season/Episode providers get IMDB ID from parent Series via `item.Series.GetProv
 
 ## Implementation Status
 
-Phases 0-4 complete (core infrastructure, metadata providers, background services, UI integration: `IExternalId`, `IExternalUrlProvider`, real config page). Description injection (`OverviewFormatter`) added on `feature/description-injection`. Automated E2E harness in place. Migrated the homegrown DTDD API layer onto the external `DoesTheDogDie` client library (v3 API, `feature/dtdd-client-migration`): 173/173 unit tests, 47/47 E2E tests passing. The plugin is not yet releasable — see `docs/PROGRESS.md`.
+**Released: 0.2.0.0** (2026-09-19). `main` and `development` are level with it; the gh-pages manifest advertises it against `targetAbi 10.11.0.0`.
+
+Everything through the v3 client-library migration is done: core infrastructure, metadata providers, background services, UI integration (`IExternalId`, `IExternalUrlProvider`, real config page), description injection (`OverviewFormatter`), the automated E2E harness, and the move off the homegrown DTDD API layer onto the external `DoesTheDogDie` client library. 175/175 unit tests and 47/47 E2E tests pass; plugin-assembly coverage is 92.6% line / 81.6% branch.
+
+Release builds no longer need a checked-out sibling library: `DtDDNetClient` 0.1.0 is on NuGet, so the csproj's `PackageReference` fallback restores cleanly. `DtddClientPath` is a local-development convenience now.
+
+Open work lives on GitHub — Milestone 8 (0.2.1 polish) and Milestone 9 (Jellyfin 12 multi-target) are the near-term ones, and #43 (budget-aware scanning) is the outstanding pre-1.0 risk. See `docs/PROGRESS.md`.
 
 ## Documentation
 
